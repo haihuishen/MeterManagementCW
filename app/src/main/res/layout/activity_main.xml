@@ -8,7 +8,7 @@
     android:paddingRight="10dp"
     android:paddingTop="5dp">
 
-    <com.zh.metermanagement.view.ClearEditText
+    <com.zh.metermanagementcw.view.ClearEditText
         android:id="@+id/cet_gone"
         android:layout_width="wrap_content"
         android:layout_height="0.1dp"
@@ -52,7 +52,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="13dp" />
 
-                    <com.zh.metermanagement.view.ClearEditText
+                    <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_oldAssetNumbers"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -224,7 +224,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
-                    <com.zh.metermanagement.view.ClearEditText
+                    <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_oldAddr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/gray"/>
-                    <com.zh.metermanagement.view.ClearEditText
+                    <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_oldElectricity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -296,7 +296,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="13dp" />
 
-                <com.zh.metermanagement.view.ClearEditText
+                <com.zh.metermanagementcw.view.ClearEditText
                     android:id="@+id/cet_newAssetNumbersScan"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -370,7 +370,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
-                    <com.zh.metermanagement.view.ClearEditText
+                    <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_newAddr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -386,7 +386,7 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/gray"/>
-                    <com.zh.metermanagement.view.ClearEditText
+                    <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_newElectricity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -443,7 +443,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="13dp" />
 
-                <com.zh.metermanagement.view.ClearEditText
+                <com.zh.metermanagementcw.view.ClearEditText
                     android:id="@+id/cet_collectorAssetNumbersScan"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

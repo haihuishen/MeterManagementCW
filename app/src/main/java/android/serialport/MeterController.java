@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.zh.metermanagement.utils.LogUtils;
+import com.zh.metermanagementcw.utils.LogUtils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -131,7 +131,7 @@ public class MeterController {
 			}
 		}
 
-		power_up();				// 为红外模块上电
+		//power_up();				// 为红外模块上电
 
 		openSerialPort("/dev/ttyMT2", 1200, 8, 1, 1);		// 打开串口
 		isOpen = true;

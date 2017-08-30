@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:padding="5dp">
 
-        <com.zh.metermanagement.view.ClearEditText
+        <com.zh.metermanagementcw.view.ClearEditText
             android:id="@+id/cet_gone"
             android:layout_width="wrap_content"
             android:layout_height="0.1dp"
@@ -25,7 +25,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
                 android:background="@color/shen_sky_blue"
 
                 android:orientation="vertical">
@@ -53,8 +54,9 @@
                             android:textColor="@android:color/black"
                             android:textSize="14dp" />
 
-                        <com.zh.metermanagement.view.ClearEditText
+                        <com.zh.metermanagementcw.view.ClearEditText
                             android:id="@+id/cet_oldAssetNumbers"
+                            android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
@@ -70,7 +72,7 @@
                     <Button
                         android:id="@+id/btn_oldAssetNumbers"
                         android:layout_width="50dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:background="@drawable/btn_bg_blue"
                         android:text="扫描\n输入"
@@ -178,10 +180,15 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/white" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -196,79 +203,91 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="旧表表地址:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:text="旧表表地址:"
-                            android:textColor="@android:color/black"
-                            android:textSize="14dp" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="旧表止码:"
-                            android:textColor="@android:color/black"
-                            android:textSize="14dp" />
-                    </LinearLayout>
-
-
-                    <LinearLayout
+                    <com.zh.metermanagementcw.view.ClearEditText
+                        android:id="@+id/cet_oldAddr"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <com.zh.metermanagement.view.ClearEditText
-                            android:id="@+id/cet_oldAddr"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:background="@drawable/bg_et"
-                            android:maxLines="1"
-                            android:padding="3dp"
-                            android:text=""
-                            android:textColor="@android:color/black"
-                            android:textSize="13dp" />
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray" />
-
-                        <com.zh.metermanagement.view.ClearEditText
-                            android:id="@+id/cet_oldElectricity"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:background="@drawable/bg_et"
-                            android:maxLines="1"
-                            android:padding="3dp"
-                            android:text=""
-                            android:textColor="@android:color/black"
-                            android:textSize="13dp" />
-                    </LinearLayout>
-
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_et"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
 
                 </LinearLayout>
+
 
 
                 <Button
                     android:id="@+id/btn_oldElectricity"
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/btn_bg_blue"
                     android:text="红外\n读取"
                     android:textColor="@drawable/btn_text_color_blue_w"
                     android:textSize="12dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:background="@color/shen_sky_blue"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="旧表止码:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+
+                    <com.zh.metermanagementcw.view.ClearEditText
+                        android:id="@+id/cet_oldElectricity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_et"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text=""
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp"
+                    android:visibility="invisible"/>
             </LinearLayout>
 
             <View
@@ -278,7 +297,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -301,7 +321,7 @@
                         android:textColor="@android:color/black"
                         android:textSize="14dp" />
 
-                    <com.zh.metermanagement.view.ClearEditText
+                    <com.zh.metermanagementcw.view.ClearEditText
                         android:layout_marginTop="1dp"
                         android:id="@+id/cet_newAssetNumbersScan"
                         android:layout_width="match_parent"
@@ -320,7 +340,7 @@
                 <Button
                     android:id="@+id/btn_newAssetNumbersScan"
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/btn_bg_blue"
                     android:text="扫描\n输入"
@@ -331,7 +351,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -346,136 +367,121 @@
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:text="新表表地址:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:text="新表表地址:"
-                            android:textColor="@android:color/black"
-                            android:textSize="14dp" />
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:text="新表止码:"
-                            android:textColor="@android:color/black"
-                            android:textSize="14dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_marginTop="2dp"
+                    <com.zh.metermanagementcw.view.ClearEditText
+                        android:id="@+id/cet_newAddr"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_et"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
 
-                        <com.zh.metermanagement.view.ClearEditText
-                            android:id="@+id/cet_newAddr"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="6"
-                            android:background="@drawable/bg_et"
-                            android:maxLines="1"
-                            android:padding="3dp"
-                            android:text=""
-                            android:textColor="@android:color/black"
-                            android:textSize="13dp" />
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="新表止码:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
 
-                        <com.zh.metermanagement.view.ClearEditText
-                            android:id="@+id/cet_newElectricity"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="4"
-                            android:background="@drawable/bg_et"
-                            android:maxLines="1"
-                            android:padding="3dp"
-                            android:text=""
-                            android:textColor="@android:color/black"
-                            android:textSize="13dp" />
-                    </LinearLayout>
+
+                    <com.zh.metermanagementcw.view.ClearEditText
+                        android:id="@+id/cet_newElectricity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_et"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
 
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_newElectricity"
                     android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/btn_bg_blue"
                     android:text="红外\n读取"
                     android:textColor="@drawable/btn_text_color_blue_w"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:visibility="invisible"/>
             </LinearLayout>
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/white" />
-        <LinearLayout
-            android:padding="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/shen_sky_blue"
-            android:gravity="center">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_pic"
-                android:layout_marginRight="10dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:scrollbars="none"
-                android:visibility="visible"/>
-
-            <LinearLayout
-                android:id="@+id/linearLayout_pv"
-                android:layout_marginLeft="5dp"
-                android:padding="2dp"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/bg_text_translucent"
-                android:visibility="gone">
-                <com.bm.library.PhotoView
-                    android:id="@+id/pv_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
-            </LinearLayout>
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:visibility="gone"/>
-            <Button
-                android:id="@+id/btn_camera"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:text="拍照"
-                android:background="@drawable/btn_bg_blue"
-                android:textColor="@drawable/btn_text_color_blue_w"
-                android:textSize="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/white" />
 
-                />
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/shen_sky_blue"
+                android:gravity="center">
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_pic"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:scrollbars="none"
+                    android:visibility="visible"/>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout_pv"
+                    android:layout_marginLeft="5dp"
+                    android:padding="2dp"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:background="@drawable/bg_text_translucent"
+                    android:visibility="gone">
+                    <com.bm.library.PhotoView
+                        android:id="@+id/pv_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"/>
+                <Button
+                    android:id="@+id/btn_camera"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="拍照"
+                    android:background="@drawable/btn_bg_blue"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp"
+
+                    />
+            </LinearLayout>
         </LinearLayout>
+
+
 
         <Button
 

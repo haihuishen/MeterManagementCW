@@ -6,26 +6,27 @@
              android:background="@drawable/bg_transparency">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@drawable/dialog_background_change">
+        android:layout_height="250dp"
+        android:background="@color/shen_btn_blue">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="15dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
                 android:text="手动输入"
+                android:textStyle="bold"
                 />
 
-            <com.zh.metermanagement.view.ClearEditText
+            <com.zh.metermanagementcw.view.ClearEditText
                 android:id="@+id/et_addr"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:paddingRight="5dp"
@@ -42,9 +43,9 @@
                 android:textSize="25dp"/>
 
 
-            <com.zh.metermanagement.view.ClearEditText
+            <com.zh.metermanagementcw.view.ClearEditText
                 android:id="@+id/et_electricity"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:paddingRight="5dp"

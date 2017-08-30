@@ -37,8 +37,9 @@
 
 
     <color name="shen_blue">#0014ff</color>
-
     <color name="shen_blue_statstics">#3686C5</color>
+    <color name="shen_red">#FF0000</color>
+    <color name="shen_black">#000000</color>
 
 
 

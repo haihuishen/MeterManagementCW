@@ -7,7 +7,7 @@
     android:padding="20dp">
 
 
-    <com.zh.metermanagement.view.AutoCompleteTextViewWithData1
+    <com.zh.metermanagementcw.view.AutoCompleteTextViewWithData1
         android:id="@+id/actv_recipients"
         android:padding="5dp"
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
         android:textColor="@color/black"
         android:hint="请输入收件人"
         />
-    <com.zh.metermanagement.view.AutoCompleteTextViewWithData1
+    <com.zh.metermanagementcw.view.AutoCompleteTextViewWithData1
         android:layout_marginTop="10dp"
         android:id="@+id/actv_subject"
         android:padding="5dp"
@@ -33,7 +33,7 @@
         android:hint="请输入主题"
         />
 
-    <com.zh.metermanagement.view.AutoCompleteTextViewWithData1
+    <com.zh.metermanagementcw.view.AutoCompleteTextViewWithData1
         android:layout_marginTop="10dp"
         android:id="@+id/actv_text"
         android:padding="5dp"
