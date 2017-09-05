@@ -221,6 +221,19 @@ public class Constant {
     public final static String TABLE_METERINFO1_STR_relaceOrAnd = "relaceOrAnd";
     /** 是否完成(扫描完) */
     public final static String TABLE_METERINFO1_STR_isFinish = "isFinish";
+    //----2017/09/04
+    /** 电表表脚封扣（条码） */
+    public final static String TABLE_METERINFO1_STR_meterFootNumbers = "meterFootNumbers";
+    /** 拍照图片的路径(电表表脚封扣) */
+    public final static String TABLE_METERINFO1_STR_meterFootPicPath = "meterFootPicPath";
+    /** 表箱封扣1（条码） */
+    public final static String TABLE_METERINFO1_STR_meterBodyNumbers1 = "meterBodyNumbers1";
+    /** 拍照图片的路径(表箱封扣1) */
+    public final static String TABLE_METERINFO1_STR_meterBodyPicPath1 = "meterBodyPicPath1";
+    /** 表箱封扣2（条码） */
+    public final static String TABLE_METERINFO1_STR_meterBodyNumbers2 = "meterBodyNumbers2";
+    /** 拍照图片的路径(表箱封扣2) */
+    public final static String TABLE_METERINFO1_STR_meterBodyPicPath2 = "meterBodyPicPath2";
 
     //-------------------------------------------------------------------------------
     /** 序号(数据库自动生成) */
@@ -306,7 +319,24 @@ public class Constant {
         /** 抄表区段 */
         theMeteringSection,
         /** 地址 */
-        addr
+        addr,
+        //----2017/09/04
+        /** 电表表脚封扣（条码） */
+        meterFootNumbers,
+        /** 拍照图片的路径(电表表脚封扣) */
+        meterFootPicPath,
+        /** 表箱封扣1（条码） */
+        meterBodyNumbers1,
+        /** 拍照图片的路径(表箱封扣1) */
+        meterBodyPicPath1,
+        /** 表箱封扣2（条码） */
+        meterBodyNumbers2,
+        /** 拍照图片的路径(表箱封扣2) */
+        meterBodyPicPath2,
+
+        /** 拍照图片的路径(集中器) */
+        picPath
+
     }
 
     //-------------------------------- 变压器 --------------------------------
@@ -322,7 +352,10 @@ public class Constant {
         /** 抄表区段 */
         theMeteringSection,
         /** 地址 */
-        addr
+        addr,
+
+        /** 拍照图片的路径(变压器) */
+        picPath
     }
 
 }

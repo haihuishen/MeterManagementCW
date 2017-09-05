@@ -369,7 +369,9 @@ public class POIExcelUtil {
 		String[] headers = new String[]{
 				"序号", "供电所", "台区名称", "用户编号", "用户名称", "用户地址", "计量点编号", "计量点地址",
 				"旧电能表资产编号", "旧电能表资产编号", "旧电能表止码", "旧电能表表地址",
-				"新电能表资产编号", "新电能表止码", "新电能表表地址", "II型采集器资产编号", "备注"
+				"新电能表资产编号", "新电能表止码", "新电能表表地址", "II型采集器资产编号",
+				"电表表脚封扣", "表箱封扣1", "表箱封扣2",
+				"备注"
 		};
 
 		HSSFWorkbook workbook = new HSSFWorkbook();				// 声明一个工作薄
@@ -395,7 +397,8 @@ public class POIExcelUtil {
 
 //0.序号 1.供电所	 2.台区名称 3.用户编号	 4.用户名称 5.用户地址 6.计量点编号 7.计量点地址
 //8.旧电能表资产编号 9.旧电能表资产编号 10.旧电能表止码 11.旧电能表表地址
-//12.新电能表资产编号 13.新电能表止码 14.新电能表表地址 15.II型采集器资产编号 16.备注
+//12.新电能表资产编号 13.新电能表止码 14.新电能表表地址 15.II型采集器资产编号
+//16.电表表脚封扣 17.表箱封扣1 18.表箱封扣2 19.备注
 
 			hssfRow = sheet.createRow(rowIndex);
 			setCellStyle(contentStyle, hssfRow, 0, rowIndex + "");						// 0.序号
@@ -439,7 +442,11 @@ public class POIExcelUtil {
 					if(bean.getRelaceOrAnd().equals("0"))
 						notes += "旧电能表地址与资产编码不匹配";
 
-				setCellStyle(contentStyle, hssfRow, 16, notes);								// 16.备注
+				setCellStyle(contentStyle, hssfRow, 16, bean.getMeterFootNumbers());		// 16.电表表脚封扣
+				setCellStyle(contentStyle, hssfRow, 17, bean.getMeterBodyNumbers1());		// 17.表箱封扣1
+				setCellStyle(contentStyle, hssfRow, 18, bean.getMeterBodyNumbers1());		// 18.表箱封扣2
+
+				setCellStyle(contentStyle, hssfRow, 19, notes);								// 19.备注
 			}else {
 
 				setCellStyle(contentStyle, hssfRow, 9, "");            	// 9.旧电能表资产编号
@@ -450,7 +457,13 @@ public class POIExcelUtil {
 				setCellStyle(contentStyle, hssfRow, 13, "");            // 13.新电能表止码
 				setCellStyle(contentStyle, hssfRow, 14, "");                    // 14.新电能表表地址
 
-				setCellStyle(contentStyle, hssfRow, 16, "");								// 16.备注
+				//16.电表表脚封扣 17.表箱封扣1 18.表箱封扣2 19.备注
+
+				setCellStyle(contentStyle, hssfRow, 16, "");								// 16.电表表脚封扣
+				setCellStyle(contentStyle, hssfRow, 17, "");								// 17.表箱封扣1
+				setCellStyle(contentStyle, hssfRow, 18, "");								// 18.表箱封扣2
+
+				setCellStyle(contentStyle, hssfRow, 19, "");								// 19.备注
 			}
 
 			rowIndex++;
@@ -465,6 +478,7 @@ public class POIExcelUtil {
 		String[] assetNumberTitle = { "无匹配的资产编号"};
 		// 生成表头内容
 		HSSFRow hssfRow1 = sheet1.createRow(0);					// 创建一行
+		hssfRow1.setHeight((short) (15.625 * 40));				// n为行高的像素数。
 		for (int i = 0; i < assetNumberTitle.length; i++) {
 			HSSFCell cell = hssfRow1.createCell(i);				// 这一行的第i列的单元格
 			cell.setCellStyle(headStyle);
@@ -485,9 +499,12 @@ public class POIExcelUtil {
 		HSSFSheet sheet2 = workbook.createSheet("集中器");		// 生成一个表格
 		sheet2.setDefaultColumnWidth(25);
 
-		String[] concentratorTitle = {"资产编号", "纬度", "经度", "抄表区段", "地址"};
+
+		String[] concentratorTitle = {"资产编号", "纬度", "经度", "抄表区段", "地址",
+				"电表表脚封扣", "表箱封扣1", "表箱封扣2"};
 		// 生成表头内容
 		HSSFRow hssfRow2 = sheet2.createRow(0);					// 创建一行
+		hssfRow2.setHeight((short) (15.625 * 40));				// n为行高的像素数。
 		for (int i = 0; i < concentratorTitle.length; i++) {
 			HSSFCell cell = hssfRow2.createCell(i);				// 这一行的第i列的单元格
 			cell.setCellStyle(headStyle);
@@ -504,6 +521,11 @@ public class POIExcelUtil {
 				setCellStyle(contentStyle, hssfRow2, 2, bean.getLongitude());        	// 经度
 				setCellStyle(contentStyle, hssfRow2, 3, bean.getTheMeteringSection());  // 抄表区段
 				setCellStyle(contentStyle, hssfRow2, 4, bean.getAddr());        		// 地址
+
+				setCellStyle(contentStyle, hssfRow2, 5, bean.getMeterFootNumbers());    // 电表表脚封扣
+				setCellStyle(contentStyle, hssfRow2, 6, bean.getMeterBodyNumbers1());   // 表箱封扣1
+				setCellStyle(contentStyle, hssfRow2, 7, bean.getMeterBodyNumbers1());   // 表箱封扣2
+
 				rowIndex++;
 			}
 		}
@@ -516,6 +538,7 @@ public class POIExcelUtil {
 		String[] transformerTitle = {"纬度", "经度", "抄表区段", "地址"};
 		// 生成表头内容
 		HSSFRow hssfRow3 = sheet3.createRow(0);					// 创建一行
+		hssfRow3.setHeight((short) (15.625 * 40));				// n为行高的像素数。
 		for (int i = 0; i < transformerTitle.length; i++) {
 			HSSFCell cell = hssfRow3.createCell(i);				// 这一行的第i列的单元格
 			cell.setCellStyle(headStyle);

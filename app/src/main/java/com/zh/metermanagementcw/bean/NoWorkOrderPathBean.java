@@ -14,6 +14,8 @@ public class NoWorkOrderPathBean {
 
     public static String ReplaceMeter = "换表" + File.separator;
     public static String NewCollector = "加装采集器" + File.separator;
+    public static String Concentrator = "集中器" + File.separator;
+    public static String Transformer = "变压器" + File.separator;
 
     public static String Photo = "图片" + File.separator;
     public static String ExportExcel = "导出Excel" + File.separator;
@@ -24,15 +26,18 @@ public class NoWorkOrderPathBean {
     /** 抄表区段/图片 */
     private String areaPhotoPath;
 
-
     /** 抄表区段/导出Excel */
     private String areaExportPath;
-
 
     /** 抄表区段/图片/换表 */
     private String replaceMeterPhotoPath;
     /** 抄表区段/图片/加装采集器 */
     private String newCollectorPhotoPath;
+
+    /** 抄表区段/图片/集中器 */
+    private String concentratorPhotoPath;
+    /** 抄表区段/图片/变压器 */
+    private String transformerPhotoPath;
 
 
     /** 抄表区段 */
@@ -72,13 +77,32 @@ public class NoWorkOrderPathBean {
     }
 
 
-    /** 抄表区段/加装采集器/图片 */
+    /** 抄表区段/图片/加装采集器 */
     public String getNewCollectorPhotoPath() {
         return newCollectorPhotoPath;
     }
-    /** 抄表区段/加装采集器/图片 */
+    /** 抄表区段/图片/加装采集器 */
     public void setNewCollectorPhotoPath(String newCollectorPhotoPath) {
         this.newCollectorPhotoPath = newCollectorPhotoPath;
+    }
+
+
+    /** 抄表区段/图片/集中器 */
+    public String getConcentratorPhotoPath() {
+        return concentratorPhotoPath;
+    }
+    /** 抄表区段/图片/集中器 */
+    public void setConcentratorPhotoPath(String concentratorPhotoPath) {
+        this.concentratorPhotoPath = concentratorPhotoPath;
+    }
+
+    /** 抄表区段/图片/变压器 */
+    public String getTransformerPhotoPath() {
+        return transformerPhotoPath;
+    }
+    /** 抄表区段/图片/变压器 */
+    public void setTransformerPhotoPath(String transformerPhotoPath) {
+        this.transformerPhotoPath = transformerPhotoPath;
     }
 
 
@@ -89,6 +113,8 @@ public class NoWorkOrderPathBean {
         FilesUtils.createFile(context, areaExportPath);
         FilesUtils.createFile(context, replaceMeterPhotoPath);
         FilesUtils.createFile(context, newCollectorPhotoPath);
+        FilesUtils.createFile(context, concentratorPhotoPath);
+        FilesUtils.createFile(context, transformerPhotoPath);
     }
 
 }

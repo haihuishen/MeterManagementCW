@@ -1,80 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:paddingTop="5dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/shen_sky_blue"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
         <LinearLayout
+            android:paddingTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/shen_sky_blue"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="集中器资产编号:"
+                        android:textColor="@android:color/black"
+                        android:textSize="14dp" />
+
+                    <com.zh.metermanagementcw.view.ClearEditText
+                        android:id="@+id/cet_concentratorAssetNumbers"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_et"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_concentratorAssetNumbers"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text="扫描\n输入"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/white"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/shen_sky_blue"
+                android:gravity="center"
+                android:padding="5dp"
                 android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="集中器资产编号："
-                    android:textColor="@android:color/black"
-                    android:textSize="13dp" />
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <com.zh.metermanagementcw.view.ClearEditText
-                    android:id="@+id/cet_concentratorAssetNumbers"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="电表表脚封扣:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_meterFootNumbersScan"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_meterFoot"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_meterFootPic"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_meterFootPicDelete"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraMeterFoot"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+                    <Button
+                        android:id="@+id/btn_meterFootNumbersScan"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_et"
-                    android:maxLines="1"
-                    android:padding="3dp"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="13dp" />
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表箱封扣1:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_meterBodyNumbersScan1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_meterBody1"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_meterBodyPic1"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_meterBodyPicDelete1"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraMeterBody1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_meterBodyNumbersScan1"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表箱封扣2:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_meterBodyNumbersScan2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_meterBody2"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_meterBodyPic2"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_meterBodyPicDelete2"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraMeterBody2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_meterBodyNumbersScan2"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_concentratorAssetNumbers"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/btn_bg_blue"
-                android:text="扫描\n输入"
-                android:textColor="@drawable/btn_text_color_blue_w"
-                android:textSize="12dp" />
-        </LinearLayout>
+            <LinearLayout
 
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/white"
-            android:visibility="gone"/>
-
-        <LinearLayout
-            android:layout_marginTop="50dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/tv_wait"
@@ -87,116 +364,178 @@
 
             </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="经度"
-                    android:textSize="13dp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/tv_longitude"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_et"
-                    android:textColor="@color/black"
-                    android:textSize="13dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="纬度"
-                    android:textSize="13dp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/tv_latitude"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_et"
-                    android:textColor="@color/black"
-                    android:textSize="13dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="10dp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/tv_addr"
-                android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="15dp"
-                android:minLines="1"
-                android:maxLines="3"
-                android:textColor="@color/black"/>
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="经度:"
+                        android:textSize="13dp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_longitude"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_et"
+                        android:textColor="@color/black"
+                        android:textSize="13dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="纬度:"
+                        android:textSize="13dp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_latitude"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_et"
+                        android:textColor="@color/black"
+                        android:textSize="13dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/tv_addr"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15dp"
+                    android:minLines="1"
+                    android:maxLines="3"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <Button
+                android:layout_marginTop="50dp"
+                android:id="@+id/btn_getLocation"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_bg_blue_white"
+                android:text="获取定位"
+                android:textColor="@android:color/black"
+                android:textSize="20dp"
+                android:visibility="gone"/>
+
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/shen_sky_blue"
+                android:gravity="center"
+                android:padding="5dp">
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:scrollbars="none"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btn_camera"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text="拍照"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp"
+
+                    />
+            </LinearLayout>
         </LinearLayout>
 
         <Button
-            android:layout_marginTop="50dp"
-            android:id="@+id/btn_getLocation"
-            android:layout_width="200dp"
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:background="@drawable/btn_bg_blue_white"
-            android:text="获取定位"
+            android:text="保\t存"
             android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:visibility="gone"/>
+            android:textSize="20dp" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_save"
+    <View
+        android:id="@+id/v_Masker"
+        android:visibility="gone"
+        android:background="#e0000000"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/btn_bg_blue_white"
-        android:text="保\t存"
-        android:textColor="@android:color/black"
-        android:textSize="20dp" />
+        android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#e0000000" />
+
+        <com.bm.library.PhotoView
+            android:id="@+id/img"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+</RelativeLayout>

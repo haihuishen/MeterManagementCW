@@ -111,6 +111,8 @@ public class SortDetailFragment extends BaseFragment<SortDetailPresenter, String
                         bean.setAreaExportPath(path + NoWorkOrderPathBean.ExportExcel);
                         bean.setReplaceMeterPhotoPath(path + NoWorkOrderPathBean.Photo + NoWorkOrderPathBean.ReplaceMeter);
                         bean.setNewCollectorPhotoPath(path + NoWorkOrderPathBean.Photo + NoWorkOrderPathBean.NewCollector);
+                        bean.setConcentratorPhotoPath(path + NoWorkOrderPathBean.Photo + NoWorkOrderPathBean.Concentrator);
+                        bean.setTransformerPhotoPath(path + NoWorkOrderPathBean.Photo + NoWorkOrderPathBean.Transformer);
 
                         bean.onCreate(getContext());
                         MyApplication.setNoWorkOrderPath(bean);

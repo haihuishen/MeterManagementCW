@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.View;
 
 /**
  * 数据库管理
@@ -11,24 +12,24 @@ import android.database.sqlite.SQLiteOpenHelper;
  * */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    /**
-     *
-     * @param context 	     上下文对象
-     * @param dbName 		数据库名称
-     * @param factory       游标结果集工厂，如果需要使用则需要自定义结果集工厂，null值代表使用默认结果集工厂
-     * @param version 	     数据库版本号，必须大于等于1
-     */
+	/**
+	 *
+	 * @param context 	     上下文对象
+	 * @param dbName 		数据库名称
+	 * @param factory       游标结果集工厂，如果需要使用则需要自定义结果集工厂，null值代表使用默认结果集工厂
+	 * @param version 	     数据库版本号，必须大于等于1
+	 */
 	private DatabaseHelper(Context context, String dbName, CursorFactory factory, int version) {
 		super(context, dbName, factory, version);
 	}
 
-    /**
-     *  新建数据库
-     *
-     * @param context 	     上下文对象
-     * @param dbName		数据库名称
-     * @param version	     数据库版本号，必须大于等于1
-     */
+	/**
+	 *  新建数据库
+	 *
+	 * @param context 	     上下文对象
+	 * @param dbName		数据库名称
+	 * @param version	     数据库版本号，必须大于等于1
+	 */
 	public DatabaseHelper(Context context, String dbName, int version) {
 		this(context, dbName, null, version); // this -->"私有的构造函数"
 
@@ -36,13 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	/**
 	 * 数据库第一次被调用时调用该方法，
-     *
-     * 	private DatabaseHelper dbHelper = null;
-     *  private SQLiteDatabase db = null;
-     * 		dbHelper = new DatabaseHelper(mContext, Constant.DB_NAME, dbVersion);
-     *      db = dbHelper.getWritableDatabase();        -----------> 这句调用时，此方法被调用
-     *
-     * 这里面主要进行对数据库的初始化操作
+	 *
+	 * 	private DatabaseHelper dbHelper = null;
+	 *  private SQLiteDatabase db = null;
+	 * 		dbHelper = new DatabaseHelper(mContext, Constant.DB_NAME, dbVersion);
+	 *      db = dbHelper.getWritableDatabase();        -----------> 这句调用时，此方法被调用
+	 *
+	 * 这里面主要进行对数据库的初始化操作
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -112,6 +113,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"meterPicPath varchar(500)," +								// 拍照图片的路径 (新装采集器对应的电表)
 				"meterContentPicPath varchar(500)," +						// 拍照图片的路径	(新装采集器)
 				"relaceOrAnd tinyint(1)," +									// 0:"换表"； 1："新装采集器"  -- 要先判断是否抄完
+
+				"meterFootNumbers varchar(500)," +							// 电表表脚封扣（条码）		 -- 2017/09/04
+				"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
+
+				"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）			 -- 2017/09/04
+				"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)	 -- 2017/09/04
+
+				"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）			 -- 2017/09/04
+				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)	 -- 2017/09/04
+
 				"isFinish tinyint(1))");									// 是否完成(扫描完)
 
 
@@ -148,7 +159,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"latitude varchar(50)," +									// 纬度
 				"longitude varchar(50)," +									// 经度
 				"theMeteringSection varchar(50)," +							// 抄表区段
-				"addr varchar(50))");										// 地址
+				"addr varchar(50)," +										// 地址
+
+				"meterFootNumbers varchar(500)," +							// 电表表脚封扣（条码）		 -- 2017/09/04
+				"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
+
+				"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）			 -- 2017/09/04
+				"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)	 -- 2017/09/04
+
+				"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）			 -- 2017/09/04
+				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)	 -- 2017/09/04
+
+				"picPath varchar(1000)" +									// 拍照图片的路径(集中器)		 -- 2017/09/04
+				")");
 
 		/** 变压器 */
 		db.execSQL("create table if not exists transformer(" +
@@ -156,40 +179,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"latitude varchar(50)," +									// 纬度
 				"longitude varchar(50)," +									// 经度
 				"theMeteringSection varchar(50)," +							// 抄表区段
-				"addr varchar(50))");										// 地址
+				"addr varchar(50)," +										// 地址
 
-    }
+				"picPath varchar(1000)" +									// 拍照图片的路径(变压器)		 -- 2017/09/04
+				")");
+
+	}
 
 
 
-    /**
-     * 数据库更新的时候调用该方法
-     * @param db 				当前操作的数据库对象
-     * @param oldVersion 		老版本号
-     * @param newVersion 		新版本号
-     */
+	/**
+	 * 数据库更新的时候调用该方法
+	 * @param db 				当前操作的数据库对象
+	 * @param oldVersion 		老版本号
+	 * @param newVersion 		新版本号
+	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		System.out.println("DBHelper onUpgrade");
 
 		String sql1,sql2,sql3,sql4,sql5,sql6;
+		String sql7,sql8,sql9,sql10,sql11,sql12;
+		String sql13,sql14;
+
 		try {
-            // // 备份数据库到SD卡的/aDBTest/DBTest.db
-            // CopyDBToSDCard.CopyDB(mContext);
+			// // 备份数据库到SD卡的/aDBTest/DBTest.db
+			// CopyDBToSDCard.CopyDB(mContext);
 			for (int i = oldVersion; i < newVersion; i++) {
 				switch (i) {
-				case 1:
+					case 1:
 //					sql1 = " ALTER TABLE sbinfo DROP COLUMN TableNumber";
 //
 //					sql2 = " ALTER TABLE sbinfo ADD COLUMN OldMeterNumber varchar(200) not null";
 //
 //					db.execSQL(sql1);
 //					db.execSQL(sql2);
-					//LogUtils.sysout("==========升级数据库", "");
-					break;
+						//LogUtils.sysout("==========升级数据库", "");
+						break;
 
-				default:
-					break;
+					case 4:								// 2017/09/05
+
+						sql1 = " ALTER TABLE meterinfo1 ADD COLUMN meterFootNumbers varchar(500)";
+						sql2 = " ALTER TABLE meterinfo1 ADD COLUMN meterFootPicPath varchar(500)";
+						sql3 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyNumbers1 varchar(500)";
+						sql4 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyPicPath1 varchar(500)";
+						sql5 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyNumbers2 varchar(500)";
+						sql6 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyPicPath2 varchar(500)";
+
+						sql7 = " ALTER TABLE concentrator ADD COLUMN meterFootNumbers varchar(500)";
+						sql8 = " ALTER TABLE concentrator ADD COLUMN meterFootPicPath varchar(500)";
+						sql9 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers1 varchar(500)";
+						sql10 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath1 varchar(500)";
+						sql11 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers2 varchar(500)";
+						sql12 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath2 varchar(500)";
+
+						sql13 = " ALTER TABLE concentrator ADD COLUMN picPath varchar(1000)";
+						sql14 = " ALTER TABLE transformer ADD COLUMN picPath varchar(1000)";
+
+						db.execSQL(sql1);
+						db.execSQL(sql2);
+						db.execSQL(sql3);
+						db.execSQL(sql4);
+						db.execSQL(sql5);
+						db.execSQL(sql6);
+						db.execSQL(sql7);
+						db.execSQL(sql8);
+						db.execSQL(sql9);
+						db.execSQL(sql10);
+						db.execSQL(sql11);
+						db.execSQL(sql12);
+						db.execSQL(sql13);
+						db.execSQL(sql14);
+
+						break;
+
+					default:
+						break;
 				}
 			}
 

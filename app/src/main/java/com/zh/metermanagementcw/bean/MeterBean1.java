@@ -58,7 +58,21 @@ public class MeterBean1 {
     /** 是否完成(扫描完) */
     private boolean isFinish;
 
+    //---- 2017/09/04
+    /** 电表表脚封扣（条码） */
+    private String meterFootNumbers;
+    /** 拍照图片的路径(电表表脚封扣) */
+    private String meterFootPicPath;
 
+    /** 表箱封扣1（条码） */
+    private String meterBodyNumbers1;
+    /** 拍照图片的路径(表箱封扣1) */
+    private String meterBodyPicPath1;
+
+    /** 表箱封扣2（条码） */
+    private String meterBodyNumbers2;
+    /** 拍照图片的路径(表箱封扣2) */
+    private String meterBodyPicPath2;
 
     //------------------------------------------------------------
 
@@ -278,6 +292,61 @@ public class MeterBean1 {
         this.relaceOrAnd = relaceOrAnd;
     }
 
+    //---- 2017/09/04
+    /** 电表表脚封扣（条码） */
+    public String getMeterFootNumbers() {
+        return meterFootNumbers;
+    }
+    /** 电表表脚封扣（条码） */
+    public void setMeterFootNumbers(String meterFootNumbers) {
+        this.meterFootNumbers = meterFootNumbers;
+    }
+
+    /** 拍照图片的路径(电表表脚封扣) */
+    public String getMeterFootPicPath() {
+        return meterFootPicPath;
+    }
+    /** 拍照图片的路径(电表表脚封扣) */
+    public void setMeterFootPicPath(String meterFootPicPath) {
+        this.meterFootPicPath = meterFootPicPath;
+    }
+
+    /** 表箱封扣1（条码） */
+    public String getMeterBodyNumbers1() {
+        return meterBodyNumbers1;
+    }
+    /** 表箱封扣1（条码） */
+    public void setMeterBodyNumbers1(String meterBodyNumbers1) {
+        this.meterBodyNumbers1 = meterBodyNumbers1;
+    }
+
+    /** 拍照图片的路径(表箱封扣1) */
+    public String getMeterBodyPicPath1() {
+        return meterBodyPicPath1;
+    }
+    /** 拍照图片的路径(表箱封扣1) */
+    public void setMeterBodyPicPath1(String meterBodyPicPath1) {
+        this.meterBodyPicPath1 = meterBodyPicPath1;
+    }
+
+    /** 表箱封扣2（条码） */
+    public String getMeterBodyNumbers2() {
+        return meterBodyNumbers2;
+    }
+    /** 表箱封扣2（条码） */
+    public void setMeterBodyNumbers2(String meterBodyNumbers2) {
+        this.meterBodyNumbers2 = meterBodyNumbers2;
+    }
+
+    /** 拍照图片的路径(表箱封扣2) */
+    public String getMeterBodyPicPath2() {
+        return meterBodyPicPath2;
+    }
+    /** 拍照图片的路径(表箱封扣2) */
+    public void setMeterBodyPicPath2(String meterBodyPicPath2) {
+        this.meterBodyPicPath2 = meterBodyPicPath2;
+    }
+
     @Override
     public String toString() {
         return "MeterBean1{" +
@@ -304,7 +373,16 @@ public class MeterBean1 {
                 ", meterPicPath='" + meterPicPath + '\'' +
                 ", meterContentPicPath='" + meterContentPicPath + '\'' +  "\n" +
                 ", relaceOrAnd=" + relaceOrAnd +
+
+                ", meterFootNumbers='" + meterFootNumbers + '\'' +  "\n" +
+                ", meterFootPicPath='" + meterFootPicPath + '\'' +
+                ", meterBodyNumbers1='" + meterBodyNumbers1 + '\'' +
+                ", meterBodyPicPath1='" + meterBodyPicPath1 + '\'' +
+                ", meterBodyNumbers2='" + meterBodyNumbers2 + '\'' +
+                ", meterBodyPicPath2='" + meterBodyPicPath2 + '\'' +  "\n" +
+
                 ", isFinish=" + isFinish +
                 '}';
     }
+
 }

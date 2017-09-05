@@ -48,9 +48,9 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by Administrator on 2017/8/4.
+ * 新装采集器
+ *
  */
-
 public class NewCollectorActivity1 extends BaseActivity implements View.OnClickListener {
 
     /** 拍照获取图片 -- 电表 */

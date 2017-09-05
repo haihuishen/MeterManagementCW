@@ -26,18 +26,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.5"
+                android:layout_weight="2.8"
                 android:background="@color/shen_sky_blue"
-
                 android:orientation="vertical">
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:padding="5dp">
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -56,9 +56,9 @@
 
                         <com.zh.metermanagementcw.view.ClearEditText
                             android:id="@+id/cet_oldAssetNumbers"
-                            android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:layout_marginTop="5dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_et"
                             android:maxLines="1"
@@ -85,9 +85,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="5dp">
+                    android:paddingRight="5dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -150,11 +150,12 @@
                             android:id="@+id/tv_userAddr"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text=""
                             android:maxLines="2"
+                            android:text=""
                             android:textColor="@android:color/black"
                             android:textSize="13dp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -180,26 +181,27 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@color/white" />
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="4dp"-->
+                <!--android:background="@color/white" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="5dp"
                 android:paddingBottom="5dp"
+                android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
@@ -225,33 +227,10 @@
                 </LinearLayout>
 
 
-
-                <Button
-                    android:id="@+id/btn_oldElectricity"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/btn_bg_blue"
-                    android:text="红外\n读取"
-                    android:textColor="@drawable/btn_text_color_blue_w"
-                    android:textSize="12dp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:background="@color/shen_sky_blue"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp"
-                android:paddingBottom="5dp"
-                android:paddingRight="5dp">
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -278,16 +257,15 @@
                 </LinearLayout>
 
 
-
                 <Button
+                    android:id="@+id/btn_oldElectricity"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/btn_bg_blue"
-                    android:text=""
+                    android:text="红外\n读取"
                     android:textColor="@drawable/btn_text_color_blue_w"
-                    android:textSize="12dp"
-                    android:visibility="invisible"/>
+                    android:textSize="12dp" />
             </LinearLayout>
 
             <View
@@ -298,7 +276,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"
+                android:layout_weight="1"
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -322,10 +300,10 @@
                         android:textSize="14dp" />
 
                     <com.zh.metermanagementcw.view.ClearEditText
-                        android:layout_marginTop="1dp"
                         android:id="@+id/cet_newAssetNumbersScan"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_et"
                         android:maxLines="1"
@@ -363,7 +341,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
 
@@ -386,8 +365,17 @@
                         android:textSize="13dp" />
 
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:layout_marginTop="5dp"
                         android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -419,9 +407,280 @@
                     android:text="红外\n读取"
                     android:textColor="@drawable/btn_text_color_blue_w"
                     android:textSize="12dp"
-                    android:visibility="invisible"/>
+                    android:visibility="invisible" />
             </LinearLayout>
 
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="4dp"-->
+                <!--android:background="@color/white" />-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:background="@color/shen_sky_blue"
+                android:gravity="center"
+                android:padding="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="电表表脚封扣:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_meterFootNumbersScan"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                    <RelativeLayout
+                        android:id="@+id/rlayout_meterFoot"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <com.bm.library.PhotoView
+                            android:id="@+id/pv_meterFootPic"
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitCenter" />
+
+                        <ImageView
+                            android:id="@+id/iv_meterFootPicDelete"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/reddelete" />
+                    </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraMeterFoot"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+                    <Button
+                        android:id="@+id/btn_meterFootNumbersScan"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表箱封扣1:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_meterBodyNumbersScan1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_meterBody1"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_meterBodyPic1"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_meterBodyPicDelete1"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraMeterBody1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+                    <Button
+                        android:id="@+id/btn_meterBodyNumbersScan1"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表箱封扣2:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_meterBodyNumbersScan2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_meterBody2"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_meterBodyPic2"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_meterBodyPicDelete2"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraMeterBody2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_meterBodyNumbersScan2"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -429,58 +688,59 @@
                 android:background="@color/white" />
 
             <LinearLayout
-                android:padding="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:background="@color/shen_sky_blue"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="5dp">
 
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_pic"
-                    android:layout_marginRight="10dp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:scrollbars="none"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/linearLayout_pv"
-                    android:layout_marginLeft="5dp"
-                    android:padding="2dp"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/bg_text_translucent"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
                     android:visibility="gone">
+
                     <com.bm.library.PhotoView
                         android:id="@+id/pv_image"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <View
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
+
                 <Button
                     android:id="@+id/btn_camera"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:text="拍照"
                     android:background="@drawable/btn_bg_blue"
+                    android:text="拍照"
                     android:textColor="@drawable/btn_text_color_blue_w"
                     android:textSize="12dp"
 
                     />
             </LinearLayout>
         </LinearLayout>
-
 
 
         <Button

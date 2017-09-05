@@ -17,6 +17,8 @@ public class TransformerBean {
     /** 地址 */
     private String addr;
 
+    /** 拍照图片的路径(变压器) */
+    private String picPath;
 
     /** 序号(数据库自动生成) */
     public String get_id() {
@@ -65,14 +67,25 @@ public class TransformerBean {
     }
 
 
+    /** 拍照图片的路径(变压器) */
+    public String getPicPath() {
+        return picPath;
+    }
+    /** 拍照图片的路径(变压器) */
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
+    }
+
+
     @Override
     public String toString() {
-        return "ConcentratorBean{" +
+        return "TransformerBean{" +
                 "_id='" + _id + '\'' +
                 ", latitude='" + latitude + '\'' +
                 ", longitude='" + longitude + '\'' +
                 ", theMeteringSection='" + theMeteringSection + '\'' +
                 ", addr='" + addr + '\'' +
+                ", picPath='" + picPath + '\'' +
                 '}';
     }
 }
