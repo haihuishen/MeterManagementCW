@@ -26,7 +26,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2.8"
+                android:layout_weight="2.9"
                 android:background="@color/shen_sky_blue"
                 android:orientation="vertical">
 
@@ -58,7 +58,7 @@
                             android:id="@+id/cet_oldAssetNumbers"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginTop="1dp"
                             android:layout_weight="1"
                             android:background="@drawable/bg_et"
                             android:maxLines="1"
@@ -83,9 +83,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:paddingBottom="5dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp">
 
@@ -193,7 +192,6 @@
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
@@ -280,7 +278,6 @@
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
@@ -334,7 +331,6 @@
                 android:background="@color/shen_sky_blue"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
@@ -421,7 +417,9 @@
                 android:layout_weight="3"
                 android:background="@color/shen_sky_blue"
                 android:gravity="center"
-                android:padding="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
                 android:orientation="vertical">
 
                 <LinearLayout

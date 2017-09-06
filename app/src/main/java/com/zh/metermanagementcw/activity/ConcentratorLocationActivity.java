@@ -1296,6 +1296,25 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
         public void onNext(@NonNull Long aLong) {
             //LogUtils.i(aLong>0? "添加成功" : "添加失败");
             showToast(aLong >0 ? "保存成功" : "保存失败");
+            if(aLong > 0){
+
+                mCEtConcentratorAssetNumbers.setText("");
+
+                //---------------------------------封扣---------------------------------------
+                mCEtMeterFootNumbersScan.setText("");
+                mRLayoutMeterFoot.setVisibility(View.GONE);
+                mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
+
+                mCEtMeterBodyNumbersScan1.setText("");
+                mRLayoutMeterBody1.setVisibility(View.GONE);
+                mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
+
+                mCEtMeterBodyNumbersScan2.setText("");
+                mRLayoutMeterBody2.setVisibility(View.GONE);
+                mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
+
+                mPicAdapter.clearPathList();
+            }
         }
 
 
@@ -1306,6 +1325,8 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
 
         @Override
         public void onComplete(){
+
+
 
         }
     };
