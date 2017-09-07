@@ -395,6 +395,9 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         @Override
         public void onNext(@NonNull List<MeterBean1> meterBeen) {
+
+            mTvTitle.setText("查询结果");
+
             if(meterBeen != null && meterBeen.size() > 0) {
                 mTbUpAndDowm.setChecked(false);
 //            for(MeterBean1 bean : meterBeen){
@@ -450,7 +453,6 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         @Override
         public void onComplete() {
-
             //closeDialog();
         }
     };

@@ -81,9 +81,14 @@ public class FinishedAdapter extends BaseAdapter {
 
         viewHold.tvOldAddr.setText(mBeanArrayList.get(position).getOldAddr());
         viewHold.tvOldElectricity.setText(mBeanArrayList.get(position).getOldElectricity());
+
+
         viewHold.tvNewAssetNumbersScan.setText(mBeanArrayList.get(position).getNewAssetNumbersScan());
         viewHold.tvNewAddr.setText(mBeanArrayList.get(position).getNewAddr());
         viewHold.tvNewElectricity.setText(mBeanArrayList.get(position).getNewElectricity());
+        viewHold.tvMeterFootNumbers.setText(mBeanArrayList.get(position).getMeterFootNumbers());
+        viewHold.tvMeterBodyNumbers1.setText(mBeanArrayList.get(position).getMeterBodyNumbers1());
+        viewHold.tvMeterBodyNumbers2.setText(mBeanArrayList.get(position).getMeterBodyNumbers2());
 
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
@@ -95,7 +100,9 @@ public class FinishedAdapter extends BaseAdapter {
         String collectorPath = "";
         if(mBeanArrayList.get(position).getRelaceOrAnd() !=null &&
                 mBeanArrayList.get(position).getRelaceOrAnd().equals("0")) {
-            viewHold.tvNewCollector.setVisibility(View.GONE);
+            //viewHold.tvNewCollector.setVisibility(View.GONE);
+            viewHold.lLayoutNewCollector.setVisibility(View.GONE);
+            viewHold.lLayoutNewMeter.setVisibility(View.VISIBLE);
             if (!TextUtils.isEmpty(mBeanArrayList.get(position).getPicPath())) {
                 path = mBeanArrayList.get(position).getPicPath();
 
@@ -104,10 +111,16 @@ public class FinishedAdapter extends BaseAdapter {
             viewHold.lLayoutPicCollector.setVisibility(View.GONE);
 
         }else {
+            viewHold.lLayoutNewCollector.setVisibility(View.VISIBLE);
+            viewHold.lLayoutNewMeter.setVisibility(View.GONE);
+
             viewHold.lLayoutPicCollector.setVisibility(View.VISIBLE);
             viewHold.rvPicCollector.setVisibility(View.VISIBLE);
             viewHold.tvNewCollector.setVisibility(View.VISIBLE);
             viewHold.tvNewCollector.setText(mBeanArrayList.get(position).getCollectorAssetNumbersScan());
+            viewHold.tvCollectorFootNumbers.setText(mBeanArrayList.get(position).getCollectorFootNumbers());
+            viewHold.tvCollectorBodyNumbers1.setText(mBeanArrayList.get(position).getCollectorBodyNumbers1());
+            viewHold.tvCollectorBodyNumbers2.setText(mBeanArrayList.get(position).getCollectorBodyNumbers2());
 
             if (!TextUtils.isEmpty(mBeanArrayList.get(position).getMeterPicPath())) {
                 path = mBeanArrayList.get(position).getMeterPicPath();
@@ -117,7 +130,9 @@ public class FinishedAdapter extends BaseAdapter {
                 LogUtils.i("mBeanArrayList.get(position).getCollectorAssetNumbersScan()" +
                         mBeanArrayList.get(position).getCollectorAssetNumbersScan() +
                 "\nbean.getCollectorNumbers()" + bean.getCollectorNumbers());
-                if(mBeanArrayList.get(position).getCollectorAssetNumbersScan().equals(bean.getCollectorNumbers())){
+                if(mBeanArrayList.get(position).getCollectorAssetNumbersScan() != null &&
+                        bean.getCollectorNumbers() != null &&
+                        mBeanArrayList.get(position).getCollectorAssetNumbersScan().equals(bean.getCollectorNumbers())){
                     collectorPath = bean.getCollectorPicPath();
                     if(!TextUtils.isEmpty(collectorPath)) {
                         viewHold.rvPicCollector.setLayoutManager(manager);
@@ -202,14 +217,36 @@ public class FinishedAdapter extends BaseAdapter {
         public TextView tvOldAddr;
         /** 旧表止码 */
         public TextView tvOldElectricity;
+
+        /** 新表 -- 包裹的布局 */
+        public LinearLayout lLayoutNewMeter;
         /** 新表资产编号 */
         public TextView tvNewAssetNumbersScan;
         /** 新表表地址 */
         public TextView tvNewAddr;
         /** 新表止码 */
         public TextView tvNewElectricity;
+
+        /** 电表表脚封扣 -- 文本 -- tv_meterFootNumbers*/
+        public TextView tvMeterFootNumbers;
+        /** 表箱封扣1 -- 文本 -- tv_meterBodyNumbers1*/
+        public TextView tvMeterBodyNumbers1;
+        /** 表箱封扣2 -- 文本 -- tv_meterBodyNumbers2*/
+        public TextView tvMeterBodyNumbers2;
+
+
+        /** 加装的采集器 -- 包裹的布局 */
+        public LinearLayout lLayoutNewCollector;
         /** 加装的采集器 */
         public TextView tvNewCollector;
+
+        /** 电表表脚封扣 -- 文本 -- tv_collectorFootNumbers*/
+        public TextView tvCollectorFootNumbers;
+        /** 表箱封扣1 -- 文本 -- tv_collectorBodyNumbers1*/
+        public TextView tvCollectorBodyNumbers1;
+        /** 表箱封扣2 -- 文本 -- tv_collectorBodyNumbers2*/
+        public TextView tvCollectorBodyNumbers2;
+        
 
 //        /** 图片 */
 //        public PhotoView pvItemImage;
@@ -231,13 +268,23 @@ public class FinishedAdapter extends BaseAdapter {
             tvOldAssetNumbers = (TextView) view.findViewById(R.id.tv_oldAssetNumbers);
             tvOldAddr = (TextView) view.findViewById(R.id.tv_oldAddr);
             tvOldElectricity = (TextView) view.findViewById(R.id.tv_oldElectricity);
+
+            lLayoutNewMeter = (LinearLayout) view.findViewById(R.id.lLayout_newMeter);
             tvNewAssetNumbersScan = (TextView) view.findViewById(R.id.tv_newAssetNumbersScan);
             tvNewAddr = (TextView) view.findViewById(R.id.tv_newAddr);
             tvNewElectricity = (TextView) view.findViewById(R.id.tv_newElectricity);
+            tvMeterFootNumbers = (TextView) view.findViewById(R.id.tv_meterFootNumbers);
+            tvMeterBodyNumbers1 = (TextView) view.findViewById(R.id.tv_meterBodyNumbers1);
+            tvMeterBodyNumbers2 = (TextView) view.findViewById(R.id.tv_meterBodyNumbers2);
+
+            lLayoutNewCollector = (LinearLayout) view.findViewById(R.id.lLayout_newCollector);
             tvNewCollector = (TextView) view.findViewById(R.id.tv_newCollector);
-            //pvItemImage = (PhotoView) view.findViewById(R.id.pv_item_image);
+            tvCollectorFootNumbers = (TextView) view.findViewById(R.id.tv_collectorFootNumbers);
+            tvCollectorBodyNumbers1 = (TextView) view.findViewById(R.id.tv_collectorBodyNumbers1);
+            tvCollectorBodyNumbers2 = (TextView) view.findViewById(R.id.tv_collectorBodyNumbers2);
+
             rvPic = (RecyclerView) view.findViewById(R.id.rv_pic);
-            lLayoutPicCollector = (LinearLayout) view.findViewById(R.id.lLayout_newCollector);
+            lLayoutPicCollector = (LinearLayout) view.findViewById(R.id.lLayout_newCollectorPic);
             rvPicCollector = (RecyclerView) view.findViewById(R.id.rv_pic_newCollector);
         }
 

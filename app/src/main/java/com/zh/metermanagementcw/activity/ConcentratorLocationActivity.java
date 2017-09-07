@@ -216,7 +216,8 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
         mBtnBack.setVisibility(View.VISIBLE);
         mBtnMenu.setVisibility(View.GONE);
 
-        mTvTitle.setText("集中器位置信息");
+        //mTvTitle.setText("集中器位置信息");
+        mTvTitle.setText("新装集中器");
     }
 
     @Override

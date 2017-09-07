@@ -218,66 +218,74 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                         if(cursor.getCount() != 0) {
                             if(cursor.moveToFirst()) {
                                 do{
-                                    MeterBean1 meterBean = new MeterBean1();
+                                    MeterBean1 bean = new MeterBean1();
 
                                     try {
 
-                                        meterBean.setUserNumber(getValue(cursor, Constant.TABLE_METERINFO1_STR_userNumber));
-                                        meterBean.setUserName(getValue(cursor, Constant.TABLE_METERINFO1_STR_userName));
-                                        meterBean.setUserAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_userAddr));
-                                        meterBean.setUserPhone(getValue(cursor, Constant.TABLE_METERINFO1_STR_userPhone));
-                                        meterBean.setMeasurementPointNumber(getValue(cursor, Constant.TABLE_METERINFO1_STR_measurementPointNumber));
-                                        meterBean.setPowerSupplyBureau(getValue(cursor, Constant.TABLE_METERINFO1_STR_powerSupplyBureau));
-                                        meterBean.setTheMeteringSection(getValue(cursor, Constant.TABLE_METERINFO1_STR_theMeteringSection));
-                                        meterBean.setCourts(getValue(cursor, Constant.TABLE_METERINFO1_STR_courts));
-                                        meterBean.setMeasuringPointAddress(getValue(cursor, Constant.TABLE_METERINFO1_STR_measuringPointAddress));
+                                        bean.setUserNumber(getValue(cursor, Constant.TABLE_METERINFO1_STR_userNumber));
+                                        bean.setUserName(getValue(cursor, Constant.TABLE_METERINFO1_STR_userName));
+                                        bean.setUserAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_userAddr));
+                                        bean.setUserPhone(getValue(cursor, Constant.TABLE_METERINFO1_STR_userPhone));
+                                        bean.setMeasurementPointNumber(getValue(cursor, Constant.TABLE_METERINFO1_STR_measurementPointNumber));
+                                        bean.setPowerSupplyBureau(getValue(cursor, Constant.TABLE_METERINFO1_STR_powerSupplyBureau));
+                                        bean.setTheMeteringSection(getValue(cursor, Constant.TABLE_METERINFO1_STR_theMeteringSection));
+                                        bean.setCourts(getValue(cursor, Constant.TABLE_METERINFO1_STR_courts));
+                                        bean.setMeasuringPointAddress(getValue(cursor, Constant.TABLE_METERINFO1_STR_measuringPointAddress));
 
-                                        meterBean.setOldAssetNumbers(getValue(cursor,Constant.TABLE_METERINFO1_STR_oldAssetNumbers));
-                                        meterBean.setOldAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldAddr));
+                                        bean.setOldAssetNumbers(getValue(cursor,Constant.TABLE_METERINFO1_STR_oldAssetNumbers));
+                                        bean.setOldAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldAddr));
                                         //------------------------
                                         String oldAddrAndAsset = cursor.getString(
                                                 cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_oldAddrAndAsset));
                                         if(StringUtils.isNotEmpty(oldAddrAndAsset) ) {
-                                            meterBean.setOldAddrAndAsset(oldAddrAndAsset.equals("1"));
+                                            bean.setOldAddrAndAsset(oldAddrAndAsset.equals("1"));
                                         }else {
-                                            meterBean.setOldAddrAndAsset(false);
+                                            bean.setOldAddrAndAsset(false);
                                         }
                                         //------------------------
-                                        meterBean.setOldElectricity(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldElectricity));
-                                        meterBean.setNewAddr(getValue(cursor,Constant.TABLE_METERINFO1_STR_newAddr));
+                                        bean.setOldElectricity(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldElectricity));
+                                        bean.setNewAddr(getValue(cursor,Constant.TABLE_METERINFO1_STR_newAddr));
                                         //------------------------
                                         String newAddrAndAsset = cursor.getString(
                                                 cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_newAddrAndAsset));
                                         if(StringUtils.isNotEmpty(newAddrAndAsset) ) {
-                                            meterBean.setNewAddrAndAsset(newAddrAndAsset.equals("1"));
+                                            bean.setNewAddrAndAsset(newAddrAndAsset.equals("1"));
                                         }else {
-                                            meterBean.setNewAddrAndAsset(false);
+                                            bean.setNewAddrAndAsset(false);
                                         }
                                         //------------------------
-                                        meterBean.setNewAssetNumbersScan(getValue(cursor,Constant.TABLE_METERINFO1_STR_newAssetNumbersScan));
-                                        meterBean.setNewElectricity(getValue(cursor,Constant.TABLE_METERINFO1_STR_newElectricity));
-                                        meterBean.setCollectorAssetNumbersScan(getValue(cursor,Constant.TABLE_METERINFO1_STR_collectorAssetNumbersScan));
-                                        meterBean.setTime(getValue(cursor,Constant.TABLE_METERINFO1_STR_time));
-                                        meterBean.setPicPath(getValue(cursor,Constant.TABLE_METERINFO1_STR_picPath));
-                                        meterBean.setMeterPicPath(getValue(cursor,Constant.TABLE_METERINFO1_STR_meterPicPath));
-                                        meterBean.setMeterContentPicPath(getValue(cursor,Constant.TABLE_METERINFO1_STR_meterContentPicPath));
-                                        meterBean.setRelaceOrAnd(getValue(cursor, Constant.TABLE_METERINFO1_STR_relaceOrAnd));
+                                        bean.setNewAssetNumbersScan(getValue(cursor,Constant.TABLE_METERINFO1_STR_newAssetNumbersScan));
+                                        bean.setNewElectricity(getValue(cursor,Constant.TABLE_METERINFO1_STR_newElectricity));
+                                        bean.setCollectorAssetNumbersScan(getValue(cursor,Constant.TABLE_METERINFO1_STR_collectorAssetNumbersScan));
+                                        bean.setTime(getValue(cursor,Constant.TABLE_METERINFO1_STR_time));
+                                        bean.setPicPath(getValue(cursor,Constant.TABLE_METERINFO1_STR_picPath));
+                                        bean.setMeterPicPath(getValue(cursor,Constant.TABLE_METERINFO1_STR_meterPicPath));
+                                        bean.setMeterContentPicPath(getValue(cursor,Constant.TABLE_METERINFO1_STR_meterContentPicPath));
+                                        bean.setRelaceOrAnd(getValue(cursor, Constant.TABLE_METERINFO1_STR_relaceOrAnd));
 
                                         //----2017/09/04
-                                        meterBean.setMeterFootNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterFootNumbers));
-                                        meterBean.setMeterFootPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterFootPicPath));
-                                        meterBean.setMeterBodyNumbers1(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyNumbers1));
-                                        meterBean.setMeterBodyPicPath1(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyPicPath1));
-                                        meterBean.setMeterBodyNumbers2(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyNumbers2));
-                                        meterBean.setMeterBodyPicPath2(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyPicPath2));
+                                        bean.setMeterFootNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterFootNumbers));
+                                        bean.setMeterFootPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterFootPicPath));
+                                        bean.setMeterBodyNumbers1(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyNumbers1));
+                                        bean.setMeterBodyPicPath1(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyPicPath1));
+                                        bean.setMeterBodyNumbers2(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyNumbers2));
+                                        bean.setMeterBodyPicPath2(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyPicPath2));
+
+                                        //----2017/09/06
+                                        bean.setCollectorFootNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorFootNumbers));
+                                        bean.setCollectorFootPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorFootPicPath));
+                                        bean.setCollectorBodyNumbers1(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyNumbers1));
+                                        bean.setCollectorBodyPicPath1(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyPicPath1));
+                                        bean.setCollectorBodyNumbers2(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyNumbers2));
+                                        bean.setCollectorBodyPicPath2(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyPicPath2));
 
                                         //------------------------
                                         String isFinish = cursor.getString(
                                                 cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_isFinish));
                                         if(StringUtils.isNotEmpty(isFinish) ) {
-                                            meterBean.setFinish(isFinish.equals("1"));
+                                            bean.setFinish(isFinish.equals("1"));
                                         }else {
-                                            meterBean.setFinish(false);
+                                            bean.setFinish(false);
                                         }
                                         //------------------------
 
@@ -286,7 +294,7 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                                     }
 
                                     //Log.i("shen", "nei:" + meterBean.toString());
-                                    beanList.add(meterBean);
+                                    beanList.add(bean);
 
                                 }while (cursor.moveToNext());
                             }
@@ -586,12 +594,18 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
                             if (count != 0) {
                                 if (cursor.moveToFirst()) {
-                                    bean.setCollectorNumbers(cursor.getString(
-                                            cursor.getColumnIndex(Constant.TABLE_COLLECTORNUMBER_STR_collectorNumbers)));
-                                    bean.setTheMeteringSection(cursor.getString(
-                                            cursor.getColumnIndex(Constant.TABLE_COLLECTORNUMBER_STR_theMeteringSection)));
-                                    bean.setCollectorPicPath(cursor.getString(
-                                            cursor.getColumnIndex(Constant.TABLE_COLLECTORNUMBER_STR_collectorPicPath)));
+                                    bean.setCollectorNumbers(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorNumbers));
+                                    bean.setTheMeteringSection(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_theMeteringSection));
+                                    bean.setCollectorPicPath(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorPicPath));
+
+                                    //----2017/09/06
+                                    bean.setCollectorFootNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorFootNumbers));
+                                    bean.setCollectorFootPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorFootPicPath));
+                                    bean.setCollectorBodyNumbers1(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyNumbers1));
+                                    bean.setCollectorBodyPicPath1(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyPicPath1));
+                                    bean.setCollectorBodyNumbers2(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyNumbers2));
+                                    bean.setCollectorBodyPicPath2(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyPicPath2));
+
                                 }
                             }
                         }
@@ -643,14 +657,19 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                                 if (cursor.moveToFirst()) {
                                     do{
                                         CollectorNumberBean bean = new CollectorNumberBean();
-                                        bean.setCollectorNumbers(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_COLLECTORNUMBER_STR_collectorNumbers)));
-                                        bean.setTheMeteringSection(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_COLLECTORNUMBER_STR_theMeteringSection)));
-                                        bean.setCollectorPicPath(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_COLLECTORNUMBER_STR_collectorPicPath)));
-                                        beanList.add(bean);
+                                        bean.setCollectorNumbers(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorNumbers));
+                                        bean.setTheMeteringSection(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_theMeteringSection));
+                                        bean.setCollectorPicPath(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorPicPath));
 
+                                        //----2017/09/06
+                                        bean.setCollectorFootNumbers(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorFootNumbers));
+                                        bean.setCollectorFootPicPath(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorFootPicPath));
+                                        bean.setCollectorBodyNumbers1(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorBodyNumbers1));
+                                        bean.setCollectorBodyPicPath1(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorBodyPicPath1));
+                                        bean.setCollectorBodyNumbers2(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorBodyNumbers2));
+                                        bean.setCollectorBodyPicPath2(getValue(cursor, Constant.TABLE_COLLECTORNUMBER_STR_collectorBodyPicPath2));
+
+                                        beanList.add(bean);
                                     }while (cursor.moveToNext());
                                 }
                             }
@@ -779,7 +798,7 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
     }
 
     @Override
-    public void addCollectorToMeterInfo(Observer observer, final String meteringSection, final String collectorNumber, List<MeterBean1> meterBean1List) {
+    public void addCollectorToMeterInfo(Observer observer, final String meteringSection, final CollectorNumberBean collectorNumberBean, List<MeterBean1> meterBean1List) {
 
 
         MeterBean1[] meterBean1arr = new MeterBean1[meterBean1List.size()];
@@ -795,7 +814,15 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                     public Long apply(@NonNull MeterBean1 meterBean1) throws Exception {
 
                         ContentValues values = new ContentValues();
-                        values.put("collectorAssetNumbersScan", collectorNumber);
+                        values.put("collectorAssetNumbersScan", collectorNumberBean.getCollectorNumbers());
+
+                        values.put("collectorFootNumbers", collectorNumberBean.getCollectorFootNumbers());
+                        values.put("collectorFootPicPath", collectorNumberBean.getCollectorFootPicPath());
+                        values.put("collectorBodyNumbers1", collectorNumberBean.getCollectorBodyNumbers1());
+                        values.put("collectorBodyPicPath1", collectorNumberBean.getCollectorBodyPicPath1());
+                        values.put("collectorBodyNumbers2", collectorNumberBean.getCollectorBodyNumbers2());
+                        values.put("collectorBodyPicPath2", collectorNumberBean.getCollectorBodyPicPath2());
+
                         values.put("relaceOrAnd", "1");         // 0:"换表"； 1："新装采集器" -- 要先判断是否抄完
                         values.put("meterPicPath", meterBean1.getMeterPicPath());
                         values.put("isFinish", true);
@@ -826,6 +853,14 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                         LogUtils.i("CollectorNumberBean:" + collectorNumberBean.toString());
 
                         ContentValues values = new ContentValues();
+
+                        values.put("collectorFootNumbers", collectorNumberBean.getCollectorFootNumbers());
+                        values.put("collectorFootPicPath", collectorNumberBean.getCollectorFootPicPath());
+                        values.put("collectorBodyNumbers1", collectorNumberBean.getCollectorBodyNumbers1());
+                        values.put("collectorBodyPicPath1", collectorNumberBean.getCollectorBodyPicPath1());
+                        values.put("collectorBodyNumbers2", collectorNumberBean.getCollectorBodyNumbers2());
+                        values.put("collectorBodyPicPath2", collectorNumberBean.getCollectorBodyPicPath2());
+
                         values.put("collectorNumbers", collectorNumberBean.getCollectorNumbers());
                         values.put("theMeteringSection", meteringSection);         // 0:"换表"； 1："新装采集器" -- 要先判断是否抄完
                         values.put("collectorPicPath", collectorNumberBean.getCollectorPicPath());
@@ -879,26 +914,33 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
         int i = 0;
         for(String set : conditionMap.keySet()){
+//            if(i == size-1){                                            // 最后一个
+//                if(set.equals("userNumber") || set.equals("userName")) {
+//                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+//                    selection += set + " like ?";
+//
+//                }else {
+//
+//                    selection += set + "=?";
+//                    selectionArgs[i] = conditionMap.get(set);
+//                }
+//            }else {
+//
+//                if(set.equals("userNumber") || set.equals("userName")) {
+//                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+//                    selection += set + " like ? and ";
+//
+//                }else {
+//                    selection += set + "=? and ";
+//                    selectionArgs[i] = conditionMap.get(set);
+//                }
+//            }
             if(i == size-1){                                            // 最后一个
-                if(set.equals("userNumber") || set.equals("userName")) {
-                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-                    selection += set + " like ?";
-
-                }else {
-
-                    selection += set + "=?";
-                    selectionArgs[i] = conditionMap.get(set);
-                }
+                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                selection += set + " like ?";
             }else {
-
-                if(set.equals("userNumber") || set.equals("userName")) {
-                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-                    selection += set + " like ? and ";
-
-                }else {
-                    selection += set + "=? and ";
-                    selectionArgs[i] = conditionMap.get(set);
-                }
+                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                selection += set + " like ? and ";
             }
 
             i++;
@@ -1574,26 +1616,33 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
         int i = 0;
         for(String set : conditionMap.keySet()){
+//            if(i == size-1){                                            // 最后一个
+//                if(set.equals("userNumber") || set.equals("userName")) {
+//                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+//                    selection += set + " like ?";
+//
+//                }else {
+//
+//                    selection += set + "=?";
+//                    selectionArgs[i] = conditionMap.get(set);
+//                }
+//            }else {
+//
+//                if(set.equals("userNumber") || set.equals("userName")) {
+//                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+//                    selection += set + " like ? and ";
+//
+//                }else {
+//                    selection += set + "=? and ";
+//                    selectionArgs[i] = conditionMap.get(set);
+//                }
+//            }
             if(i == size-1){                                            // 最后一个
-                if(set.equals("userNumber") || set.equals("userName")) {
-                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-                    selection += set + " like ?";
-
-                }else {
-
-                    selection += set + "=?";
-                    selectionArgs[i] = conditionMap.get(set);
-                }
+                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                selection += set + " like ?";
             }else {
-
-                if(set.equals("userNumber") || set.equals("userName")) {
-                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-                    selection += set + " like ? and ";
-
-                }else {
-                    selection += set + "=? and ";
-                    selectionArgs[i] = conditionMap.get(set);
-                }
+                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                selection += set + " like ? and ";
             }
 
             i++;

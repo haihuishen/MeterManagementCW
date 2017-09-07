@@ -1,33 +1,51 @@
 package com.zh.metermanagementcw.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.shen.sweetdialog.SweetAlertDialog;
 import com.zh.metermanagementcw.R;
+import com.zh.metermanagementcw.application.MyApplication;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.utils.CopyFileUtils;
 import com.zh.metermanagementcw.utils.FilesUtils;
+import com.zh.metermanagementcw.utils.GetDeviceIDUtil;
 import com.zh.metermanagementcw.utils.LogUtils;
+import com.zh.metermanagementcw.utils.POIExcelUtil;
 import com.zh.metermanagementcw.utils.ResourceUtil;
 import com.zh.metermanagementcw.utils.ShortCut;
+import com.zh.metermanagementcw.xml.PullSerialNumberParser;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 闪屏<p>
@@ -76,31 +94,89 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
                 startActivity(intent);
                 finish();
             }
-        }, 3000);
+        }, 4000);
 
         //在此调用下面方法，才能捕获到线程中的异常
         //Thread.setDefaultUncaughtExceptionHandler(this);
 
 
-
-
-        String sam = getDeviceNum();
-        Log.i("shen", "getDeviceNum():"+sam);
-
-        //sam = sam.toLowerCase();
-        //if (!sam.contains("kt45") || !sam.contains("c70sc")) {
-
-//        if (!sam.contains("C70SC")) {
+//        LogUtils.i("getDeviceId():" + GetDeviceIDUtil.getDeviceId(getApplicationContext()));
+//        LogUtils.i("getWLAN_MAC():" + GetDeviceIDUtil.getWLAN_MAC(getApplicationContext()));
+//        LogUtils.i("getBT_MAC():" + GetDeviceIDUtil.getBT_MAC());
+//
+//        //------------------------------------ 获取唯一标识 -------------------------------------------
+//        initSerialNumberXML("SerialNumber.xml");
+//        PullSerialNumberParser parser = new PullSerialNumberParser();
+//        try {
+//            parser.parser();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        boolean isZhDevice = false;
+//        String serialNumber = GetDeviceIDUtil.getSerialNumber();
+//        for(String s : MyApplication.getSerialNumberList()){
+//            LogUtils.i("serialNumber:" + serialNumber + "    s:" + s);
+//            if(serialNumber.equalsIgnoreCase(s)){
+//                isZhDevice = true;
+//                break;
+//            }
+//        }
+//
+//        if (isZhDevice) {
 //            Toast.makeText(this, "设备初始化失败！", Toast.LENGTH_SHORT).show();
 //
 //            //如果之前创建了Runnable对象,那么就把这任务移除
 //            if(runnable!=null){
 //                handler.removeCallbacks(runnable);
 //            }
-//            //type_finish();
-//            MyApplication.exitApp();
-//            //}
+//
+//            SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+//                    .setTitleText("提示")
+//                    .setContentText("设备初始化失败!")
+//                    .setConfirmText("确认")
+//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                            MyApplication.exitApp();
+//                            sweetAlertDialog.dismiss();
+//                        }
+//                    });
+//
+//
+//            dialog.setCancelable(false);
+//            dialog.show();
 //        }
+
+
+        String sam = GetDeviceIDUtil.getDeviceNum();
+        Log.i("shen", "getDeviceNum():"+sam);
+
+        //sam = sam.toLowerCase();
+        //if (!sam.contains("kt45") || !sam.contains("c70sc")) {
+
+        if (!sam.equalsIgnoreCase("ZH-E7")) {
+            //如果之前创建了Runnable对象,那么就把这任务移除
+            if(runnable!=null){
+                handler.removeCallbacks(runnable);
+            }
+
+            SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+                    .setTitleText("提示")
+                    .setContentText("设备初始化失败!")
+                    .setConfirmText("确认")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            MyApplication.exitApp();
+                            sweetAlertDialog.dismiss();
+                        }
+                    });
+
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
 
         FilesUtils.createFile(this, Constant.srcPathDir);
         FilesUtils.createFile(this, Constant.IMPORT_METER_INFO_PATH);
@@ -127,7 +203,6 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
         initSrc(Constant.DIRECTIONSFORUSEIMAGE_PATH, "no_preview_picture.png");
 
-        //       LogUtils.i("shen1234");
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            LogUtils.i("shen1");
 //            int checkSelfPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -168,31 +243,6 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 //        }
 
 
-
-//        if(!checkExcel()){
-//            //如果之前创建了Runnable对象,那么就把这任务移除
-//            if(runnable!=null){
-//                handler.removeCallbacks(runnable);
-//            }
-//
-//            SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-//                    .setTitleText("提示")
-//                    .setContentText("\'电表换装/导入数据源/换表导入文件/\'\n 无导入文件")
-//                    .setConfirmText("确认")
-//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                        @Override
-//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                            sweetAlertDialog.dismiss();
-//                            MyApplication.exitApp();
-//
-//                        }
-//                    });
-//
-//
-//            dialog.setCancelable(false);
-//            dialog.show();
-//
-//        }
 
 
         CopyFileUtils.copyFile(this.getDatabasePath(Constant.DB_NAME).getAbsolutePath(),
@@ -259,18 +309,51 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
     }
 
     private void initData() {
-        myCountDownTimer = new MyCountDownTimer(3000, 1000);
+        myCountDownTimer = new MyCountDownTimer(4000, 1000);
         myCountDownTimer.start();
 
-        //mTvCountDown.setEnabled(false);         // 设置不可点击跳转！
+        Observable.just("")
+                .observeOn(Schedulers.io())
+                .map(new Function<String, Boolean>() {
+                    @Override
+                    public Boolean apply(@io.reactivex.annotations.NonNull String s) throws Exception {
 
+                        // File Context.getFilesDir();
+                        // 该方法返回指向/data/data/<Package Name>/files/目录的一个File对象。
+                        for(int i=1; i<=45; i++) {
+                            File file;
+                            if ((file = new File(Constant.DIRECTIONSFORUSEIMAGE_PATH)).exists()) {                                      //  创建路径（文件夹）
+                                file.delete();
+                            }
+                            initSrc(Constant.DIRECTIONSFORUSEIMAGE_PATH , i + ".png");
+                            //initSrc(DIRECTIONSFORUSEIMAGE_PATH , i + ".png");
+                        }
 
-        // File Context.getFilesDir();
-        // 该方法返回指向/data/data/<Package Name>/files/目录的一个File对象。
-        for(int i=1; i<10; i++) {
-            initSrc(Constant.DIRECTIONSFORUSEIMAGE_PATH , i + ".png");
-            //initSrc(DIRECTIONSFORUSEIMAGE_PATH , i + ".png");
-        }
+                        return true;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Boolean>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(@io.reactivex.annotations.NonNull Boolean aBoolean) {
+
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
     }
 
@@ -308,23 +391,61 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
 
     /**
-     * 检查excel是否存在
+     * 拷贝数据库（xx.db）到files文件夹下
+     * <br>注1：只在第一次打开应用才拷贝,第二次会判断有没有这个数据库
+     * <br>注2：xx.db拷贝到工程目录assets目录下
+     * <br>拿到files文件夹：File files = getFilesDir();
+     * <br>如：复制后的data/data/com.shen.accountbook/files/xx.db"
+     *
+     * @param dbName	数据库名称
      */
-    private boolean checkExcel() {
-        if (!fileIsExists()) {
-            //Toast.makeText(getApplicationContext(), "import.xls文件不存在", Toast.LENGTH_SHORT).show();
-            return false;
+    private void initSerialNumberXML(String dbName) {
+        //1,在files文件夹下创建同名dbName数据库文件过程
+        File files = getFilesDir();
+        // 在files文件夹下生成一个"dbName名字"的文件
+        File file = new File(files, dbName);
+
+        // 如果"dbName名字的文件" 存在  （如第二次进入）
+        if(file.exists()){
+            //return;
+            file.delete();
+            file = new File(files, dbName);
         }
-        return true;
+
+        InputStream stream = null;
+        FileOutputStream fos = null;
+
+        //2,输入流读取assets目录下的文件
+        try {
+            // getAssets()拿到"资产目录"的文件夹（工程目录下的assets目录）
+            // ***打开"dbName名字的文件"    （拿到他的输入流）
+            stream = getAssets().open(dbName);
+
+            //3,将读取的内容写入到指定文件夹的文件中去
+            // ***拿到"file文件"的"输出流"
+            fos = new FileOutputStream(file);
+
+            //4,每次的读取内容大小
+            byte[] bs = new byte[1024];
+            int temp = -1;
+            while( (temp = stream.read(bs))!=-1){	// 將"输入流"（stream）读到"bs"
+                fos.write(bs, 0, temp);				// 將"bs"写到"fos"（输出流）
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            if(stream!=null && fos!=null){	// "流"非等于"null",说明没有关闭
+                try {
+                    // 关闭流
+                    stream.close();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-    /**
-     * 获取设备号
-     * @return
-     */
-    public String getDeviceNum() {
-        return android.os.Build.MODEL;
-    }
 
 
     /**

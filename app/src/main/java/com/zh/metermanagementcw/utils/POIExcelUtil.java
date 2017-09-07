@@ -370,7 +370,8 @@ public class POIExcelUtil {
 				"序号", "供电所", "台区名称", "用户编号", "用户名称", "用户地址", "计量点编号", "计量点地址",
 				"旧电能表资产编号", "旧电能表资产编号", "旧电能表止码", "旧电能表表地址",
 				"新电能表资产编号", "新电能表止码", "新电能表表地址", "II型采集器资产编号",
-				"电表表脚封扣", "表箱封扣1", "表箱封扣2",
+				"新电能表表脚封扣", "新电能表表箱封扣1", "新电能表表箱封扣2",
+				"采集器表脚封扣", "采集器表箱封扣1", "采集器表箱封扣2",
 				"备注"
 		};
 
@@ -398,7 +399,8 @@ public class POIExcelUtil {
 //0.序号 1.供电所	 2.台区名称 3.用户编号	 4.用户名称 5.用户地址 6.计量点编号 7.计量点地址
 //8.旧电能表资产编号 9.旧电能表资产编号 10.旧电能表止码 11.旧电能表表地址
 //12.新电能表资产编号 13.新电能表止码 14.新电能表表地址 15.II型采集器资产编号
-//16.电表表脚封扣 17.表箱封扣1 18.表箱封扣2 19.备注
+//16.新电能表电表表脚封扣 17.新电能表表箱封扣1 18.新电能表表箱封扣2
+//19.采集器表脚封扣 20.采集器表箱封扣1 21.采集器表箱封扣2 22.备注
 
 			hssfRow = sheet.createRow(rowIndex);
 			setCellStyle(contentStyle, hssfRow, 0, rowIndex + "");						// 0.序号
@@ -421,6 +423,15 @@ public class POIExcelUtil {
 					setCellStyle(contentStyle, hssfRow, 14, bean.getNewAddr());                    // 14.新电能表表地址
 
 					setCellStyle(contentStyle, hssfRow, 15, "");    // 15.II型采集器资产编号
+
+					setCellStyle(contentStyle, hssfRow, 16, bean.getMeterFootNumbers());		// 16.电表表脚封扣
+					setCellStyle(contentStyle, hssfRow, 17, bean.getMeterBodyNumbers1());		// 17.表箱封扣1
+					setCellStyle(contentStyle, hssfRow, 18, bean.getMeterBodyNumbers1());		// 18.表箱封扣2
+
+					setCellStyle(contentStyle, hssfRow, 19, "");	// 19.采集器电表表脚封扣
+					setCellStyle(contentStyle, hssfRow, 20, "");	// 20.采集器表箱封扣1
+					setCellStyle(contentStyle, hssfRow, 21, "");	// 21.采集器表箱封扣2
+
 				}else {
 					setCellStyle(contentStyle, hssfRow, 9, bean.getOldAssetNumbers());            // 9.旧电能表资产编号
 					setCellStyle(contentStyle, hssfRow, 10, "");            // 10.旧电能表止码
@@ -431,6 +442,14 @@ public class POIExcelUtil {
 					setCellStyle(contentStyle, hssfRow, 14, "");                    // 14.新电能表表地址
 
 					setCellStyle(contentStyle, hssfRow, 15, bean.getCollectorAssetNumbersScan());    // 15.II型采集器资产编号
+
+					setCellStyle(contentStyle, hssfRow, 16, "");								// 16.新电能表电表表脚封扣
+					setCellStyle(contentStyle, hssfRow, 17, "");								// 17.新电能表表箱封扣1
+					setCellStyle(contentStyle, hssfRow, 18, "");								// 18.新电能表表箱封扣2
+
+					setCellStyle(contentStyle, hssfRow, 19, bean.getCollectorFootNumbers());	// 19.采集器电表表脚封扣
+					setCellStyle(contentStyle, hssfRow, 20, bean.getCollectorBodyNumbers1());	// 20.采集器表箱封扣1
+					setCellStyle(contentStyle, hssfRow, 21, bean.getCollectorBodyNumbers1());	// 21.采集器表箱封扣2
 				}
 
 				// 旧电能表地址与资产编码不匹配。
@@ -442,11 +461,9 @@ public class POIExcelUtil {
 					if(bean.getRelaceOrAnd().equals("0"))
 						notes += "旧电能表地址与资产编码不匹配";
 
-				setCellStyle(contentStyle, hssfRow, 16, bean.getMeterFootNumbers());		// 16.电表表脚封扣
-				setCellStyle(contentStyle, hssfRow, 17, bean.getMeterBodyNumbers1());		// 17.表箱封扣1
-				setCellStyle(contentStyle, hssfRow, 18, bean.getMeterBodyNumbers1());		// 18.表箱封扣2
 
-				setCellStyle(contentStyle, hssfRow, 19, notes);								// 19.备注
+
+				setCellStyle(contentStyle, hssfRow, 22, notes);								// 19.备注
 			}else {
 
 				setCellStyle(contentStyle, hssfRow, 9, "");            	// 9.旧电能表资产编号
@@ -457,13 +474,18 @@ public class POIExcelUtil {
 				setCellStyle(contentStyle, hssfRow, 13, "");            // 13.新电能表止码
 				setCellStyle(contentStyle, hssfRow, 14, "");                    // 14.新电能表表地址
 
-				//16.电表表脚封扣 17.表箱封扣1 18.表箱封扣2 19.备注
+				//16.新电能表电表表脚封扣 17.新电能表表箱封扣1 18.新电能表表箱封扣2
+				//19.采集器表脚封扣 20.采集器表箱封扣1 21.采集器表箱封扣2 22.备注
 
-				setCellStyle(contentStyle, hssfRow, 16, "");								// 16.电表表脚封扣
-				setCellStyle(contentStyle, hssfRow, 17, "");								// 17.表箱封扣1
-				setCellStyle(contentStyle, hssfRow, 18, "");								// 18.表箱封扣2
+				setCellStyle(contentStyle, hssfRow, 16, "");								// 16.新电能表电表表脚封扣
+				setCellStyle(contentStyle, hssfRow, 17, "");								// 17.新电能表表箱封扣1
+				setCellStyle(contentStyle, hssfRow, 18, "");								// 18.新电能表表箱封扣2
 
-				setCellStyle(contentStyle, hssfRow, 19, "");								// 19.备注
+				setCellStyle(contentStyle, hssfRow, 19, "");								// 19.采集器表脚封扣
+				setCellStyle(contentStyle, hssfRow, 20, "");								// 20.采集器表箱封扣1
+				setCellStyle(contentStyle, hssfRow, 21, "");								// 21.采集器表箱封扣2
+
+				setCellStyle(contentStyle, hssfRow, 22, "");								// 19.备注
 			}
 
 			rowIndex++;

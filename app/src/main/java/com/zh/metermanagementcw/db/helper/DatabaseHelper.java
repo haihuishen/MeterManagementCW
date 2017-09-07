@@ -62,7 +62,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"_id integer primary key autoincrement," +
 				"collectorNumbers varchar(50) not null unique," +			// 采集器资产编码
 				"theMeteringSection varchar(50)," +							// 抄表区段
-				"collectorPicPath varchar(1000))");							// 采集器图片
+				"collectorPicPath varchar(1000)," +							// 采集器图片
+
+				"collectorFootNumbers varchar(500)," +						// (采集器)表脚封扣（条码）		 -- 2017/09/04
+				"collectorFootPicPath varchar(500)," +						// (采集器)拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
+
+				"collectorBodyNumbers1 varchar(500)," +						// (采集器)表箱封扣1（条码）			 -- 2017/09/04
+				"collectorBodyPicPath1 varchar(500)," +						// (采集器)拍照图片的路径(表箱封扣1)	 -- 2017/09/04
+
+				"collectorBodyNumbers2 varchar(500)," +						// (采集器)表箱封扣2（条码）			 -- 2017/09/04
+				"collectorBodyPicPath2 varchar(500)" +						// (采集器)拍照图片的路径(表箱封扣2)	 -- 2017/09/04
+
+
+				")");
 
 
 		/** 用户数据(表) */
@@ -114,14 +126,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"meterContentPicPath varchar(500)," +						// 拍照图片的路径	(新装采集器)
 				"relaceOrAnd tinyint(1)," +									// 0:"换表"； 1："新装采集器"  -- 要先判断是否抄完
 
-				"meterFootNumbers varchar(500)," +							// 电表表脚封扣（条码）		 -- 2017/09/04
-				"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
+				"meterFootNumbers varchar(500)," +							// （新电表）表脚封扣（条码）		 -- 2017/09/04
+				"meterFootPicPath varchar(500)," +							// （新电表）拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
 
-				"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）			 -- 2017/09/04
-				"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)	 -- 2017/09/04
+				"meterBodyNumbers1 varchar(500)," +							// （新电表）表箱封扣1（条码）			 -- 2017/09/04
+				"meterBodyPicPath1 varchar(500)," +							// （新电表）拍照图片的路径(表箱封扣1)	 -- 2017/09/04
 
-				"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）			 -- 2017/09/04
-				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)	 -- 2017/09/04
+				"meterBodyNumbers2 varchar(500)," +							// （新电表）表箱封扣2（条码）			 -- 2017/09/04
+				"meterBodyPicPath2 varchar(500)," +							// （新电表）拍照图片的路径(表箱封扣2)	 -- 2017/09/04
+
+
+				"collectorFootNumbers varchar(500)," +						// (采集器)表脚封扣（条码）		 -- 2017/09/04
+				"collectorFootPicPath varchar(500)," +						// (采集器)拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
+
+				"collectorBodyNumbers1 varchar(500)," +						// (采集器)表箱封扣1（条码）			 -- 2017/09/04
+				"collectorBodyPicPath1 varchar(500)," +						// (采集器)拍照图片的路径(表箱封扣1)	 -- 2017/09/04
+
+				"collectorBodyNumbers2 varchar(500)," +						// (采集器)表箱封扣2（条码）			 -- 2017/09/04
+				"collectorBodyPicPath2 varchar(500)," +						// (采集器)拍照图片的路径(表箱封扣2)	 -- 2017/09/04
 
 				"isFinish tinyint(1))");									// 是否完成(扫描完)
 
@@ -161,7 +183,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"theMeteringSection varchar(50)," +							// 抄表区段
 				"addr varchar(50)," +										// 地址
 
-				"meterFootNumbers varchar(500)," +							// 电表表脚封扣（条码）		 -- 2017/09/04
+				"meterFootNumbers varchar(500)," +							// 表脚封扣（条码）		 -- 2017/09/04
 				"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)	 -- 2017/09/04
 
 				"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）			 -- 2017/09/04
@@ -200,7 +222,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 		String sql1,sql2,sql3,sql4,sql5,sql6;
 		String sql7,sql8,sql9,sql10,sql11,sql12;
-		String sql13,sql14;
+		String sql13,sql14,sql15,sql16,sql17,sql18;
+		String sql19,sql20;
+		String sql21,sql22,sql23,sql24,sql25,sql26;
 
 		try {
 			// // 备份数据库到SD卡的/aDBTest/DBTest.db
@@ -226,15 +250,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 						sql5 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyNumbers2 varchar(500)";
 						sql6 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyPicPath2 varchar(500)";
 
-						sql7 = " ALTER TABLE concentrator ADD COLUMN meterFootNumbers varchar(500)";
-						sql8 = " ALTER TABLE concentrator ADD COLUMN meterFootPicPath varchar(500)";
-						sql9 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers1 varchar(500)";
-						sql10 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath1 varchar(500)";
-						sql11 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers2 varchar(500)";
-						sql12 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath2 varchar(500)";
 
-						sql13 = " ALTER TABLE concentrator ADD COLUMN picPath varchar(1000)";
-						sql14 = " ALTER TABLE transformer ADD COLUMN picPath varchar(1000)";
+						sql7 = " ALTER TABLE concentrator ADD COLUMN collectorFootNumbers varchar(500)";
+						sql8 = " ALTER TABLE concentrator ADD COLUMN collectorFootPicPath varchar(500)";
+						sql9 = " ALTER TABLE concentrator ADD COLUMN collectorBodyNumbers1 varchar(500)";
+						sql10 = " ALTER TABLE concentrator ADD COLUMN collectorBodyPicPath1 varchar(500)";
+						sql11 = " ALTER TABLE concentrator ADD COLUMN collectorBodyNumbers2 varchar(500)";
+						sql12 = " ALTER TABLE concentrator ADD COLUMN collectorBodyPicPath2 varchar(500)";
+
+						sql13 = " ALTER TABLE concentrator ADD COLUMN meterFootNumbers varchar(500)";
+						sql14 = " ALTER TABLE concentrator ADD COLUMN meterFootPicPath varchar(500)";
+						sql15 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers1 varchar(500)";
+						sql16 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath1 varchar(500)";
+						sql17 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers2 varchar(500)";
+						sql18 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath2 varchar(500)";
+
+						sql19 = " ALTER TABLE concentrator ADD COLUMN picPath varchar(1000)";
+						sql20 = " ALTER TABLE transformer ADD COLUMN picPath varchar(1000)";
+
+						sql21 = " ALTER TABLE collectornumber ADD COLUMN collectorFootNumbers varchar(500)";
+						sql22 = " ALTER TABLE collectornumber ADD COLUMN collectorFootPicPath varchar(500)";
+						sql23 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyNumbers1 varchar(500)";
+						sql24 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyPicPath1 varchar(500)";
+						sql25 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyNumbers2 varchar(500)";
+						sql26 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyPicPath2 varchar(500)";
+
 
 						db.execSQL(sql1);
 						db.execSQL(sql2);
@@ -250,6 +290,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 						db.execSQL(sql12);
 						db.execSQL(sql13);
 						db.execSQL(sql14);
+						db.execSQL(sql15);
+						db.execSQL(sql16);
+						db.execSQL(sql17);
+						db.execSQL(sql18);
+						db.execSQL(sql19);
+						db.execSQL(sql20);
+
+						db.execSQL(sql21);
+						db.execSQL(sql22);
+						db.execSQL(sql23);
+						db.execSQL(sql24);
+						db.execSQL(sql25);
+						db.execSQL(sql26);
 
 						break;
 

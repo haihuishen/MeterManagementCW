@@ -201,10 +201,10 @@ public interface TaskPresenter1 {
      *
      * @param observer
      * @param meteringSection       抄表区段
-     * @param collectorNumber       采集器资产编码
+     * @param collectorNumberBean   采集器 信息
      * @param meterBean1List        要添加到采集器的表 -- 列表
      */
-    void addCollectorToMeterInfo(Observer observer, String meteringSection, String collectorNumber, List<MeterBean1> meterBean1List);
+    void addCollectorToMeterInfo(Observer observer, String meteringSection, CollectorNumberBean collectorNumberBean, List<MeterBean1> meterBean1List);
 
     /**
      * 添加采集器 -- 到"所有采集器那张表"

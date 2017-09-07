@@ -14,8 +14,11 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bm.library.Info;
@@ -30,6 +33,7 @@ import com.zh.metermanagementcw.application.MyApplication;
 import com.zh.metermanagementcw.bean.CollectorNumberBean;
 import com.zh.metermanagementcw.bean.MeterBean1;
 import com.zh.metermanagementcw.config.Constant;
+import com.zh.metermanagementcw.utils.ExcelUtil;
 import com.zh.metermanagementcw.utils.FilesUtils;
 import com.zh.metermanagementcw.utils.ImageFactory;
 import com.zh.metermanagementcw.utils.LogUtils;
@@ -60,6 +64,13 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
 
     public static final int RESULT_OK = 1;
 
+    /** 拍照获取图片--电表表脚封扣*/
+    public static final int TAKE_PHOTO_METER_FOOT = 2001;
+    /** 拍照获取图片--表箱封扣1*/
+    public static final int TAKE_PHOTO_METER_BODY1 = 2002;
+    /** 拍照获取图片--表箱封扣2*/
+    public static final int TAKE_PHOTO_METER_BODY2 = 2003;
+
 
     /** 标题 */
     TextView mTvTitle;
@@ -73,6 +84,56 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
     /** 采集器编号 -- 按钮 */
     Button mBtnCollectorNumbers;
 
+
+    //-------------------------新表的封扣---------------------
+    /** 表脚封扣 -- 编辑框 -- cet_collectorFootNumbersScan*/
+    private ClearEditText mCEtCollectorFootNumbersScan;
+    /** 表脚封扣(扫描) -- 按钮 -- btn_collectorFootNumbersScan*/
+    private Button mBtnCollectorFootNumbersScan;
+
+    /** 表脚封扣 -- 布局 -- rlayout_collectorFoot */
+    private RelativeLayout mRLayoutCollectorFoot;
+    /** 表脚封扣(拍照后得到的照片) -- 图片 -- pv_collectorFootPic*/
+    private PhotoView mPvCameraCollectorFoot;
+    /** 表脚封扣(拍照后得到的照片的删除按钮) -- 按钮 -- iv_collectorFootPicDelete*/
+    private ImageView mIvCollectorFootPicDelete;
+
+    /** 表脚封扣(拍照) -- 图片按钮 -- ib_cameraCollectorFoot*/
+    private ImageButton mIBtnCameraCollectorFoot;
+
+
+
+    /** 表箱封扣1 -- 编辑框 -- cet_collectorBodyNumbersScan1*/
+    private ClearEditText mCEtCollectorBodyNumbersScan1;
+    /** 表箱封扣1(扫描) -- 按钮 -- btn_collectorBodyNumbersScan1*/
+    private Button mBtnCollectorBodyNumbersScan1;
+
+    /** 表箱封扣1 -- 布局 -- rlayout_collectorBody1 */
+    private RelativeLayout mRLayoutCollectorBody1;
+    /** 表箱封扣1(拍照后得到的照片) -- 图片 -- pv_collectorBodyPic1*/
+    private PhotoView mPvCameraCollectorBody1;
+    /** 表箱封扣1(拍照后得到的照片的删除按钮) -- 按钮 -- iv_collectorBodyPicDelete1*/
+    private ImageView mIvCollectorBodyPicDelete1;
+
+    /** 表箱封扣1(拍照) -- 图片按钮 -- ib_cameraCollectorBody1*/
+    private ImageButton mIBtnCameraCollectorBody1;
+
+
+
+    /** 表箱封扣2 -- 编辑框 -- cet_collectorBodyNumbersScan2*/
+    private ClearEditText mCEtCollectorBodyNumbersScan2;
+    /** 表箱封扣2(扫描) -- 按钮 -- btn_collectorBodyNumbersScan2*/
+    private Button mBtnCollectorBodyNumbersScan2;
+
+    /** 表箱封扣2 -- 布局 -- rlayout_collectorBody2 */
+    private RelativeLayout mRLayoutCollectorBody2;
+    /** 表箱封扣2(拍照后得到的照片) -- 图片 -- pv_collectorBodyPic2*/
+    private PhotoView mPvCameraCollectorBody2;
+    /** 表箱封扣2(拍照后得到的照片的删除按钮) -- 按钮 -- iv_collectorBodyPicDelete2*/
+    private ImageView mIvCollectorBodyPicDelete2;
+
+    /** 表箱封扣2(拍照) -- 图片按钮 -- ib_cameraCollectorBody2*/
+    private ImageButton mIBtnCameraCollectorBody2;
 
 
     //--------------------------扫描-------------------------
@@ -139,6 +200,8 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
 
     CollectorNumberBean mCollectorNumberBean = new CollectorNumberBean();
 
+
+    boolean isSaveSuccess = false;
     @Override
     public int getContentLayout() {
         return R.layout.activity_new_collector1;
@@ -173,6 +236,31 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
         mLvMeterContent = (ListView) findViewById(R.id.lv_meterContent);
 
         mBtnScan = (Button) findViewById(R.id.btn_scan);
+
+
+
+        mCEtCollectorFootNumbersScan = (ClearEditText) findViewById(R.id.cet_collectorFootNumbersScan);
+        mBtnCollectorFootNumbersScan = (Button) findViewById(R.id.btn_collectorFootNumbersScan);
+        mRLayoutCollectorFoot = (RelativeLayout) findViewById(R.id.rlayout_collectorFoot);
+        mPvCameraCollectorFoot = (PhotoView) findViewById(R.id.pv_collectorFootPic);
+        mIvCollectorFootPicDelete = (ImageView) findViewById(R.id.iv_collectorFootPicDelete);
+        mIBtnCameraCollectorFoot = (ImageButton) findViewById(R.id.ib_cameraCollectorFoot);
+
+        mCEtCollectorBodyNumbersScan1 = (ClearEditText) findViewById(R.id.cet_collectorBodyNumbersScan1);
+        mBtnCollectorBodyNumbersScan1 = (Button) findViewById(R.id.btn_collectorBodyNumbersScan1);
+        mRLayoutCollectorBody1 = (RelativeLayout) findViewById(R.id.rlayout_collectorBody1);
+        mPvCameraCollectorBody1 = (PhotoView) findViewById(R.id.pv_collectorBodyPic1);
+        mIvCollectorBodyPicDelete1 = (ImageView) findViewById(R.id.iv_collectorBodyPicDelete1);
+        mIBtnCameraCollectorBody1 = (ImageButton) findViewById(R.id.ib_cameraCollectorBody1);
+
+        mCEtCollectorBodyNumbersScan2 = (ClearEditText) findViewById(R.id.cet_collectorBodyNumbersScan2);
+        mBtnCollectorBodyNumbersScan2 = (Button) findViewById(R.id.btn_collectorBodyNumbersScan2);
+        mRLayoutCollectorBody2 = (RelativeLayout) findViewById(R.id.rlayout_collectorBody2);
+        mPvCameraCollectorBody2 = (PhotoView) findViewById(R.id.pv_collectorBodyPic2);
+        mIvCollectorBodyPicDelete2 = (ImageView) findViewById(R.id.iv_collectorBodyPicDelete2);
+        mIBtnCameraCollectorBody2 = (ImageButton) findViewById(R.id.ib_cameraCollectorBody2);
+
+
         mBtnSave = (Button) findViewById(R.id.btn_save);
 
         mBtnCamera = (Button) findViewById(R.id.btn_camera);
@@ -187,6 +275,22 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
     public void initListener() {
         mBtnCollectorNumbers.setOnClickListener(this);
 
+        mBtnCollectorFootNumbersScan.setOnClickListener(this);
+        mPvCameraCollectorFoot.setOnClickListener(this);
+        mIvCollectorFootPicDelete.setOnClickListener(this);
+        mIBtnCameraCollectorFoot.setOnClickListener(this);
+
+        mBtnCollectorBodyNumbersScan1.setOnClickListener(this);
+        mPvCameraCollectorBody1.setOnClickListener(this);
+        mIvCollectorBodyPicDelete1.setOnClickListener(this);
+        mIBtnCameraCollectorBody1.setOnClickListener(this);
+
+        mBtnCollectorBodyNumbersScan2.setOnClickListener(this);
+        mPvCameraCollectorBody2.setOnClickListener(this);
+        mIvCollectorBodyPicDelete2.setOnClickListener(this);
+        mIBtnCameraCollectorBody2.setOnClickListener(this);
+
+
         mBtnCamera.setOnClickListener(this);
         mPvBgImg.setOnClickListener(this);
 
@@ -200,6 +304,10 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
         mBtnCollectorNumbers.setEnabled(false);
         mBtnScan.setEnabled(false);
 
+        mBtnCollectorFootNumbersScan.setEnabled(false);
+        mBtnCollectorBodyNumbersScan1.setEnabled(false);
+        mBtnCollectorBodyNumbersScan2.setEnabled(false);
+
         //LogUtils.i("MyApplication.getCurrentMeteringSection():" + MyApplication.getCurrentMeteringSection());
 
         mMeterBeanList = new ArrayList<>();
@@ -210,6 +318,19 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
         taskPresenter1.readDbToBean(readObserver, MyApplication.getCurrentMeteringSection());
 
         mCEtCollectorNumbers.setEnabled(false);
+
+        //---------------------------------封扣---------------------------------------
+        mCEtCollectorFootNumbersScan.setText("");
+        mRLayoutCollectorFoot.setVisibility(View.GONE);
+        mIBtnCameraCollectorFoot.setVisibility(View.VISIBLE);
+
+        mCEtCollectorBodyNumbersScan1.setText("");
+        mRLayoutCollectorBody1.setVisibility(View.GONE);
+        mIBtnCameraCollectorBody1.setVisibility(View.VISIBLE);
+
+        mCEtCollectorBodyNumbersScan2.setText("");
+        mRLayoutCollectorBody2.setVisibility(View.GONE);
+        mIBtnCameraCollectorBody2.setVisibility(View.VISIBLE);
 
         //---------------------------------图片 采集器 ---------------------------------------
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -467,6 +588,11 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
 
         mBtnCollectorNumbers.setEnabled(false);
         mBtnScan.setEnabled(false);
+
+        mBtnCollectorFootNumbersScan.setEnabled(false);
+        mBtnCollectorBodyNumbersScan1.setEnabled(false);
+        mBtnCollectorBodyNumbersScan2.setEnabled(false);
+
         taskPresenter1.initBarcode2D(initBarcode2DSObserver, getContext(), mScanBack);
 
         if (requestCode == TAKE_PHOTO_METER) {                       // 拍照获取图片
@@ -511,13 +637,83 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
 
 
             }
+        }else if(requestCode == TAKE_PHOTO_METER_FOOT){                       // 拍照获取图片--电表表脚封扣
+            if (resultCode == Activity.RESULT_OK) {
+
+                try {
+                    ImageFactory.ratioAndGenThumb(Constant.CACHE_IMAGE_PATH + "CacheImage.jpg",
+                            mCurrentPicName, 1000, 1000, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (mCollectorNumberBean != null) {
+
+                    mRLayoutCollectorFoot.setVisibility(View.VISIBLE);
+                    mIBtnCameraCollectorFoot.setVisibility(View.GONE);
+
+                    mCollectorNumberBean.setCollectorFootPicPath(mCurrentPicName);
+                    mPvCameraCollectorFoot.setImageBitmap(ImageFactory.getBitmap(mCollectorNumberBean.getCollectorFootPicPath()));
+                    ExcelUtil.broadCreateFile(NewCollectorActivity1.this, new File(mCurrentPicName));
+                }
+            }
+
+        }else if(requestCode == TAKE_PHOTO_METER_BODY1){                       // 拍照获取图片--表箱封扣1
+            if (resultCode == Activity.RESULT_OK) {
+
+                try {
+                    ImageFactory.ratioAndGenThumb(Constant.CACHE_IMAGE_PATH + "CacheImage.jpg",
+                            mCurrentPicName, 1000, 1000, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (mCollectorNumberBean != null) {
+
+                    mRLayoutCollectorBody1.setVisibility(View.VISIBLE);
+                    mIBtnCameraCollectorBody1.setVisibility(View.GONE);
+
+                    mCollectorNumberBean.setCollectorBodyPicPath1(mCurrentPicName);
+                    mPvCameraCollectorBody1.setImageBitmap(ImageFactory.getBitmap(mCollectorNumberBean.getCollectorBodyPicPath1()));
+
+                    ExcelUtil.broadCreateFile(NewCollectorActivity1.this, new File(mCurrentPicName));
+                }
+            }
+
+        }else if(requestCode == TAKE_PHOTO_METER_BODY2){                       // 拍照获取图片--表箱封扣2
+            if (resultCode == Activity.RESULT_OK) {
+
+
+                try {
+                    ImageFactory.ratioAndGenThumb(Constant.CACHE_IMAGE_PATH + "CacheImage.jpg",
+                            mCurrentPicName, 1000, 1000, false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (mCollectorNumberBean != null) {
+
+                    mRLayoutCollectorBody2.setVisibility(View.VISIBLE);
+                    mIBtnCameraCollectorBody2.setVisibility(View.GONE);
+
+                    mCollectorNumberBean.setCollectorBodyPicPath2(mCurrentPicName);
+                    mPvCameraCollectorBody2.setImageBitmap(ImageFactory.getBitmap(mCollectorNumberBean.getCollectorBodyPicPath2()));
+
+                    ExcelUtil.broadCreateFile(NewCollectorActivity1.this, new File(mCurrentPicName));
+                }
+            }
+
         }
     }
 
     @Override
     public void onClick(View v) {
 
+        String collectorNumbers = mCEtCollectorNumbers.getText().toString().trim();
+
         Intent intent;
+        File file;
+        SweetAlertDialog dialog;
         switch (v.getId()) {
             case R.id.btn_back_left:
 
@@ -535,6 +731,21 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
                 mCollectorNumberBean.clean();
                 mMeterBeanListScan.clear();
 
+                //---------------------------------封扣---------------------------------------
+                mCEtCollectorFootNumbersScan.setText("");
+                mRLayoutCollectorFoot.setVisibility(View.GONE);
+                mIBtnCameraCollectorFoot.setVisibility(View.VISIBLE);
+
+                mCEtCollectorBodyNumbersScan1.setText("");
+                mRLayoutCollectorBody1.setVisibility(View.GONE);
+                mIBtnCameraCollectorBody1.setVisibility(View.VISIBLE);
+
+                mCEtCollectorBodyNumbersScan2.setText("");
+                mRLayoutCollectorBody2.setVisibility(View.GONE);
+                mIBtnCameraCollectorBody2.setVisibility(View.VISIBLE);
+
+                //-----------------------------------------------------------------------------
+
                 mCurrentScanBtnId = R.id.btn_collectorNumbers;
                 if(mBarcode2DWithSoft != null) {
                     mBarcode2DWithSoft.stopScan();
@@ -551,9 +762,255 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
                 break;
 
 
+
+
+            case R.id.btn_collectorFootNumbersScan:        // 电表表脚封扣(扫描) -- 按钮
+                if(StringUtils.isEmpty(collectorNumbers)){
+                    showToast("请输入--采集器资产编号");
+                    return;
+                }
+
+                mCurrentScanBtnId = R.id.btn_collectorFootNumbersScan;
+                mCEtCollectorFootNumbersScan.setText("");
+
+                if(mBarcode2DWithSoft != null) {
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.scan();                              //启动扫描
+                }
+                break;
+
+            case R.id.pv_collectorFootPic:                  // 电表表脚封扣(拍照后得到的照片) -- 图片
+                mInfo = mPvCameraCollectorFoot.getInfo();                   // 拿到pv_camaraPhoto的信息(如：位置)，用于动画
+                mBitmap = ImageFactory.getBitmap(mCollectorNumberBean.getCollectorFootPicPath());
+                mPvBgImg.setImageBitmap(mBitmap);
+                mIvBg.startAnimation(in);             // 执行动画
+                mIvBg.setVisibility(View.VISIBLE);
+                mLlayoutParent.setVisibility(View.VISIBLE);
+                mPvBgImg.animaFrom(mInfo);
+                setTitleIsShow(View.GONE);
+                break;
+            case R.id.iv_collectorFootPicDelete:            // 电表表脚封扣(拍照后得到的照片的删除按钮) -- 按钮
+
+                dialog = new SweetAlertDialog(NewCollectorActivity1.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("提示")
+                        .setContentText("是否删除该图片")
+                        .setConfirmText("是")
+                        .setCancelText("否")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                String path = mCollectorNumberBean.getCollectorFootPicPath();
+                                mCollectorNumberBean.setCollectorFootPicPath("");
+                                File file = new File(path);
+                                if(file.exists()){
+                                    file.delete();
+                                }
+                                ExcelUtil.broadCreateFile(NewCollectorActivity1.this, new File(path));
+
+                                mRLayoutCollectorFoot.setVisibility(View.GONE);
+                                mIBtnCameraCollectorFoot.setVisibility(View.VISIBLE);
+
+                                sweetAlertDialog.dismiss();
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+
+
+                dialog.show();
+
+                break;
+
+
+            case R.id.ib_cameraCollectorFoot:                                   // 表脚封扣(拍照) -- 图片按钮
+                if(StringUtils.isEmpty(collectorNumbers)){
+                    showToast("请输入--采集器资产编号");
+                    return;
+                }
+                mCurrentPicName = MyApplication.getNoWorkOrderPath().getNewCollectorPhotoPath()
+                        + collectorNumbers + "_表脚封扣.jpg";
+
+                if(mBarcode2DWithSoft!=null){
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.close();
+                    mBarcode2DWithSoft = null;
+                }
+
+                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                file = new File(Constant.CACHE_IMAGE_PATH + "CacheImage.jpg");  // 携带图片存放路径
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                startActivityForResult(intent, TAKE_PHOTO_METER_FOOT);
+
+                break;
+
+
+            case R.id.btn_collectorBodyNumbersScan1:        // 表箱封扣1(扫描) -- 按钮
+                if(StringUtils.isEmpty(collectorNumbers)){
+                    showToast("请输入--采集器资产编号");
+                    return;
+                }
+
+                mCurrentScanBtnId = R.id.btn_collectorBodyNumbersScan1;
+                mCEtCollectorBodyNumbersScan1.setText("");
+
+                if(mBarcode2DWithSoft != null) {
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.scan();                              //启动扫描
+                }
+                break;
+            case R.id.pv_collectorBodyPic1:                  // 表箱封扣1(拍照后得到的照片) -- 图片
+                mInfo = mPvCameraCollectorBody1.getInfo();                   // 拿到pv_camaraPhoto的信息(如：位置)，用于动画
+                mBitmap = ImageFactory.getBitmap(mCollectorNumberBean.getCollectorBodyPicPath1());
+                mPvBgImg.setImageBitmap(mBitmap);
+                mIvBg.startAnimation(in);             // 执行动画
+                mIvBg.setVisibility(View.VISIBLE);
+                mLlayoutParent.setVisibility(View.VISIBLE);
+                mPvBgImg.animaFrom(mInfo);
+                setTitleIsShow(View.GONE);
+                break;
+
+            case R.id.iv_collectorBodyPicDelete1:            // 表箱封扣1(拍照后得到的照片的删除按钮) -- 按钮
+                dialog = new SweetAlertDialog(NewCollectorActivity1.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("提示")
+                        .setContentText("是否删除该图片")
+                        .setConfirmText("是")
+                        .setCancelText("否")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                String path = mCollectorNumberBean.getCollectorBodyPicPath1();
+                                mCollectorNumberBean.setCollectorBodyPicPath1("");
+                                File file = new File(path);
+                                if(file.exists()){
+                                    file.delete();
+                                }
+                                ExcelUtil.broadCreateFile(NewCollectorActivity1.this, new File(path));
+
+                                mRLayoutCollectorBody1.setVisibility(View.GONE);
+                                mIBtnCameraCollectorBody1.setVisibility(View.VISIBLE);
+
+                                sweetAlertDialog.dismiss();
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+
+
+                dialog.show();
+                break;
+            case R.id.ib_cameraCollectorBody1:               // 表箱封扣1(拍照) -- 图片按钮
+                if(StringUtils.isEmpty(collectorNumbers)){
+                    showToast("请输入--采集器资产编号");
+                    return;
+                }
+
+                mCurrentPicName = MyApplication.getNoWorkOrderPath().getNewCollectorPhotoPath()
+                        + collectorNumbers + "_表箱封扣1.jpg";
+
+                if(mBarcode2DWithSoft!=null){
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.close();
+                    mBarcode2DWithSoft = null;
+                }
+
+                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                file = new File(Constant.CACHE_IMAGE_PATH + "CacheImage.jpg");  // 携带图片存放路径
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                startActivityForResult(intent, TAKE_PHOTO_METER_BODY1);
+                break;
+
+
+            case R.id.btn_collectorBodyNumbersScan2:        // 表箱封扣2(扫描) -- 按钮
+                if(StringUtils.isEmpty(collectorNumbers)){
+                    showToast("请输入--采集器资产编号");
+                    return;
+                }
+
+                mCurrentScanBtnId = R.id.btn_collectorBodyNumbersScan2;
+                mCEtCollectorBodyNumbersScan2.setText("");
+
+                if(mBarcode2DWithSoft != null) {
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.scan();                              //启动扫描
+                }
+                break;
+            case R.id.pv_collectorBodyPic2:                  // 表箱封扣2(拍照后得到的照片) -- 图片
+                mInfo = mPvCameraCollectorBody2.getInfo();                   // 拿到pv_camaraPhoto的信息(如：位置)，用于动画
+                mBitmap = ImageFactory.getBitmap(mCollectorNumberBean.getCollectorBodyPicPath2());
+                mPvBgImg.setImageBitmap(mBitmap);
+                mIvBg.startAnimation(in);             // 执行动画
+                mIvBg.setVisibility(View.VISIBLE);
+                mLlayoutParent.setVisibility(View.VISIBLE);
+                mPvBgImg.animaFrom(mInfo);
+                setTitleIsShow(View.GONE);
+                break;
+
+            case R.id.iv_collectorBodyPicDelete2:            // 表箱封扣2(拍照后得到的照片的删除按钮) -- 按钮
+                dialog = new SweetAlertDialog(NewCollectorActivity1.this, SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("提示")
+                        .setContentText("是否删除该图片")
+                        .setConfirmText("是")
+                        .setCancelText("否")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                String path = mCollectorNumberBean.getCollectorBodyPicPath2();
+                                mCollectorNumberBean.setCollectorBodyPicPath2("");
+                                File file = new File(path);
+                                if(file.exists()){
+                                    file.delete();
+                                }
+                                ExcelUtil.broadCreateFile(NewCollectorActivity1.this, new File(path));
+
+                                mRLayoutCollectorBody2.setVisibility(View.GONE);
+                                mIBtnCameraCollectorBody2.setVisibility(View.VISIBLE);
+
+                                sweetAlertDialog.dismiss();
+                            }
+                        })
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+
+
+                dialog.show();
+                break;
+            case R.id.ib_cameraCollectorBody2:               // 表箱封扣2(拍照) -- 图片按钮
+                if(StringUtils.isEmpty(collectorNumbers)){
+                    showToast("请输入--采集器资产编号");
+                    return;
+                }
+
+                mCurrentPicName = MyApplication.getNoWorkOrderPath().getNewCollectorPhotoPath()
+                        + collectorNumbers  + "_表箱封扣2.jpg";
+
+                if(mBarcode2DWithSoft!=null){
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.close();
+                    mBarcode2DWithSoft = null;
+                }
+
+                intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                file = new File(Constant.CACHE_IMAGE_PATH + "CacheImage.jpg");  // 携带图片存放路径
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                startActivityForResult(intent, TAKE_PHOTO_METER_BODY2);
+                break;
+
+
+
             case R.id.btn_camera:
 
-                String collectorNumbers = mCEtCollectorNumbers.getText().toString().trim();
                 if(!TextUtils.isEmpty(collectorNumbers)) {
                     int size = 0;
                     if(StringUtils.isEmpty(mCollectorNumberBean.getCollectorPicPath())){
@@ -580,7 +1037,7 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
                         LogUtils.i("mCurrentPicName:" + mCurrentPicName);
 
                         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        File file = new File(Constant.CACHE_IMAGE_PATH  + "CacheImage.jpg");  // 携带图片存放路径
+                        file = new File(Constant.CACHE_IMAGE_PATH  + "CacheImage.jpg");  // 携带图片存放路径
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                         startActivityForResult(intent, TAKE_PHOTO_COLLECTOR);
                     }
@@ -594,15 +1051,14 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
 
             case R.id.btn_save:                         // 保存
 
-                String strCollectorNumbers = mCEtCollectorNumbers.getText().toString().trim();
-
-                if(!TextUtils.isEmpty(strCollectorNumbers)) {
+                isSaveSuccess = false;
+                if(!TextUtils.isEmpty(collectorNumbers)) {
                     if(mMeterBeanListScan.size() != 0) {
 
                         showLoadingDialog("","正在保存数据...");
                         taskPresenter1.addCollectorToMeterInfo(saveCollectorToMeterInfoObserver,
                                 MyApplication.getCurrentMeteringSection(),
-                                strCollectorNumbers,
+                                mCollectorNumberBean,
                                 mMeterBeanListScan);
 
                     }else{
@@ -661,15 +1117,6 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
             if (length < 1) {
                 LogUtils.i("扫描失败");
                 mBeepManager.playError();
-                //showToast("扫描失败");
-//                if (length == -1) {
-//                    tvData.setText("Scan cancel");
-//                } else if (length == 0) {
-//                    tvData.setText("Scan TimeOut");
-//                } else {
-//                    Log.i(TAG,"Scan fail");
-//                    //Toast.makeText(MainActivity.this,"Scan fail",Toast.LENGTH_SHORT).show();
-//                }
             }else {
                 LogUtils.i("扫描成功");
                 String barCode = new String(bytes, 0, length);
@@ -744,9 +1191,20 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
                     }
 
 
+                }else if(mCurrentScanBtnId == R.id.btn_collectorFootNumbersScan){
+                    mBeepManager.playSuccessful();
+                    mCEtCollectorFootNumbersScan.setText(mScanDate);
+                    mCollectorNumberBean.setCollectorFootNumbers(mScanDate);
+                }else if(mCurrentScanBtnId == R.id.btn_collectorBodyNumbersScan1){
+                    mBeepManager.playSuccessful();
+                    mCEtCollectorBodyNumbersScan1.setText(mScanDate);
+                    mCollectorNumberBean.setCollectorBodyNumbers1(mScanDate);
+                }else if(mCurrentScanBtnId == R.id.btn_collectorBodyNumbersScan2){
+                    mBeepManager.playSuccessful();
+                    mCEtCollectorBodyNumbersScan2.setText(mScanDate);
+                    mCollectorNumberBean.setCollectorBodyNumbers2(mScanDate);
                 }
             }
-            //scaning=false;
         }
     }
 
@@ -781,6 +1239,10 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
         public void onComplete(){
             mBtnCollectorNumbers.setEnabled(true);
             mBtnScan.setEnabled(true);
+
+            mBtnCollectorFootNumbersScan.setEnabled(true);
+            mBtnCollectorBodyNumbersScan1.setEnabled(true);
+            mBtnCollectorBodyNumbersScan2.setEnabled(true);
         }
     };
 
@@ -834,6 +1296,8 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
             //LogUtils.i("aLong:" + aLong);
             //Log.i("shen", "保存情况：" + (aLong>0 ? "成功" : "失败"));
             //showToast("保存" + (aLong>0 ? "成功" : "失败"));
+            LogUtils.i("saveCollectorToMeterInfoObserver -- 保存情况：" + (aLong>0 ? "成功" : "失败"));
+            isSaveSuccess = aLong>0;
         }
 
         @Override
@@ -867,8 +1331,12 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
         @Override
         public void onNext(@NonNull Long aLong) {
             //LogUtils.i("aLong:" + aLong);
-            //Log.i("shen", "保存情况：" + (aLong>0 ? "成功" : "失败"));
+            LogUtils.i("saveCollectorToCollectorTableObserver -- 保存情况：" + (aLong>0 ? "成功" : "失败"));
             //showToast("保存" + (aLong>0 ? "成功" : "失败"));
+
+            isSaveSuccess = isSaveSuccess &&  aLong>0;
+
+            showToast("保存" + (isSaveSuccess ? "成功" : "失败"));
         }
 
         @Override
@@ -880,13 +1348,26 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
 
         @Override
         public void onComplete() {
-            showToast("保存成功");
+            //showToast("保存成功");
 
             mCEtCollectorNumbers.setText("");
             mPicAdapter.clearPathList();
             mMeterContentAdapter.clearPathList();
             mCollectorNumberBean.clean();
             mMeterBeanListScan.clear();
+
+            //---------------------------------封扣---------------------------------------
+            mCEtCollectorFootNumbersScan.setText("");
+            mRLayoutCollectorFoot.setVisibility(View.GONE);
+            mIBtnCameraCollectorFoot.setVisibility(View.VISIBLE);
+
+            mCEtCollectorBodyNumbersScan1.setText("");
+            mRLayoutCollectorBody1.setVisibility(View.GONE);
+            mIBtnCameraCollectorBody1.setVisibility(View.VISIBLE);
+
+            mCEtCollectorBodyNumbersScan2.setText("");
+            mRLayoutCollectorBody2.setVisibility(View.GONE);
+            mIBtnCameraCollectorBody2.setVisibility(View.VISIBLE);
 
             closeDialog();
         }
@@ -923,24 +1404,62 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
         @Override
         public void onComplete() {
 
-                if(StringUtils.isEmpty(mCollectorNumberBean.getCollectorPicPath())){
-                    mPhotoIndex = 1;
-                }else {
-                    String path = mCollectorNumberBean.getCollectorPicPath();
-                    for(String tempPath : path.split(",")){
-                        if(!(new File(tempPath).exists())){
-                            path = StringUtils.deleteSubStr(path, tempPath);
-                        }
+            if(StringUtils.isEmpty(mCollectorNumberBean.getCollectorPicPath())){
+                mPhotoIndex = 1;
+            }else {
+                String path = mCollectorNumberBean.getCollectorPicPath();
+                for(String tempPath : path.split(",")){
+                    if(!(new File(tempPath).exists())){
+                        path = StringUtils.deleteSubStr(path, tempPath);
                     }
-                    mCollectorNumberBean.setCollectorPicPath(path);
-                    if(StringUtils.isNotEmpty(mCollectorNumberBean.getCollectorPicPath())) {
-                        try {
-                            mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
-                        } catch (Exception e) {
-                        }
-                    }
-                    mPicAdapter.setPathList(mCollectorNumberBean.getCollectorPicPath());
                 }
+                mCollectorNumberBean.setCollectorPicPath(path);
+                if(StringUtils.isNotEmpty(mCollectorNumberBean.getCollectorPicPath())) {
+                    try {
+                        mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
+                    } catch (Exception e) {
+                    }
+                }
+                mPicAdapter.setPathList(mCollectorNumberBean.getCollectorPicPath());
+            }
+
+            //---------------------------------封扣---------------------------------------
+
+            mCEtCollectorFootNumbersScan.setText(mCollectorNumberBean.getCollectorFootNumbers());
+            mCEtCollectorBodyNumbersScan1.setText(mCollectorNumberBean.getCollectorBodyNumbers1());
+            mCEtCollectorBodyNumbersScan2.setText(mCollectorNumberBean.getCollectorBodyNumbers2());
+
+            if(StringUtils.isNotEmpty(mCollectorNumberBean.getCollectorFootPicPath()) &&
+                    new File(mCollectorNumberBean.getCollectorFootPicPath()).exists() ){
+                mPvCameraCollectorFoot.setImageBitmap(ImageFactory.getBitmap(mCollectorNumberBean.getCollectorFootPicPath()));
+                mRLayoutCollectorFoot.setVisibility(View.VISIBLE);
+                mIBtnCameraCollectorFoot.setVisibility(View.GONE);
+            }else {
+                mRLayoutCollectorFoot.setVisibility(View.GONE);
+                mIBtnCameraCollectorFoot.setVisibility(View.VISIBLE);
+            }
+
+            if(StringUtils.isNotEmpty(mCollectorNumberBean.getCollectorBodyPicPath1()) &&
+                    new File(mCollectorNumberBean.getCollectorBodyPicPath1()).exists() ){
+                mPvCameraCollectorBody1.setImageBitmap(ImageFactory.getBitmap(mCollectorNumberBean.getCollectorBodyPicPath1()));
+                mRLayoutCollectorBody1.setVisibility(View.VISIBLE);
+                mIBtnCameraCollectorBody1.setVisibility(View.GONE);
+            }else {
+                mRLayoutCollectorBody1.setVisibility(View.GONE);
+                mIBtnCameraCollectorBody1.setVisibility(View.VISIBLE);
+            }
+
+            if(StringUtils.isNotEmpty(mCollectorNumberBean.getCollectorBodyPicPath2()) &&
+                    new File(mCollectorNumberBean.getCollectorBodyPicPath2()).exists() ){
+                mPvCameraCollectorBody2.setImageBitmap(ImageFactory.getBitmap(mCollectorNumberBean.getCollectorBodyPicPath2()));
+                mRLayoutCollectorBody2.setVisibility(View.VISIBLE);
+                mIBtnCameraCollectorBody2.setVisibility(View.GONE);
+            }else {
+                mRLayoutCollectorBody2.setVisibility(View.GONE);
+                mIBtnCameraCollectorBody2.setVisibility(View.VISIBLE);
+            }
+
+
 
             //closeDialog();
             taskPresenter1.readDbToBeanForCollector(getMeterInfoForCollctorObserver,

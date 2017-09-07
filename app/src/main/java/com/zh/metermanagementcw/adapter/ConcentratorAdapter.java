@@ -63,6 +63,10 @@ public class ConcentratorAdapter extends BaseAdapter {
         viewHold.tvLongitude.setText(mBeanArrayList.get(position).getLongitude());
         viewHold.tvAddr.setText(mBeanArrayList.get(position).getAddr());
 
+        viewHold.tvMeterFootNumbers.setText(mBeanArrayList.get(position).getMeterFootNumbers());
+        viewHold.tvMeterBodyNumbers1.setText(mBeanArrayList.get(position).getMeterBodyNumbers1());
+        viewHold.tvMeterBodyNumbers2.setText(mBeanArrayList.get(position).getMeterBodyNumbers2());
+
         return convertView;
     }
 
@@ -78,6 +82,13 @@ public class ConcentratorAdapter extends BaseAdapter {
         /** 地址 */
         public TextView tvAddr;
 
+        /** 电表表脚封扣 -- 文本 -- tv_meterFootNumbers*/
+        public TextView tvMeterFootNumbers;
+        /** 表箱封扣1 -- 文本 -- tv_meterBodyNumbers1*/
+        public TextView tvMeterBodyNumbers1;
+        /** 表箱封扣2 -- 文本 -- tv_meterBodyNumbers2*/
+        public TextView tvMeterBodyNumbers2;
+
 
         public ViewHold(View view) {
 
@@ -85,6 +96,10 @@ public class ConcentratorAdapter extends BaseAdapter {
             tvLatitude = (TextView) view.findViewById(R.id.tv_latitude);
             tvLongitude = (TextView) view.findViewById(R.id.tv_longitude);
             tvAddr = (TextView) view.findViewById(R.id.tv_addr);
+
+            tvMeterFootNumbers = (TextView) view.findViewById(R.id.tv_meterFootNumbers);
+            tvMeterBodyNumbers1 = (TextView) view.findViewById(R.id.tv_meterBodyNumbers1);
+            tvMeterBodyNumbers2 = (TextView) view.findViewById(R.id.tv_meterBodyNumbers2);
 
         }
 

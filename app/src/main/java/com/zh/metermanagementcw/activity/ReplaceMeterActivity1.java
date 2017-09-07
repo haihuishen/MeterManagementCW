@@ -295,20 +295,11 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
             switch (msg.what) {
                 case BROAD_READMETER_FAIL: 												// 抄表失败
                     mBeepManager.playError();
-                    //promptTone();
                     showToast("抄表失败");
                     String fallMessage = "";
 
                     if(mCurrentReadBtnId == R.id.btn_oldElectricity){
-//                        String oldAddr = mCEtOldAddr.getText().toString().trim();
-//                        String oldElectricity = mCEtOldElectricity.getText().toString().trim();
-//                        if(TextUtils.isEmpty(oldAddr)){
-//                            fallMessage = "\n是否要手工输入表地址";
-//                            mDialogType = DialogType_oldAddrIsEmpty;
-//                        }else {
-//                            fallMessage = "\n是否要手工输入电表止码";
-//                            mDialogType = DialogType_oldAddrIsNotEmpty;
-//                        }
+
                         SweetAlertDialog dialog = new SweetAlertDialog(ReplaceMeterActivity1.this, SweetAlertDialog.NORMAL_TYPE)
                                 .setTitleText("提示")
                                 .setContentText("抄表失败是否要手工输入")
@@ -359,7 +350,6 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 
                 case BROAD_READMETER_SUCCESS: 											// 抄表成功
 
-                    //promptTone();                                            // 发出声音 -- 提示音
                     String[] datas = (String[]) msg.obj;					 // 刚刚抄表得到的数据
 
                     LogUtils.i("广播抄表结果 -- \n"
@@ -1423,12 +1413,20 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 //                "oldAssetNumbers.substring(oldAssetNumbers.length() - 5, oldAssetNumbers.length())"+
 //                        oldAssetNumbers.substring(oldAssetNumbers.length() - 5, oldAssetNumbers.length()));
 
+        if(oldAddr.length()<= 5){
+            while (oldAddr.length()> 5){
+                oldAddr = "0" + oldAddr;
+            }
+        }
+
         if(oldAssetNumbers.length() > 5 && oldAddr.length()>5) {
             if (!oldAddr.substring(oldAddr.length() - 5, oldAddr.length()).equals(
                     oldAssetNumbers.substring(oldAssetNumbers.length() - 5, oldAssetNumbers.length()))) {
                 mMeterBean.setOldAddrAndAsset(true);
                 LogUtils.i("不同");
             }
+        }else{
+            mMeterBean.setOldAddrAndAsset(true);
         }
 
 //        if(newAssetNumbersScan.length() > 5 && newAddr.length()>5) {

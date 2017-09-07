@@ -448,6 +448,9 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
         public void onNext(@NonNull List<CollectorNumberBean> collectorNumberBeen) {
             mCollectorNumberBeanList = (ArrayList<CollectorNumberBean>) collectorNumberBeen;
 
+            LogUtils.i("mCollectorNumberBeanList.size()" +
+                    (mCollectorNumberBeanList != null ? mCollectorNumberBeanList.size() : "null"));
+
             if(mFinishedAdapter!=null){
                 mFinishedAdapter.setCollectorNumberBeanList(mCollectorNumberBeanList);
             }

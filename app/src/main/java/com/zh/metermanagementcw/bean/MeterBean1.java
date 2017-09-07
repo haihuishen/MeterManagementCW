@@ -29,7 +29,7 @@ public class MeterBean1 {
 
     /** 旧表表地址(需扫描) */
     private String oldAddr;
-    /** 旧表表地址 和 资产编码 比较 */
+    /** 旧表表地址 和 资产编码 比较  -- ture:不同 false:相同*/
     private boolean oldAddrAndAsset;
     /** 旧电能表止码-电量(需扫描) */
     private String oldElectricity;
@@ -59,20 +59,36 @@ public class MeterBean1 {
     private boolean isFinish;
 
     //---- 2017/09/04
-    /** 电表表脚封扣（条码） */
+    /** (新电表)电表表脚封扣（条码） */
     private String meterFootNumbers;
-    /** 拍照图片的路径(电表表脚封扣) */
+    /** (新电表)拍照图片的路径(电表表脚封扣) */
     private String meterFootPicPath;
 
-    /** 表箱封扣1（条码） */
+    /** (新电表)表箱封扣1（条码） */
     private String meterBodyNumbers1;
-    /** 拍照图片的路径(表箱封扣1) */
+    /** (新电表)拍照图片的路径(表箱封扣1) */
     private String meterBodyPicPath1;
 
-    /** 表箱封扣2（条码） */
+    /** (新电表)表箱封扣2（条码） */
     private String meterBodyNumbers2;
-    /** 拍照图片的路径(表箱封扣2) */
+    /** (新电表)拍照图片的路径(表箱封扣2) */
     private String meterBodyPicPath2;
+
+    //---- 2017/09/06
+    /** (采集器)电表表脚封扣（条码） */
+    private String collectorFootNumbers;
+    /** (采集器)拍照图片的路径(电表表脚封扣) */
+    private String collectorFootPicPath;
+
+    /** (采集器)表箱封扣1（条码） */
+    private String collectorBodyNumbers1;
+    /** (采集器)拍照图片的路径(表箱封扣1) */
+    private String collectorBodyPicPath1;
+
+    /** (采集器)表箱封扣2（条码） */
+    private String collectorBodyNumbers2;
+    /** (采集器)拍照图片的路径(表箱封扣2) */
+    private String collectorBodyPicPath2;
 
     //------------------------------------------------------------
 
@@ -175,11 +191,11 @@ public class MeterBean1 {
         this.oldAddr = oldAddr;
     }
 
-    /** 旧表表地址 和 资产编码 比较 */
+    /** 旧表表地址 和 资产编码 比较   -- ture:不同 false:相同*/
     public boolean isOldAddrAndAsset() {
         return oldAddrAndAsset;
     }
-    /** 旧表表地址 和 资产编码 比较 */
+    /** 旧表表地址 和 资产编码 比较   -- ture:不同 false:相同*/
     public void setOldAddrAndAsset(boolean oldAddrAndAsset) {
         this.oldAddrAndAsset = oldAddrAndAsset;
     }
@@ -293,58 +309,114 @@ public class MeterBean1 {
     }
 
     //---- 2017/09/04
-    /** 电表表脚封扣（条码） */
+    /** (新电表)电表表脚封扣（条码） */
     public String getMeterFootNumbers() {
         return meterFootNumbers;
     }
-    /** 电表表脚封扣（条码） */
+    /** (新电表)电表表脚封扣（条码） */
     public void setMeterFootNumbers(String meterFootNumbers) {
         this.meterFootNumbers = meterFootNumbers;
     }
 
-    /** 拍照图片的路径(电表表脚封扣) */
+    /** (新电表)拍照图片的路径(电表表脚封扣) */
     public String getMeterFootPicPath() {
         return meterFootPicPath;
     }
-    /** 拍照图片的路径(电表表脚封扣) */
+    /** (新电表)拍照图片的路径(电表表脚封扣) */
     public void setMeterFootPicPath(String meterFootPicPath) {
         this.meterFootPicPath = meterFootPicPath;
     }
 
-    /** 表箱封扣1（条码） */
+    /** (新电表)表箱封扣1（条码） */
     public String getMeterBodyNumbers1() {
         return meterBodyNumbers1;
     }
-    /** 表箱封扣1（条码） */
+    /** (新电表)表箱封扣1（条码） */
     public void setMeterBodyNumbers1(String meterBodyNumbers1) {
         this.meterBodyNumbers1 = meterBodyNumbers1;
     }
 
-    /** 拍照图片的路径(表箱封扣1) */
+    /** (新电表)拍照图片的路径(表箱封扣1) */
     public String getMeterBodyPicPath1() {
         return meterBodyPicPath1;
     }
-    /** 拍照图片的路径(表箱封扣1) */
+    /** (新电表)拍照图片的路径(表箱封扣1) */
     public void setMeterBodyPicPath1(String meterBodyPicPath1) {
         this.meterBodyPicPath1 = meterBodyPicPath1;
     }
 
-    /** 表箱封扣2（条码） */
+    /** (新电表)表箱封扣2（条码） */
     public String getMeterBodyNumbers2() {
         return meterBodyNumbers2;
     }
-    /** 表箱封扣2（条码） */
+    /** (新电表)表箱封扣2（条码） */
     public void setMeterBodyNumbers2(String meterBodyNumbers2) {
         this.meterBodyNumbers2 = meterBodyNumbers2;
     }
 
-    /** 拍照图片的路径(表箱封扣2) */
+    /** (新电表)拍照图片的路径(表箱封扣2) */
     public String getMeterBodyPicPath2() {
         return meterBodyPicPath2;
     }
-    /** 拍照图片的路径(表箱封扣2) */
+    /** (新电表)拍照图片的路径(表箱封扣2) */
     public void setMeterBodyPicPath2(String meterBodyPicPath2) {
         this.meterBodyPicPath2 = meterBodyPicPath2;
+    }
+
+
+    //---- 2017/09/06
+    /** (采集器)电表表脚封扣（条码） */
+    public String getCollectorFootNumbers() {
+        return collectorFootNumbers;
+    }
+    /** (采集器)电表表脚封扣（条码） */
+    public void setCollectorFootNumbers(String collectorFootNumbers) {
+        this.collectorFootNumbers = collectorFootNumbers;
+    }
+
+    /** (采集器)拍照图片的路径(电表表脚封扣) */
+    public String getCollectorFootPicPath() {
+        return collectorFootPicPath;
+    }
+    /** (采集器)拍照图片的路径(电表表脚封扣) */
+    public void setCollectorFootPicPath(String collectorFootPicPath) {
+        this.collectorFootPicPath = collectorFootPicPath;
+    }
+
+    /** (采集器)表箱封扣1（条码） */
+    public String getCollectorBodyNumbers1() {
+        return collectorBodyNumbers1;
+    }
+    /** (采集器)表箱封扣1（条码） */
+    public void setCollectorBodyNumbers1(String collectorBodyNumbers1) {
+        this.collectorBodyNumbers1 = collectorBodyNumbers1;
+    }
+
+    /** (采集器)拍照图片的路径(表箱封扣1) */
+    public String getCollectorBodyPicPath1() {
+        return collectorBodyPicPath1;
+    }
+    /** (采集器)拍照图片的路径(表箱封扣1) */
+    public void setCollectorBodyPicPath1(String collectorBodyPicPath1) {
+        this.collectorBodyPicPath1 = collectorBodyPicPath1;
+    }
+
+    /** (采集器)表箱封扣2（条码） */
+    public String getCollectorBodyNumbers2() {
+        return collectorBodyNumbers2;
+    }
+    /** (采集器)表箱封扣2（条码） */
+    public void setCollectorBodyNumbers2(String collectorBodyNumbers2) {
+        this.collectorBodyNumbers2 = collectorBodyNumbers2;
+    }
+
+    /** (采集器)拍照图片的路径(表箱封扣2) */
+    public String getCollectorBodyPicPath2() {
+        return collectorBodyPicPath2;
+    }
+    /** (采集器)拍照图片的路径(表箱封扣2) */
+    public void setCollectorBodyPicPath2(String collectorBodyPicPath2) {
+        this.collectorBodyPicPath2 = collectorBodyPicPath2;
     }
 
     @Override
@@ -381,6 +453,13 @@ public class MeterBean1 {
                 ", meterBodyNumbers2='" + meterBodyNumbers2 + '\'' +
                 ", meterBodyPicPath2='" + meterBodyPicPath2 + '\'' +  "\n" +
 
+                ", collectorFootNumbers='" + collectorFootNumbers + '\'' +  "\n" +
+                ", collectorFootPicPath='" + collectorFootPicPath + '\'' +
+                ", collectorBodyNumbers1='" + collectorBodyNumbers1 + '\'' +
+                ", collectorBodyPicPath1='" + collectorBodyPicPath1 + '\'' +
+                ", collectorBodyNumbers2='" + collectorBodyNumbers2 + '\'' +
+                ", collectorBodyPicPath2='" + collectorBodyPicPath2 + '\'' +  "\n" +
+                
                 ", isFinish=" + isFinish +
                 '}';
     }

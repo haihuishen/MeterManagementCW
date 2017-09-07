@@ -8,7 +8,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 21
         versionCode 5
-        versionName "2.11"
+        versionName "2.12"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 //        jackOptions {
@@ -44,7 +44,8 @@ android {
     // 编译后的apk名字!
     android.applicationVariants.all {
         variant -> variant.outputs.each {
-            output -> output.outputFile = new File(output.outputFile.parent, "集抄改造_zh-c7_" + defaultConfig.versionCode +  "_v" + defaultConfig.versionName +"_"+buildType.name+ ".apk");
+            output -> output.outputFile = new File(output.outputFile.parent, "集抄改造_zh-c7_" +
+                    defaultConfig.versionCode +  "_v" + defaultConfig.versionName +"_"+buildType.name+ ".apk");
         }
     }
 //    packagingOptions {

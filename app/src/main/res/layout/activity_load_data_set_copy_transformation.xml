@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="加载数据前请确认：\n
-1、数据源文件存放位置为:\n 我的电脑\\C70SC\\手机存储\\电表换装\\集抄改造\\导入数据源\n
+1、数据源文件存放位置为:\n 我的电脑\\ZH-E7\\手机存储\\电表换装\\集抄改造\\导入数据\n
 2、数据源文件的数据格式符合要求\n
 3、后缀名若不是.xls, 请将文件另存为.xls"
         android:textColor="@color/black"/>

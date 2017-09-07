@@ -221,19 +221,34 @@ public class Constant {
     public final static String TABLE_METERINFO1_STR_relaceOrAnd = "relaceOrAnd";
     /** 是否完成(扫描完) */
     public final static String TABLE_METERINFO1_STR_isFinish = "isFinish";
+    
     //----2017/09/04
-    /** 电表表脚封扣（条码） */
+    /** (新电表)电表表脚封扣（条码） */
     public final static String TABLE_METERINFO1_STR_meterFootNumbers = "meterFootNumbers";
-    /** 拍照图片的路径(电表表脚封扣) */
+    /** (新电表)拍照图片的路径(电表表脚封扣) */
     public final static String TABLE_METERINFO1_STR_meterFootPicPath = "meterFootPicPath";
-    /** 表箱封扣1（条码） */
+    /** (新电表)表箱封扣1（条码） */
     public final static String TABLE_METERINFO1_STR_meterBodyNumbers1 = "meterBodyNumbers1";
-    /** 拍照图片的路径(表箱封扣1) */
+    /** (新电表)拍照图片的路径(表箱封扣1) */
     public final static String TABLE_METERINFO1_STR_meterBodyPicPath1 = "meterBodyPicPath1";
-    /** 表箱封扣2（条码） */
+    /** (新电表)表箱封扣2（条码） */
     public final static String TABLE_METERINFO1_STR_meterBodyNumbers2 = "meterBodyNumbers2";
-    /** 拍照图片的路径(表箱封扣2) */
+    /** (新电表)拍照图片的路径(表箱封扣2) */
     public final static String TABLE_METERINFO1_STR_meterBodyPicPath2 = "meterBodyPicPath2";
+
+    //----2017/09/06
+    /** (采集器)电表表脚封扣（条码） */
+    public final static String TABLE_METERINFO1_STR_collectorFootNumbers = "collectorFootNumbers";
+    /** (采集器)拍照图片的路径(电表表脚封扣) */
+    public final static String TABLE_METERINFO1_STR_collectorFootPicPath = "collectorFootPicPath";
+    /** (采集器)表箱封扣1（条码） */
+    public final static String TABLE_METERINFO1_STR_collectorBodyNumbers1 = "collectorBodyNumbers1";
+    /** (采集器)拍照图片的路径(表箱封扣1) */
+    public final static String TABLE_METERINFO1_STR_collectorBodyPicPath1 = "collectorBodyPicPath1";
+    /** (采集器)表箱封扣2（条码） */
+    public final static String TABLE_METERINFO1_STR_collectorBodyNumbers2 = "collectorBodyNumbers2";
+    /** (采集器)拍照图片的路径(表箱封扣2) */
+    public final static String TABLE_METERINFO1_STR_collectorBodyPicPath2 = "collectorBodyPicPath2";
 
     //-------------------------------------------------------------------------------
     /** 序号(数据库自动生成) */
@@ -252,6 +267,20 @@ public class Constant {
     public final static String TABLE_COLLECTORNUMBER_STR_theMeteringSection = "theMeteringSection";
     /** 采集器图片 */
     public final static String TABLE_COLLECTORNUMBER_STR_collectorPicPath = "collectorPicPath";
+
+    //----2017/09/06
+    /** (采集器)电表表脚封扣（条码） */
+    public final static String TABLE_COLLECTORNUMBER_STR_collectorFootNumbers = "collectorFootNumbers";
+    /** (采集器)拍照图片的路径(电表表脚封扣) */
+    public final static String TABLE_COLLECTORNUMBER_STR_collectorFootPicPath = "collectorFootPicPath";
+    /** (采集器)表箱封扣1（条码） */
+    public final static String TABLE_COLLECTORNUMBER_STR_collectorBodyNumbers1 = "collectorBodyNumbers1";
+    /** (采集器)拍照图片的路径(表箱封扣1) */
+    public final static String TABLE_COLLECTORNUMBER_STR_collectorBodyPicPath1 = "collectorBodyPicPath1";
+    /** (采集器)表箱封扣2（条码） */
+    public final static String TABLE_COLLECTORNUMBER_STR_collectorBodyNumbers2 = "collectorBodyNumbers2";
+    /** (采集器)拍照图片的路径(表箱封扣2) */
+    public final static String TABLE_COLLECTORNUMBER_STR_collectorBodyPicPath2 = "collectorBodyPicPath2";
 
 
 

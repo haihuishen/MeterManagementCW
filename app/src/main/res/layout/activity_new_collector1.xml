@@ -18,7 +18,6 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:paddingTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -64,7 +63,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -87,7 +85,299 @@
                 android:divider="@color/shen_btn_blue"
                 android:dividerHeight="1dp"></ListView>
 
+            <Button
+                android:id="@+id/btn_scan"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_bg_blue1"
+                android:layout_gravity="center"
+                android:text="扫描电表"
+                android:textColor="@drawable/btn_text_color_blue_w"
+                android:textSize="15dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/gray" />
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/shen_sky_blue"
+                android:gravity="center"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="2dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表脚封扣:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_collectorFootNumbersScan"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_collectorFoot"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_collectorFootPic"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_collectorFootPicDelete"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraCollectorFoot"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+                    <Button
+                        android:id="@+id/btn_collectorFootNumbersScan"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表箱封扣1:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_collectorBodyNumbersScan1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_collectorBody1"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_collectorBodyPic1"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_collectorBodyPicDelete1"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraCollectorBody1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true"/>
+
+                    </RelativeLayout>
+                    <Button
+                        android:id="@+id/btn_collectorBodyNumbersScan1"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/shen_sky_blue"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="表箱封扣2:"
+                            android:textColor="@android:color/black"
+                            android:textSize="14dp" />
+
+                        <com.zh.metermanagementcw.view.ClearEditText
+                            android:layout_marginTop="1dp"
+                            android:id="@+id/cet_collectorBodyNumbersScan2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_et"
+                            android:maxLines="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textColor="@android:color/black"
+                            android:textSize="13dp" />
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="2dp">
+                        <RelativeLayout
+                            android:id="@+id/rlayout_collectorBody2"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="2dp">
+                            <com.bm.library.PhotoView
+                                android:id="@+id/pv_collectorBodyPic2"
+                                android:layout_width="50dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:id="@+id/iv_collectorBodyPicDelete2"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentTop="true"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/reddelete" />
+                        </RelativeLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_cameraCollectorBody2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@mipmap/camera"
+                            android:layout_centerInParent="true" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_collectorBodyNumbersScan2"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="扫描\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/gray" />
+            
             <LinearLayout
                 android:padding="5dp"
                 android:layout_width="match_parent"
@@ -97,13 +387,14 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv_pic"
-                    android:layout_marginRight="10dp"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
                     android:scrollbars="none"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
+
                 <Button
                     android:id="@+id/btn_camera"
                     android:layout_width="50dp"
@@ -121,25 +412,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_scan"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_bg_blue_white"
-                android:layout_gravity="center"
-                android:text="扫描电表"
-                android:textColor="@android:color/black"
-                android:textSize="15dp"/>
+
 
             <Button
                 android:id="@+id/btn_save"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"

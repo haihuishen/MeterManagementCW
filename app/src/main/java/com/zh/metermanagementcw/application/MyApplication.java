@@ -57,7 +57,11 @@ public class MyApplication extends Application {
 
 	//--------------------------acceptance------------------------------
 	/** acceptance -- 日/月冻结 */
-	private static List<AcceptanceBean> mAcceptanceBeanList;
+	private static List<AcceptanceBean> mAcceptanceBeanList = new ArrayList<>();
+
+
+	/** 序列号列表 */
+	private static List<String> serialNumberList = new ArrayList<>();
 
 
 
@@ -181,6 +185,13 @@ public class MyApplication extends Application {
 	}
 
 
+	public static List<String> getSerialNumberList() {
+		return serialNumberList;
+	}
+
+	public static void setSerialNumberList(List<String> serialNumberList) {
+		MyApplication.serialNumberList = serialNumberList;
+	}
 
 	/**
 	 * 退出APP
