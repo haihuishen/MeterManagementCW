@@ -25,22 +25,22 @@ public class MyApplication extends Application {
 
 	private static Context context;
 	/** Activity集合 */
-	public static ArrayList<BaseActivity> listActivity;
+	public static ArrayList<BaseActivity> listActivity = new ArrayList<>();
 
 	private static MyApplication instance;
 
 
 
 	/** 无工单 -- 用户/表主的信息 */
-	private static List<MeterBean> mMeterBeanList;
+	private static List<MeterBean> mMeterBeanList = new ArrayList<>();
 	/** 无工单 -- 用户/表主的信息 */
-	private static List<MeterBean1> mMeterBean1List;
+	private static List<MeterBean1> mMeterBean1List = new ArrayList<>();
 	/** 无工单 -- 无匹配的资产编码 */
-	private static List<AssetNumberBean> mAssetNumberBeanList;
+	private static List<AssetNumberBean> mAssetNumberBeanList = new ArrayList<>();
 	/** 无工单 -- 集中器的资产编码 */
-	private static List<ConcentratorBean> mConcentratorBeanList;
+	private static List<ConcentratorBean> mConcentratorBeanList = new ArrayList<>();
 	/** 无工单 -- 变压器 */
-	private static List<TransformerBean> mTransformerBeanList;
+	private static List<TransformerBean> mTransformerBeanList = new ArrayList<>();
 
 
 	/** 区域 */

@@ -1055,6 +1055,14 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
                 if(!TextUtils.isEmpty(collectorNumbers)) {
                     if(mMeterBeanListScan.size() != 0) {
 
+                        String collectorFootNumbersScan = mCEtCollectorFootNumbersScan.getText().toString().trim();
+                        String collectorBodyNumbersScan1 = mCEtCollectorBodyNumbersScan1.getText().toString().trim();
+                        String collectorBodyNumbersScan2 = mCEtCollectorBodyNumbersScan2.getText().toString().trim();
+
+                        mCollectorNumberBean.setCollectorFootNumbers(collectorFootNumbersScan);
+                        mCollectorNumberBean.setCollectorBodyNumbers1(collectorBodyNumbersScan1);
+                        mCollectorNumberBean.setCollectorBodyNumbers2(collectorBodyNumbersScan2);
+
                         showLoadingDialog("","正在保存数据...");
                         taskPresenter1.addCollectorToMeterInfo(saveCollectorToMeterInfoObserver,
                                 MyApplication.getCurrentMeteringSection(),

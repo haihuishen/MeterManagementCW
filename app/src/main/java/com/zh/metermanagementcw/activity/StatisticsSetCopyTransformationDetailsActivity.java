@@ -154,7 +154,7 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
     @Override
     public void initData() {
 
-        taskPresenter1.readDbToBean(statisticsObserver, MyApplication.getCurrentMeteringSection());
+        taskPresenter1.statisticsData(statisticsObserver);
 
         ArrayList<MeterBean1> beanList = new ArrayList<>();
         List<AssetNumberBean> assetNumberBeanList = new ArrayList<>();
@@ -273,6 +273,8 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
         }else if(type.equals(Constant.type_assetsNumber_Mismatches)){               // 有表,无户
 
             assetNumberBeanList = MyApplication.getAssetNumberBeanList();
+
+            //LogUtils.i("assetNumberBeanList.size():" + assetNumberBeanList.size());
             mListView.setVisibility(View.GONE);
             mOtherListView.setVisibility(View.VISIBLE);
 
@@ -414,10 +416,10 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
 
         @Override
         public void onNext(@NonNull List<AssetNumberBean> assetNumberBeen) {
+
+            // LogUtils.i("assetNumberBeen.size() :" + assetNumberBeen.size());
             MyApplication.setAssetNumberBeanList(assetNumberBeen);
 
-            AssetsNumberMismatchesAdapter assetsNumberMismatchesAdapter =
-                    new AssetsNumberMismatchesAdapter(StatisticsSetCopyTransformationDetailsActivity.this, assetNumberBeen);
         }
 
         @Override
@@ -431,6 +433,8 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
             //closeDialog();
         }
     };
+
+
 
     /**
      * 获取采集器列表

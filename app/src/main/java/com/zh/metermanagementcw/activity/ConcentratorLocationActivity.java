@@ -605,6 +605,10 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
         String latitude = mTvLatitude.getText().toString().trim();
         String addr = mTvAddr.getText().toString().trim();
 
+        String meterFootNumbersScan = mCEtMeterFootNumbersScan.getText().toString().trim();
+        String meterBodyNumbersScan1 = mCEtMeterBodyNumbersScan1.getText().toString().trim();
+        String mCeterBodyNumbersScan2 = mCEtMeterBodyNumbersScan2.getText().toString().trim();
+
         //0.000000
         if(TextUtils.isEmpty(assetNumbers)){
             showToast("请输入资产编号");
@@ -620,6 +624,12 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
 //        }
 
         //LogUtils.i("mConcentratorBean.toString():" + mConcentratorBean.toString());
+
+
+        mConcentratorBean.setMeterFootNumbers(meterFootNumbersScan);
+        mConcentratorBean.setMeterBodyNumbers1(meterBodyNumbersScan1);
+        mConcentratorBean.setMeterBodyNumbers2(mCeterBodyNumbersScan2);
+
 
         ContentValues values = new ContentValues();
         values.put(Constant.CONCENTRATOR.assetNumbers.toString(), assetNumbers);
@@ -840,7 +850,7 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
                     return;
                 }
                 mCurrentPicName = MyApplication.getNoWorkOrderPath().getConcentratorPhotoPath() +
-                    assetNumbers + "_表箱封扣1.jpg";
+                        assetNumbers + "_表箱封扣1.jpg";
 
                 if(mBarcode2DWithSoft!=null){
                     mBarcode2DWithSoft.stopScan();
@@ -1163,43 +1173,27 @@ public class ConcentratorLocationActivity extends BaseActivity implements View.O
                                     mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
                                 }
 
-                            if(StringUtils.isEmpty(mConcentratorBean.getPicPath())){
-                                mPhotoIndex = 1;
-                            }else {
-                                String path = mConcentratorBean.getPicPath();
-                                for(String tempPath : path.split(",")){
-                                    if(!(new File(tempPath).exists())){
-                                        path = StringUtils.deleteSubStr(path, tempPath);
+                                if(StringUtils.isEmpty(mConcentratorBean.getPicPath())){
+                                    mPhotoIndex = 1;
+                                }else {
+                                    String path = mConcentratorBean.getPicPath();
+                                    for(String tempPath : path.split(",")){
+                                        if(!(new File(tempPath).exists())){
+                                            path = StringUtils.deleteSubStr(path, tempPath);
+                                        }
                                     }
-                                }
 
-                                mConcentratorBean.setPicPath(path);
-                                if(StringUtils.isNotEmpty(mConcentratorBean.getPicPath())) {
-                                    try {
-                                        mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
-                                    } catch (Exception e) {
+                                    mConcentratorBean.setPicPath(path);
+                                    if(StringUtils.isNotEmpty(mConcentratorBean.getPicPath())) {
+                                        try {
+                                            mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
+                                        } catch (Exception e) {
+                                        }
                                     }
+                                    mPicAdapter.setPathList(mConcentratorBean.getPicPath());
                                 }
-                                mPicAdapter.setPathList(mConcentratorBean.getPicPath());
-                            }
 
                                 break;
-                            } else {
-                                mPhotoIndex = 1;
-                                mConcentratorBean = new ConcentratorBean();
-
-                                //---------------------------------封扣---------------------------------------
-                                mCEtMeterFootNumbersScan.setText("");
-                                mRLayoutMeterFoot.setVisibility(View.GONE);
-                                mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
-
-                                mCEtMeterBodyNumbersScan1.setText("");
-                                mRLayoutMeterBody1.setVisibility(View.GONE);
-                                mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
-
-                                mCEtMeterBodyNumbersScan2.setText("");
-                                mRLayoutMeterBody2.setVisibility(View.GONE);
-                                mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
                             }
                         }
                     }else{

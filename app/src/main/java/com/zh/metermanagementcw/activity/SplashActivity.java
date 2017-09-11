@@ -104,58 +104,28 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 //        LogUtils.i("getWLAN_MAC():" + GetDeviceIDUtil.getWLAN_MAC(getApplicationContext()));
 //        LogUtils.i("getBT_MAC():" + GetDeviceIDUtil.getBT_MAC());
 //
-//        //------------------------------------ 获取唯一标识 -------------------------------------------
-//        initSerialNumberXML("SerialNumber.xml");
-//        PullSerialNumberParser parser = new PullSerialNumberParser();
-//        try {
-//            parser.parser();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        boolean isZhDevice = false;
-//        String serialNumber = GetDeviceIDUtil.getSerialNumber();
-//        for(String s : MyApplication.getSerialNumberList()){
-//            LogUtils.i("serialNumber:" + serialNumber + "    s:" + s);
-//            if(serialNumber.equalsIgnoreCase(s)){
-//                isZhDevice = true;
-//                break;
-//            }
-//        }
-//
-//        if (isZhDevice) {
-//            Toast.makeText(this, "设备初始化失败！", Toast.LENGTH_SHORT).show();
-//
-//            //如果之前创建了Runnable对象,那么就把这任务移除
-//            if(runnable!=null){
-//                handler.removeCallbacks(runnable);
-//            }
-//
-//            SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
-//                    .setTitleText("提示")
-//                    .setContentText("设备初始化失败!")
-//                    .setConfirmText("确认")
-//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                        @Override
-//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                            MyApplication.exitApp();
-//                            sweetAlertDialog.dismiss();
-//                        }
-//                    });
-//
-//
-//            dialog.setCancelable(false);
-//            dialog.show();
-//        }
+        //------------------------------------ 获取唯一标识 -------------------------------------------
+        initSerialNumberXML("SerialNumber.xml");
+        PullSerialNumberParser parser = new PullSerialNumberParser();
+        try {
+            parser.parser();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        boolean isZhDevice = false;
+        String serialNumber = GetDeviceIDUtil.getSerialNumber();
+        for(String s : MyApplication.getSerialNumberList()){
+            LogUtils.i("serialNumber:" + serialNumber + "    s:" + s);
+            if(serialNumber.equalsIgnoreCase(s)){
+                isZhDevice = true;
+                break;
+            }
+        }
 
-        String sam = GetDeviceIDUtil.getDeviceNum();
-        Log.i("shen", "getDeviceNum():"+sam);
+        if (!isZhDevice) {
+            //Toast.makeText(this, "设备初始化失败！", Toast.LENGTH_SHORT).show();
 
-        //sam = sam.toLowerCase();
-        //if (!sam.contains("kt45") || !sam.contains("c70sc")) {
-
-        if (!sam.equalsIgnoreCase("ZH-E7")) {
             //如果之前创建了Runnable对象,那么就把这任务移除
             if(runnable!=null){
                 handler.removeCallbacks(runnable);
@@ -173,9 +143,39 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
                         }
                     });
 
+
             dialog.setCancelable(false);
             dialog.show();
         }
+
+
+//        String sam = GetDeviceIDUtil.getDeviceNum();
+//        Log.i("shen", "getDeviceNum():"+sam);
+//
+//        //sam = sam.toLowerCase();
+//        //if (!sam.contains("kt45") || !sam.contains("c70sc")) {
+//
+//        if (!sam.equalsIgnoreCase("ZH-E7")) {
+//            //如果之前创建了Runnable对象,那么就把这任务移除
+//            if(runnable!=null){
+//                handler.removeCallbacks(runnable);
+//            }
+//
+//            SweetAlertDialog dialog = new SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+//                    .setTitleText("提示")
+//                    .setContentText("设备初始化失败!")
+//                    .setConfirmText("确认")
+//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                            MyApplication.exitApp();
+//                            sweetAlertDialog.dismiss();
+//                        }
+//                    });
+//
+//            dialog.setCancelable(false);
+//            dialog.show();
+//        }
 
 
         FilesUtils.createFile(this, Constant.srcPathDir);
