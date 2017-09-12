@@ -25,6 +25,7 @@ import com.shen.sweetdialog.SweetAlertDialog;
 import com.zh.metermanagementcw.R;
 import com.zh.metermanagementcw.application.MyApplication;
 import com.zh.metermanagementcw.config.Constant;
+import com.zh.metermanagementcw.utils.AppUtils;
 import com.zh.metermanagementcw.utils.CopyFileUtils;
 import com.zh.metermanagementcw.utils.FilesUtils;
 import com.zh.metermanagementcw.utils.GetDeviceIDUtil;
@@ -73,6 +74,9 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
     MyCountDownTimer myCountDownTimer;  // 倒计时器
 
     private final int REQUESTCODE = 101;
+
+
+    private TextView mTvVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,6 +294,7 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
     private void initView() {
         mTvCountDown = (TextView) findViewById(R.id.tv_count_down);
+        mTvVersion = (TextView) findViewById(R.id.tv_version);
 
     }
 
@@ -357,6 +362,9 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
                     }
                 });
+
+        //填充各控件的数据
+        mTvVersion.setText("软件版本: V" + AppUtils.getVersionName(this));
 
     }
 
