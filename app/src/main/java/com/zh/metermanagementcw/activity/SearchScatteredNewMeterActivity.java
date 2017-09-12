@@ -1,7 +1,6 @@
 package com.zh.metermanagementcw.activity;
 
 import android.graphics.Bitmap;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -12,17 +11,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-
 import com.bm.library.Info;
 import com.bm.library.PhotoView;
 import com.shen.sweetdialog.SweetAlertDialog;
 import com.zebra.adc.decoder.Barcode2DWithSoft;
 import com.zh.metermanagementcw.R;
 import com.zh.metermanagementcw.activity.base.BaseActivity;
-import com.zh.metermanagementcw.adapter.FinishedAdapter;
-import com.zh.metermanagementcw.application.MyApplication;
-import com.zh.metermanagementcw.bean.CollectorNumberBean;
-import com.zh.metermanagementcw.bean.MeterBean1;
+import com.zh.metermanagementcw.adapter.AcceptanceAdapter;
+import com.zh.metermanagementcw.adapter.ScatteredNewMeterAdapter;
+import com.zh.metermanagementcw.bean.AcceptanceBean;
+import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.utils.BeepManager;
 import com.zh.metermanagementcw.utils.ImageFactory;
@@ -39,10 +37,10 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by Administrator on 2017/5/18.
+ * 零散新装
+ *
  */
-
-public class SearchSetCopyTransformationActivity extends BaseActivity implements View.OnClickListener {
+public class SearchScatteredNewMeterActivity extends BaseActivity implements View.OnClickListener {
 
     /** 标题 */
     TextView mTvTitle;
@@ -56,13 +54,10 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
     ClearEditText mCEtUserName;
     /** 用户编码 -- 编辑框 */
     ClearEditText mCEtUserNumber;
-    /** 旧资产编码 -- 编辑框 */
-    ClearEditText mCEtOldAssetsNumber;
-    /** 新资产编码 -- 编辑框 */
-    ClearEditText mCEtNewAssetsNumber;
+    /** 资产编码 -- 编辑框 */
+    ClearEditText mCEtAssetsNumber;
 
-    Button mBtnOldAssetsNumber;
-    Button mBtnNewAssetsNumber;
+    Button mBtnAssetsNumber;
 
     /** 收起和展开--查询条件 */
     ToggleButton mTbUpAndDowm;
@@ -73,15 +68,23 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
     /** 查询 -- 按钮 */
     Button mBtnSearch;
 
-    /** 查询出的信息 -- 文本 */
-    TextView mTvInfo;
-
     //--------------------------------------------------
-    FinishedAdapter mFinishedAdapter;
+    ScatteredNewMeterAdapter mScatteredNewMeterAdapter;
     ListView mListView;
 
-    ArrayList<MeterBean1> mMeterBean1List = new ArrayList<>();
+    ArrayList<ScatteredNewMeterBean> mScatteredNewMeterBeanList = new ArrayList<>();
 
+
+    //--------------------------------------------------
+    /** 成为 二维扫描 */
+    Barcode2DWithSoft mBarcode2DWithSoft;
+    ScanBack mScanBack;
+    /** 当前二维扫描的按钮 */
+    private int mCurrentScanBtnId = 1;
+
+    public BeepManager mBeepManager;
+
+    //--------------------------图片-----------------------------
     public Bitmap mBitmap;
 
     public View mLlayoutParent;
@@ -93,18 +96,12 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
     public AlphaAnimation in;
     public AlphaAnimation out;
 
-    //--------------------------------------------------
-    /** 成为 二维扫描 */
-    Barcode2DWithSoft mBarcode2DWithSoft;
-    ScanBack mScanBack;
-    /** 当前二维扫描的按钮 */
-    private int mCurrentScanBtnId = 1;
 
-    public BeepManager mBeepManager;
+
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_search_set_copy_transformation;
+        return R.layout.activity_search_scatter_new_meter;
     }
 
     @Override
@@ -132,19 +129,14 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         mCEtUserName = (ClearEditText) findViewById(R.id.et_userName);
         mCEtUserNumber = (ClearEditText) findViewById(R.id.et_userNumber);
-        mCEtOldAssetsNumber = (ClearEditText) findViewById(R.id.et_oldAssetsNumber);
-        mCEtNewAssetsNumber = (ClearEditText) findViewById(R.id.et_newAssetsNumber);
+        mCEtAssetsNumber = (ClearEditText) findViewById(R.id.et_assetsNumber);
 
-        mBtnOldAssetsNumber = (Button) findViewById(R.id.btn_oldAssetsNumber);
-        mBtnNewAssetsNumber = (Button) findViewById(R.id.btn_newAssetsNumber);
+        mBtnAssetsNumber = (Button) findViewById(R.id.btn_assetsNumber);
 
         mTbUpAndDowm = (ToggleButton) findViewById(R.id.tb_upAndDown);
         LlayoutSearch = (LinearLayout) findViewById(R.id.llayout_search);
 
         mBtnSearch = (Button) findViewById(R.id.btn_search);
-
-        mTvInfo = (TextView) findViewById(R.id.tv_info);
-
 
         //--------------------------------------------------
         mLlayoutParent = findViewById(R.id.parent);
@@ -157,9 +149,7 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
     @Override
     public void initListener() {
         mBtnSearch.setOnClickListener(this);
-        mBtnOldAssetsNumber.setOnClickListener(this);
-        mBtnNewAssetsNumber.setOnClickListener(this);
-        mPvBgImg.setOnClickListener(this);
+        mBtnAssetsNumber.setOnClickListener(this);
 
         mTbUpAndDowm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -186,22 +176,6 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         taskPresenter1.initBarcode2D(initBarcode2DSObserver, getContext(), mScanBack);
 
-        mFinishedAdapter = new FinishedAdapter(getContext(), mMeterBean1List, new ArrayList<CollectorNumberBean>(),
-                new FinishedAdapter.FinishPhotoListener() {
-                    @Override
-                    public void onPreView(int index, String path, Info info) {
-                        mInfo = info;
-
-                        mBitmap = ImageFactory.getBitmap(path);
-                        mPvBgImg.setImageBitmap(mBitmap);
-                        mIvBg.startAnimation(in);             // 执行动画
-                        mIvBg.setVisibility(View.VISIBLE);
-                        mLlayoutParent.setVisibility(View.VISIBLE);
-                        mPvBgImg.animaFrom(mInfo);
-                        setTitleIsShow(View.GONE);
-                    }
-                });
-        mListView.setAdapter(mFinishedAdapter);
 
         //------------------------------------------------------------------
 
@@ -228,6 +202,28 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         mPvBgImg.setImageBitmap(mBitmap);
         mPvBgImg.enable();
+
+
+        //-------------------------------------------------------------------
+        mScatteredNewMeterBeanList = new ArrayList<>();
+        mScatteredNewMeterAdapter = new ScatteredNewMeterAdapter(getContext(), mScatteredNewMeterBeanList,
+                new ScatteredNewMeterAdapter.PrePhotoListener() {
+                    @Override
+                    public void onPreView(int index, String path, Info info) {
+                        mInfo = info;
+
+                        mBitmap = ImageFactory.getBitmap(path);
+                        mPvBgImg.setImageBitmap(mBitmap);
+                        mIvBg.startAnimation(in);             // 执行动画
+                        mIvBg.setVisibility(View.VISIBLE);
+                        mLlayoutParent.setVisibility(View.VISIBLE);
+                        mPvBgImg.animaFrom(mInfo);
+                        setTitleIsShow(View.GONE);
+                    }
+                });
+
+        mListView.setAdapter(mScatteredNewMeterAdapter);
+
     }
 
     @Override
@@ -252,7 +248,6 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
             mBarcode2DWithSoft.close();
         }
         super.onDestroy();
-        //android.os.Process.killProcess(java.lang.Process.myPid());
     }
 
 
@@ -265,8 +260,8 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         String userName = mCEtUserName.getText().toString().trim();
         String userNumber = mCEtUserNumber.getText().toString().trim();
-        String oldAssetsNumber = mCEtOldAssetsNumber.getText().toString().trim();
-        String newAssetsNumber = mCEtNewAssetsNumber.getText().toString().trim();
+        String assetsNumber = mCEtAssetsNumber.getText().toString().trim();
+
 
         boolean isEmpty = true;
         if(StringUtils.isNotEmpty(userName)){
@@ -277,12 +272,8 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
             conditionMap.put("userNumber", userNumber);
             isEmpty = false;
         }
-        if(StringUtils.isNotEmpty(oldAssetsNumber)){
-            conditionMap.put("oldAssetNumbers", oldAssetsNumber);
-            isEmpty = false;
-        }
-        if(StringUtils.isNotEmpty(newAssetsNumber)){
-            conditionMap.put("newAssetNumbersScan", newAssetsNumber);
+        if(StringUtils.isNotEmpty(assetsNumber)){
+            conditionMap.put("assetNumbers", assetsNumber);
             isEmpty = false;
         }
 
@@ -301,9 +292,8 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
             dialog.show();
         }else {
-            taskPresenter1.searchMeterInfo(searchMeterInfoObserver,
-                    MyApplication.getCurrentMeteringSection(),
-                    conditionMap);
+
+            taskPresenter1.searchAcceptance(searchScatteredNewMeterObserver, conditionMap);
         }
     }
 
@@ -317,26 +307,15 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
             if (length < 1) {
                 LogUtils.i("扫描失败");
                 mBeepManager.playError();
-                //showToast("扫描失败");
-//                if (length == -1) {
-//                    tvData.setText("Scan cancel");
-//                } else if (length == 0) {
-//                    tvData.setText("Scan TimeOut");
-//                } else {
-//                    Log.i(TAG,"Scan fail");
-//                    //Toast.makeText(MainActivity.this,"Scan fail",Toast.LENGTH_SHORT).show();
-//                }
+
             }else{
                 LogUtils.i("扫描成功");
                 String barCode = new String(bytes, 0, length);
 
                 mBeepManager.playSuccessful();
                 final String scanData = barCode.trim();
-                if(mCurrentScanBtnId == R.id.btn_oldAssetsNumber){              // 旧表资产编号(二维扫描)
-                    mCEtOldAssetsNumber.setText(scanData);
-
-                }else if(mCurrentScanBtnId == R.id.btn_newAssetsNumber){    // 新表资产编号(二维扫描)
-                    mCEtNewAssetsNumber.setText(scanData);
+                if(mCurrentScanBtnId == R.id.btn_assetsNumber){              // 旧表资产编号(二维扫描)
+                    mCEtAssetsNumber.setText(scanData);
 
                 }
             }
@@ -386,7 +365,7 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
      *
      * rxjava -- 主线程
      */
-    Observer searchMeterInfoObserver = new Observer<List<MeterBean1>>() {
+    Observer searchScatteredNewMeterObserver = new Observer<List<ScatteredNewMeterBean>>() {
 
         @Override
         public void onSubscribe(@NonNull Disposable d) {
@@ -394,18 +373,13 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
         }
 
         @Override
-        public void onNext(@NonNull List<MeterBean1> meterBeen) {
-
-            mTvTitle.setText("查询结果");
-
-            if(meterBeen != null && meterBeen.size() > 0) {
+        public void onNext(@NonNull List<ScatteredNewMeterBean> beanList) {
+            if(beanList != null && beanList.size() > 0) {
                 mTbUpAndDowm.setChecked(false);
-//            for(MeterBean1 bean : meterBeen){
-//                LogUtils.i("searchMeterInfoObserver :" + bean.toString());
-//            }
-                mMeterBean1List.clear();
-                mMeterBean1List.addAll(meterBeen);
-                mFinishedAdapter.notifyDataSetChanged();
+                mScatteredNewMeterBeanList.clear();
+                mScatteredNewMeterBeanList.addAll(beanList);
+
+                mScatteredNewMeterAdapter.notifyDataSetChanged();
             }else {
                 showToast("无此用户");
             }
@@ -413,47 +387,12 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
         @Override
         public void onError(@NonNull Throwable e) {
-            LogUtils.i("searchMeterInfoObserver -- e.getMessage()" + e.getMessage());
+            LogUtils.i("searchScatteredNewMeterObserver -- e.getMessage()" + e.getMessage());
         }
 
         @Override
         public void onComplete(){
 
-            taskPresenter1.getCollectorList(getCollctorListObserver, MyApplication.getCurrentMeteringSection());
-        }
-    };
-
-    /**
-     * 获取采集器列表
-     *
-     * rxjava -- 主线程
-     */
-    Observer getCollctorListObserver = new Observer<List<CollectorNumberBean>>() {
-
-        @Override
-        public void onSubscribe(@NonNull Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(@NonNull List<CollectorNumberBean> collectorNumberBeen) {
-            ArrayList<CollectorNumberBean> collectorNumberBeanList = (ArrayList<CollectorNumberBean>) collectorNumberBeen;
-
-            if(mFinishedAdapter!=null){
-                mFinishedAdapter.setCollectorNumberBeanList(collectorNumberBeanList);
-            }
-        }
-
-        @Override
-        public void onError(@NonNull Throwable e) {
-            LogUtils.i("getCollctorObserver e.getMessage()" + e.getMessage());
-            closeDialog();
-        }
-
-
-        @Override
-        public void onComplete() {
-            //closeDialog();
         }
     };
 
@@ -476,16 +415,8 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
                 search();
                 break;
 
-            case R.id.btn_oldAssetsNumber:
-                mCurrentScanBtnId = R.id.btn_oldAssetsNumber;
-                if(mBarcode2DWithSoft != null) {
-                    mBarcode2DWithSoft.stopScan();
-                    mBarcode2DWithSoft.scan();                              //启动扫描
-                }
-                break;
-
-            case R.id.btn_newAssetsNumber:
-                mCurrentScanBtnId = R.id.btn_newAssetsNumber;
+            case R.id.btn_assetsNumber:
+                mCurrentScanBtnId = R.id.btn_assetsNumber;
                 if(mBarcode2DWithSoft != null) {
                     mBarcode2DWithSoft.stopScan();
                     mBarcode2DWithSoft.scan();                              //启动扫描
@@ -505,27 +436,4 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_BACK) {                 // 如果点击的是"返回按钮"
-
-            if(mLlayoutParent.getVisibility() == View.VISIBLE && mIvBg.getVisibility() == View.VISIBLE){   // 缩小、隐藏那个预览布局
-                mIvBg.startAnimation(out);
-                setTitleIsShow(View.VISIBLE);
-                mPvBgImg.animaTo(mInfo, new Runnable() {
-                    @Override
-                    public void run() {
-                        mLlayoutParent.setVisibility(View.GONE);
-
-                    }
-                });
-                return true;
-            }
-
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 }

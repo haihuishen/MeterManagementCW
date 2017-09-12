@@ -78,6 +78,16 @@
                         android:text="扫描\n输入"
                         android:textColor="@drawable/btn_text_color_blue_w"
                         android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/btn_oldAssetNumbers_manualOperation"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="手动\n输入"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
                 </LinearLayout>
 
 
@@ -262,6 +272,16 @@
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/btn_bg_blue"
                     android:text="红外\n读取"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/btn_oldElectricity_manualOperation"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text="手动\n输入"
                     android:textColor="@drawable/btn_text_color_blue_w"
                     android:textSize="12dp" />
             </LinearLayout>

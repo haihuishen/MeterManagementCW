@@ -350,4 +350,14 @@ public interface TaskPresenter1 {
     List<MeterBean1> searchAcceptance(Observer observer, HashMap<String, String> conditionMap);
 
 
+    /**
+     * 保存 "零散新装"
+     *
+     * @param observer
+     * @param values
+     * @param newAssetNumbers           新表资产编号
+     *
+     * @return
+     */
+    void saveScatteredNewMeterActivity(Observer observer, ContentValues values, String newAssetNumbers);
 }

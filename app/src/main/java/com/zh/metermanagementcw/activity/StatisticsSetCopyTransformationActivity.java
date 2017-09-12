@@ -271,7 +271,7 @@ public class StatisticsSetCopyTransformationActivity extends BaseActivity implem
             int oldAddrAndassetsNumberMismatchesCount = 0;
             int newAddrAndassetsNumberMismatchesCount = 0;
 
-            LogUtils.i("meterBeen.size()" + meterBeen.size());
+            //LogUtils.i("meterBeen.size()" + meterBeen.size());
 
             MyApplication.setMeterBean1List(meterBeen);
 

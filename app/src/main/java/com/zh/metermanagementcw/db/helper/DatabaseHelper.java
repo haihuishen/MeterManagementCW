@@ -193,6 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)	 -- 2017/09/04
 
 				"picPath varchar(1000)" +									// 拍照图片的路径(集中器)		 -- 2017/09/04
+
 				")");
 
 		/** 变压器 */
@@ -205,6 +206,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 				"picPath varchar(1000)" +									// 拍照图片的路径(变压器)		 -- 2017/09/04
 				")");
+
+
+//		/** 零散新装  -- 2017/09/12 */
+//		db.execSQL("create table if not exists scatterednewmeter(" +
+//				"_id integer primary key autoincrement," +
+//
+//				"userNumber varchar(50) not null," +						// 用户编号
+//				"userName varchar(50)," +									// 用户名称
+//				"userAddr varchar(50)," +									// 用户地址
+//				"userPhone varchar(50)," +									// 用户电话
+//
+//				"newAddr varchar(50)," +									// 新表表地址(需扫描)
+//				"newAssetNumbers varchar(50)," +							// 新表资产编号(需扫描)
+//				"newElectricity varchar(50)," +								// 新电能表止码-电量(需扫描)
+//
+//				"meterFootNumbers varchar(500)," +							// 表脚封扣（条码）
+//				"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)
+//
+//				"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）
+//				"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)
+//
+//				"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）
+//				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)
+//
+//				"picPath varchar(1000)" +									// 拍照图片的路径(新装电表)
+//
+//				")");
 
 	}
 
@@ -221,10 +249,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		System.out.println("DBHelper onUpgrade");
 
 		String sql1,sql2,sql3,sql4,sql5,sql6;
-		String sql7,sql8,sql9,sql10,sql11,sql12;
-		String sql13,sql14,sql15,sql16,sql17,sql18;
-		String sql19,sql20;
-		String sql21,sql22,sql23,sql24,sql25,sql26;
 
 		try {
 			// // 备份数据库到SD卡的/aDBTest/DBTest.db
@@ -240,71 +264,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //					db.execSQL(sql2);
 						//LogUtils.sysout("==========升级数据库", "");
 						break;
-
-					case 4:								// 2017/09/05
-
-						sql1 = " ALTER TABLE meterinfo1 ADD COLUMN meterFootNumbers varchar(500)";
-						sql2 = " ALTER TABLE meterinfo1 ADD COLUMN meterFootPicPath varchar(500)";
-						sql3 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyNumbers1 varchar(500)";
-						sql4 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyPicPath1 varchar(500)";
-						sql5 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyNumbers2 varchar(500)";
-						sql6 = " ALTER TABLE meterinfo1 ADD COLUMN meterBodyPicPath2 varchar(500)";
-
-
-						sql7 = " ALTER TABLE concentrator ADD COLUMN collectorFootNumbers varchar(500)";
-						sql8 = " ALTER TABLE concentrator ADD COLUMN collectorFootPicPath varchar(500)";
-						sql9 = " ALTER TABLE concentrator ADD COLUMN collectorBodyNumbers1 varchar(500)";
-						sql10 = " ALTER TABLE concentrator ADD COLUMN collectorBodyPicPath1 varchar(500)";
-						sql11 = " ALTER TABLE concentrator ADD COLUMN collectorBodyNumbers2 varchar(500)";
-						sql12 = " ALTER TABLE concentrator ADD COLUMN collectorBodyPicPath2 varchar(500)";
-
-						sql13 = " ALTER TABLE concentrator ADD COLUMN meterFootNumbers varchar(500)";
-						sql14 = " ALTER TABLE concentrator ADD COLUMN meterFootPicPath varchar(500)";
-						sql15 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers1 varchar(500)";
-						sql16 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath1 varchar(500)";
-						sql17 = " ALTER TABLE concentrator ADD COLUMN meterBodyNumbers2 varchar(500)";
-						sql18 = " ALTER TABLE concentrator ADD COLUMN meterBodyPicPath2 varchar(500)";
-
-						sql19 = " ALTER TABLE concentrator ADD COLUMN picPath varchar(1000)";
-						sql20 = " ALTER TABLE transformer ADD COLUMN picPath varchar(1000)";
-
-						sql21 = " ALTER TABLE collectornumber ADD COLUMN collectorFootNumbers varchar(500)";
-						sql22 = " ALTER TABLE collectornumber ADD COLUMN collectorFootPicPath varchar(500)";
-						sql23 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyNumbers1 varchar(500)";
-						sql24 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyPicPath1 varchar(500)";
-						sql25 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyNumbers2 varchar(500)";
-						sql26 = " ALTER TABLE collectornumber ADD COLUMN collectorBodyPicPath2 varchar(500)";
-
-
-						db.execSQL(sql1);
-						db.execSQL(sql2);
-						db.execSQL(sql3);
-						db.execSQL(sql4);
-						db.execSQL(sql5);
-						db.execSQL(sql6);
-						db.execSQL(sql7);
-						db.execSQL(sql8);
-						db.execSQL(sql9);
-						db.execSQL(sql10);
-						db.execSQL(sql11);
-						db.execSQL(sql12);
-						db.execSQL(sql13);
-						db.execSQL(sql14);
-						db.execSQL(sql15);
-						db.execSQL(sql16);
-						db.execSQL(sql17);
-						db.execSQL(sql18);
-						db.execSQL(sql19);
-						db.execSQL(sql20);
-
-						db.execSQL(sql21);
-						db.execSQL(sql22);
-						db.execSQL(sql23);
-						db.execSQL(sql24);
-						db.execSQL(sql25);
-						db.execSQL(sql26);
-
-						break;
+//
+//					case 5:								// 2017/09/12
+//
+//						sql1 = "create table if not exists scatterednewmeter(" +
+//								"_id integer primary key autoincrement," +
+//								"userNumber varchar(50) not null," +						// 用户编号
+//								"userName varchar(50)," +									// 用户名称
+//								"userAddr varchar(50)," +									// 用户地址
+//								"userPhone varchar(50)," +									// 用户电话
+//								"newAddr varchar(50)," +									// 新表表地址(需扫描)
+//								"newAssetNumbers varchar(50)," +							// 新表资产编号(需扫描)
+//								"newElectricity varchar(50)," +								// 新电能表止码-电量(需扫描)
+//								"meterFootNumbers varchar(500)," +							// 表脚封扣（条码）
+//								"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)
+//								"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）
+//								"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)
+//								"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）
+//								"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)
+//								"picPath varchar(1000)" +									// 拍照图片的路径(新装电表)
+//								")";
+//
+//						db.execSQL(sql1);
+//
+//						break;
 
 					default:
 						break;

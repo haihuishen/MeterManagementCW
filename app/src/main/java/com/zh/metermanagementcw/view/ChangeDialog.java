@@ -19,6 +19,9 @@ import com.zh.metermanagementcw.R;
  */
 public abstract class ChangeDialog extends AlertDialog implements View.OnClickListener{
 
+    public static final String HINT_ADDR = "请输入表地址";
+    public static final String HINT_ASSETNUMBER = "请输入旧表资产编号";
+
     public static final int EDIT_NUMBER = 1;
     public static final int EDIT_TEXT = 2;
 
@@ -30,6 +33,7 @@ public abstract class ChangeDialog extends AlertDialog implements View.OnClickLi
     private Button mBtnCancel;
 
     private String mTitle = "";                   // 标题
+    private String mHint = HINT_ADDR;          // 提示
     private int mInputType = 1;
 
     private int mEtAddrVisibility = View.VISIBLE;
@@ -72,6 +76,7 @@ public abstract class ChangeDialog extends AlertDialog implements View.OnClickLi
     private void initData(){
         mTvTitle.setText(mTitle);
 
+        mEtAddr.setHint(mHint);
         mEtAddr.setVisibility(mEtAddrVisibility);
         mEtElectricity.setVisibility(mEtElectricityVisibility);
 
@@ -115,6 +120,26 @@ public abstract class ChangeDialog extends AlertDialog implements View.OnClickLi
             mTvTitle.setText(title);
         else
             mTitle = title;
+    }
+
+    /**
+     * 设置"资产编号"的提示内容
+     * @param hint 提示内容
+     */
+    public void setAssetNumber(String hint){
+        if(mEtAddr != null)                // 在子类中，new 了窗口，马上设置这个,会是"空指针";因为 .show() 之后才 onCreate
+            mEtAddr.setHint(hint);
+        else
+            mHint = hint;
+    }
+
+    /**
+     * 获取资产编号编辑框
+     *
+     * @return
+     */
+    public EditText getEtAssetNumber(){
+        return mEtAddr;
     }
 
 //    /**
@@ -189,7 +214,7 @@ public abstract class ChangeDialog extends AlertDialog implements View.OnClickLi
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.btn_confirm:
-                confirm(this, mEtAddr.getText().toString(), mEtElectricity.getText().toString());
+                confirm(this, mEtAddr.getText().toString().trim(), mEtElectricity.getText().toString().trim());
                 break;
             case R.id.btn_cancel:
                 cancel(this);

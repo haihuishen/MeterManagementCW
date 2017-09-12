@@ -199,6 +199,9 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
         FilesUtils.createFile(this, Constant.ScatteredReplaceMeter_PATH);               // .../电表换装/零散换表/
         FilesUtils.createFile(this, Constant.ScatteredNewMeter_PATH);                   // .../电表换装/零散新装/
 
+        FilesUtils.createFile(this, Constant.ScatteredNewMeter_ExportInfo_PATH);        // .../电表换装/零散新装/导出数据
+        FilesUtils.createFile(this, Constant.ScatteredNewMeter_ExportExcel_Day_PATH);   // .../电表换装/零散新装/导出数据/导出Excel
+        FilesUtils.createFile(this, Constant.ScatteredNewMeter_ExportPhone_Day_PATH);   // .../电表换装/零散新装/导出数据/导出图片
 
 
         initSrc(Constant.DIRECTIONSFORUSEIMAGE_PATH, "no_preview_picture.png");

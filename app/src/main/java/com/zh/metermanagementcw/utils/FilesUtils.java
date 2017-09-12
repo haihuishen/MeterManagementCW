@@ -226,6 +226,12 @@ public class FilesUtils {
 
     public static void broadCreateFile(Context context, File file){
 
+        // 因为如果删除图片要广播的时候 -- 这里就。。。
+        // if(!file.exists()){
+        //  Log.i("shen", "文件不存在！！！-- " + file.getAbsolutePath());
+        //  return;
+        // }
+
         try {
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE); // 在电脑上马上可以看到创建的文件
             Uri uri = Uri.fromFile(file);
@@ -242,10 +248,12 @@ public class FilesUtils {
     public static void broadCreateFile(Context context, String filePath){
 
         File file = new File(filePath);
-        if(!file.exists()){
-            //Log.i("shen", "文件不存在！！！-- " + file.getAbsolutePath());
-            return;
-        }
+        // 因为如果删除图片要广播的时候 -- 这里就。。。
+        // if(!file.exists()){
+        //  Log.i("shen", "文件不存在！！！-- " + file.getAbsolutePath());
+        //  return;
+        // }
+
         try {
             Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE); // 在电脑上马上可以看到创建的文件
             Uri uri = Uri.fromFile(file);

@@ -1734,6 +1734,29 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
         return null;
     }
 
+    @Override
+    public void saveScatteredNewMeterActivity(Observer observer, final ContentValues values, final String newAssetNumbers) {
+        Observable.just("")
+                .observeOn(Schedulers.io())
+                .map(new Function<String, Object>() {
+                    @Override
+                    public Object apply(@NonNull String s) throws Exception {
+
+                        long i = mTableEx.Update(Constant.TABLE_SCATTEREDNEWMETER, values,
+                                Constant.SCATTEREDNEWMETER.newAssetNumbers.toString() + "=?",
+                                new String[]{newAssetNumbers});
+
+                        if(i <= 0){
+                            i = mTableEx.Add(Constant.TABLE_SCATTEREDNEWMETER, values);  // 返回值是  -1  失败
+                        }
+
+                        return i;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
 
     /**
      * 从游标中获取值

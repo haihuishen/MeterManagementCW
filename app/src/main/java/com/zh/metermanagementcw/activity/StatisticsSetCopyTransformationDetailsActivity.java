@@ -176,7 +176,7 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
             for(MeterBean1 bean : MyApplication.getMeterBean1List()){
                 if(bean.isFinish()){
                     beanList.add(bean);
-                    LogUtils.i("bean--isFinish" + bean.toString());
+                    // LogUtils.i("bean--isFinish" + bean.toString());
                 }
             }
             mListView.setVisibility(View.VISIBLE);
@@ -273,8 +273,6 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
         }else if(type.equals(Constant.type_assetsNumber_Mismatches)){               // 有表,无户
 
             assetNumberBeanList = MyApplication.getAssetNumberBeanList();
-
-            //LogUtils.i("assetNumberBeanList.size():" + assetNumberBeanList.size());
             mListView.setVisibility(View.GONE);
             mOtherListView.setVisibility(View.VISIBLE);
 
@@ -452,8 +450,8 @@ public class StatisticsSetCopyTransformationDetailsActivity extends BaseActivity
         public void onNext(@NonNull List<CollectorNumberBean> collectorNumberBeen) {
             mCollectorNumberBeanList = (ArrayList<CollectorNumberBean>) collectorNumberBeen;
 
-            LogUtils.i("mCollectorNumberBeanList.size()" +
-                    (mCollectorNumberBeanList != null ? mCollectorNumberBeanList.size() : "null"));
+            // LogUtils.i("mCollectorNumberBeanList.size()" +
+            //        (mCollectorNumberBeanList != null ? mCollectorNumberBeanList.size() : "null"));
 
             if(mFinishedAdapter!=null){
                 mFinishedAdapter.setCollectorNumberBeanList(mCollectorNumberBeanList);
