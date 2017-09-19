@@ -188,6 +188,10 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name="com.zh.metermanagementcw.activity.SearchScatteredNewMeterActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
 
         <activity android:name="com.zh.metermanagementcw.activity.StatisticsAcceptanceActivity"
             android:windowSoftInputMode="adjustPan"

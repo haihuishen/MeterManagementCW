@@ -200,8 +200,8 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 
 					case R.id.layout_query:								// 查询
 						//showToast("查询！");
-//						intent = new Intent(getContext(), SearchAcceptanceActivity.class);
-//						startActivity(intent);
+						intent = new Intent(getContext(), SearchScatteredNewMeterActivity.class);
+						startActivity(intent);
 
 					default:
 						break;

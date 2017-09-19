@@ -8,12 +8,14 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/v_Masker">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:background="@color/shen_sky_blue"
             android:orientation="vertical">
 
@@ -22,7 +24,49 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="用户编号："
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                    <com.zh.metermanagementcw.view.ClearEditText
+                        android:id="@+id/cet_userNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_et"
+                        android:maxLines="1"
+                        android:padding="3dp"
+                        android:text=""
+                        android:textColor="@android:color/black"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -41,7 +85,7 @@
 
                     <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_userName"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="1dp"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -60,7 +104,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -79,7 +125,7 @@
 
                     <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_userAddr"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="1dp"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
@@ -98,7 +144,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="2dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -117,7 +165,7 @@
 
                     <com.zh.metermanagementcw.view.ClearEditText
                         android:id="@+id/cet_userPhone"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="1dp"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"

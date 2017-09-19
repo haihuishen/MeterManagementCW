@@ -3,6 +3,7 @@ package com.zh.metermanagementcw.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -18,9 +19,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -100,13 +103,11 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 
 
     //-------------------------------------
-    /** 隐藏的,出现幽灵事件了 -- 编辑框*/
-    private ClearEditText mCEtGone;
 
 
     /** 旧表资产编号 -- 编辑框*/
     private ClearEditText mCEtOldAssetNumbers;
-    /** 旧表资产编号(手动输入) -- 按钮 -- btn_oldAssetNumbers_manualOperation*/
+    /** 旧表资产编号(手动输入)-- 查询 -- 按钮 -- btn_oldAssetNumbers_manualOperation*/
     private Button mBtnOldAssetNumbersManualOperation;
     /** 旧表资产编号(扫描) -- 按钮*/
     private Button mBtnOldAssetNumbers;
@@ -128,8 +129,6 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
     private ClearEditText mCEtOldElectricity;
     /** 旧电能表止码(扫描) -- 按钮*/
     private Button mBtnOldElectricity;
-    /** 旧电能表止码(手动输入) -- 按钮 -- btn_oldElectricity_manualOperation*/
-    private Button mBtnOldElectricityManualOperation;
 
     /** 新电能表表地址 -- 编辑框*/
     private ClearEditText mCEtNewAddr;
@@ -317,26 +316,36 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
                                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                                              @Override
                                                              public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                                                 ChangeDialog myDialog = new ChangeDialog(ReplaceMeterActivity1.this) {  // 注意这个上下文，用父的，还是自己的，全局的
+//                                                                 ChangeDialog myDialog = new ChangeDialog(ReplaceMeterActivity1.this) {  // 注意这个上下文，用父的，还是自己的，全局的
+//
+//                                                                     @Override
+//                                                                     public void confirm(ChangeDialog changeDialog, String addr, String electricity) {
+//
+//                                                                         mCEtOldAddr.setText(addr);
+//                                                                         mCEtOldElectricity.setText(electricity);
+//
+//                                                                         changeDialog.dismiss();
+//                                                                     }
+//
+//                                                                     @Override
+//                                                                     public void cancel(ChangeDialog changeDialog) {
+//
+//                                                                         changeDialog.dismiss();
+//                                                                     }
+//                                                                 };
+//
+//                                                                 myDialog.setTitle("手动输入");
+//                                                                 myDialog.show();
 
-                                                                     @Override
-                                                                     public void confirm(ChangeDialog changeDialog, String addr, String electricity) {
+                                                                 if(TextUtils.isEmpty(mCEtOldAddr.getText().toString().trim())){
 
-                                                                         mCEtOldAddr.setText(addr);
-                                                                         mCEtOldElectricity.setText(electricity);
+                                                                     showSoftInputFromWindow(ReplaceMeterActivity1.this,
+                                                                             mCEtOldAddr);
 
-                                                                         changeDialog.dismiss();
-                                                                     }
-
-                                                                     @Override
-                                                                     public void cancel(ChangeDialog changeDialog) {
-
-                                                                         changeDialog.dismiss();
-                                                                     }
-                                                                 };
-
-                                                                 myDialog.setTitle("手动输入");
-                                                                 myDialog.show();
+                                                                 }else {
+                                                                     showSoftInputFromWindow(ReplaceMeterActivity1.this,
+                                                                             mCEtOldElectricity);
+                                                                 }
 
                                                                  sweetAlertDialog.dismiss();
                                                              }
@@ -428,8 +437,6 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
     @Override
     public void initView() {
 
-        mCEtGone = (ClearEditText) findViewById(R.id.cet_gone);
-
         mCEtOldAssetNumbers = (ClearEditText) findViewById(R.id.cet_oldAssetNumbers);
         mBtnOldAssetNumbers = (Button) findViewById(R.id.btn_oldAssetNumbers);
         mBtnOldAssetNumbersManualOperation = (Button) findViewById(R.id.btn_oldAssetNumbers_manualOperation);
@@ -443,7 +450,6 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
         mCEtOldAddr = (ClearEditText) findViewById(R.id.cet_oldAddr);
         mCEtOldElectricity = (ClearEditText) findViewById(R.id.cet_oldElectricity);
         mBtnOldElectricity = (Button) findViewById(R.id.btn_oldElectricity);
-        mBtnOldElectricityManualOperation = (Button) findViewById(R.id.btn_oldElectricity_manualOperation);
 
         mCEtNewAddr = (ClearEditText) findViewById(R.id.cet_newAddr);
         mCEtNewAssetNumbersScan = (ClearEditText) findViewById(R.id.cet_newAssetNumbersScan);
@@ -494,7 +500,6 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 
         mBtnOldAssetNumbers.setOnClickListener(this);
         mBtnOldElectricity.setOnClickListener(this);
-        mBtnOldElectricityManualOperation.setOnClickListener(this);
         mBtnOldAssetNumbersManualOperation.setOnClickListener(this);
         mBtnNewAssetNumbersScan.setOnClickListener(this);
         mBtnNewElectricity.setOnClickListener(this);
@@ -625,22 +630,23 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 
         LogUtils.i("mMeteringSection:" + mMeteringSection);
         // 从数据库中加载数据
+        mBtnOldAssetNumbersManualOperation.setEnabled(false);
         taskPresenter1.readDbToBean(readObserver, mMeteringSection);
 
 
-        mCEtOldAssetNumbers.setEnabled(false);
+        //mCEtOldAssetNumbers.setEnabled(false);
 
         mTvUserName.setText("");
         mTvUserNumber.setText("");
         mTvUserAddr.setText("");
         mTvUserPhone.setText("");
 
-        mCEtOldAddr.setEnabled(false);
-        mCEtOldElectricity.setEnabled(false);
+        //mCEtOldAddr.setEnabled(false);
+        //mCEtOldElectricity.setEnabled(false);
 
-        mCEtNewAddr.setEnabled(false);
-        mCEtNewElectricity.setEnabled(false);
-        mCEtNewAssetNumbersScan.setEnabled(false);
+        //mCEtNewAddr.setEnabled(false);
+        //mCEtNewElectricity.setEnabled(false);
+        //mCEtNewAssetNumbersScan.setEnabled(false);
 
 
         //------------------------- 拍照 ----------------------------------
@@ -825,184 +831,323 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 
                 break;
 
+//            case R.id.btn_oldAssetNumbers_manualOperation:              // 手动输入 -- 旧资产编号
+//
+//                ChangeDialog myDialog = new ChangeDialog(getContext()) {  // 注意这个上下文，用父的，还是自己的，全局的
+//
+//                    @Override
+//                    public void confirm(ChangeDialog changeDialog, final String addr, String electricity) {
+//
+//                        if(TextUtils.isEmpty(addr)){
+//                            // showToast("请输入旧表资产编号");
+//                            // changeDialog.dismiss();
+//                            VibratorUtil.Vibrate(ReplaceMeterActivity1.this, new long[]{100,100,100,100}, false);   //震动100ms
+//
+//                            Animation anim = AnimationUtils.loadAnimation(ReplaceMeterActivity1.this, R.anim.myanim);
+//                            changeDialog.getEtAssetNumber().startAnimation(anim);
+//                            return;
+//                        }
+//                        final String assetNumbers = addr;
+//                        mCEtOldAssetNumbers.setText(assetNumbers);
+//
+//
+//                        boolean isFind = false;
+//
+//                        for(MeterBean1 bean : MyApplication.getMeterBean1List()){
+//                            //LogUtils.i("bean.toString()" + bean.toString());
+//                            //LogUtils.i("data" + scanData);
+//
+//                            if(bean.getOldAssetNumbers().equals(assetNumbers)){
+//
+//                                //LogUtils.i("bean.toString()" + bean.toString());
+//                                mMeterBean = bean;
+//
+//                                mTvUserName.setText(bean.getUserName());
+//                                mTvUserNumber.setText(bean.getUserNumber());
+//                                mTvUserAddr.setText(bean.getUserAddr());
+//                                mTvUserPhone.setText(bean.getUserPhone());
+//
+//                                mCEtOldAddr.setText(bean.getOldAddr());
+//                                mCEtOldElectricity.setText(bean.getOldElectricity());
+//
+//                                mCEtNewAddr.setText(bean.getNewAddr());
+//                                mCEtNewElectricity.setText(bean.getNewElectricity());
+//                                mCEtNewAssetNumbersScan.setText(bean.getNewAssetNumbersScan());
+//
+//                                //---------------------------------封扣---------------------------------------
+//
+//                                mCEtMeterFootNumbersScan.setText(bean.getMeterFootNumbers());
+//                                mCEtMeterBodyNumbersScan1.setText(bean.getMeterBodyNumbers1());
+//                                mCEtMeterBodyNumbersScan2.setText(bean.getMeterBodyNumbers2());
+//
+//                                if(StringUtils.isNotEmpty(mMeterBean.getMeterFootPicPath()) &&
+//                                        new File(mMeterBean.getMeterFootPicPath()).exists() ){
+//                                    mPvCameraMeterFoot.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterFootPicPath()));
+//                                    mRLayoutMeterFoot.setVisibility(View.VISIBLE);
+//                                    mIBtnCameraMeterFoot.setVisibility(View.GONE);
+//                                }else {
+//                                    mRLayoutMeterFoot.setVisibility(View.GONE);
+//                                    mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
+//                                }
+//
+//                                if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath1()) &&
+//                                        new File(mMeterBean.getMeterBodyPicPath1()).exists() ){
+//                                    mPvCameraMeterBody1.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath1()));
+//                                    mRLayoutMeterBody1.setVisibility(View.VISIBLE);
+//                                    mIBtnCameraMeterBody1.setVisibility(View.GONE);
+//                                }else {
+//                                    mRLayoutMeterBody1.setVisibility(View.GONE);
+//                                    mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
+//                                }
+//
+//                                if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath2()) &&
+//                                        new File(mMeterBean.getMeterBodyPicPath2()).exists() ){
+//                                    mPvCameraMeterBody2.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath2()));
+//                                    mRLayoutMeterBody2.setVisibility(View.VISIBLE);
+//                                    mIBtnCameraMeterBody2.setVisibility(View.GONE);
+//                                }else {
+//                                    mRLayoutMeterBody2.setVisibility(View.GONE);
+//                                    mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
+//                                }
+//
+//
+//
+//                                if(StringUtils.isEmpty(mMeterBean.getPicPath())){
+//                                    mPhotoIndex = 1;
+//                                }else {
+//                                    String path = mMeterBean.getPicPath();
+//                                    for(String tempPath : path.split(",")){
+//                                        if(!(new File(tempPath).exists())){
+//                                            path = deleteSubStr(path, tempPath);
+//                                        }
+//                                    }
+//                                    mMeterBean.setPicPath(path);
+//                                    if(StringUtils.isNotEmpty(mMeterBean.getPicPath())) {
+//                                        try {
+//                                            mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
+//                                        } catch (Exception e) {
+//                                        }
+//                                    }
+//                                    mPicAdapter.setPathList(mMeterBean.getPicPath());
+//                                }
+//
+//                                isFind = true;
+//                                mBeepManager.playSuccessful();
+//                                break;
+//                            }
+//                        }
+//
+//                        if(!isFind){
+//                            mBeepManager.playError();
+//                            SweetAlertDialog dialog = new SweetAlertDialog(ReplaceMeterActivity1.this, SweetAlertDialog.NORMAL_TYPE)
+//                                    .setTitleText("提示")
+//                                    .setContentText(assetNumbers + "\n该电表资产编码无匹配的用户，\n请通知供电所相关人员")
+//                                    .setConfirmText("确认")
+//                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                                        @Override
+//                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                                            ContentValues values = new ContentValues();
+//                                            values.put("assetNumbers", assetNumbers);
+//                                            // 只有 14位的资产编码 或是 24位的资产编码才记录 -- 添加个16位
+//                                            if(assetNumbers.length() == 14 || assetNumbers.length() == 16 || assetNumbers.length() == 24) {
+//                                                taskPresenter.addMismatchingAssetNumbers(addObserver, values);
+//                                            }
+//                                            mCEtOldAssetNumbers.setText("");
+//                                            mPicAdapter.clearPathList();
+//                                            sweetAlertDialog.dismiss();
+//                                        }
+//                                    });
+//
+//
+//                            dialog.setCancelable(false);
+//                            dialog.show();
+//                        }
+//
+//
+//                        changeDialog.dismiss();
+//                    }
+//
+//                    @Override
+//                    public void cancel(ChangeDialog changeDialog) {
+//
+//                        changeDialog.dismiss();
+//                    }
+//                };
+//
+//                myDialog.setTitle("手动输入");
+//                myDialog.setAssetNumber(ChangeDialog.HINT_ASSETNUMBER);
+//                myDialog.setEtElectricityVisibility(View.GONE);
+//                myDialog.show();
+//
+//                break;
+
             case R.id.btn_oldAssetNumbers_manualOperation:              // 手动输入 -- 旧资产编号
 
-                ChangeDialog myDialog = new ChangeDialog(getContext()) {  // 注意这个上下文，用父的，还是自己的，全局的
+                mTvUserName.setText("");
+                mTvUserNumber.setText("");
+                mTvUserAddr.setText("");
+                mTvUserPhone.setText("");
 
-                    @Override
-                    public void confirm(ChangeDialog changeDialog, final String addr, String electricity) {
+                mCEtOldAddr.setText("");
+                mCEtOldElectricity.setText("");
 
-                        if(TextUtils.isEmpty(addr)){
-                            // showToast("请输入旧表资产编号");
-                            // changeDialog.dismiss();
-                            VibratorUtil.Vibrate(ReplaceMeterActivity1.this, new long[]{100,100,100,100}, false);   //震动100ms
+                mCEtNewAddr.setText("");
+                mCEtNewElectricity.setText("");
+                mCEtNewAssetNumbersScan.setText("");
 
-                            Animation anim = AnimationUtils.loadAnimation(ReplaceMeterActivity1.this, R.anim.myanim);
-                            changeDialog.getEtAssetNumber().startAnimation(anim);
-                            return;
-                        }
-                        final String assetNumbers = addr;
-                        mCEtOldAssetNumbers.setText(assetNumbers);
+                //---------------------------------封扣---------------------------------------
+                mCEtMeterFootNumbersScan.setText("");
+                mRLayoutMeterFoot.setVisibility(View.GONE);
+                mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
 
+                mCEtMeterBodyNumbersScan1.setText("");
+                mRLayoutMeterBody1.setVisibility(View.GONE);
+                mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
 
-                        boolean isFind = false;
+                mCEtMeterBodyNumbersScan2.setText("");
+                mRLayoutMeterBody2.setVisibility(View.GONE);
+                mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
 
-                        for(MeterBean1 bean : MyApplication.getMeterBean1List()){
-                            //LogUtils.i("bean.toString()" + bean.toString());
-                            //LogUtils.i("data" + scanData);
+                mPicAdapter.clearPathList();
 
-                            if(bean.getOldAssetNumbers().equals(assetNumbers)){
+                //------------------------------------------------
+                mBitmap = ImageFactory.getBitmap(Constant.CACHE_IMAGE_PATH + "no_preview_picture.png");
 
-                                //LogUtils.i("bean.toString()" + bean.toString());
-                                mMeterBean = bean;
+//                mPvCamaraPhoto.disenable();// 把PhotoView当普通的控件，把触摸功能关掉
+//                mPvCamaraPhoto.setImageBitmap(mBitmap);
 
-                                mTvUserName.setText(bean.getUserName());
-                                mTvUserNumber.setText(bean.getUserNumber());
-                                mTvUserAddr.setText(bean.getUserAddr());
-                                mTvUserPhone.setText(bean.getUserPhone());
+                mPvBgImg.setImageBitmap(mBitmap);
+                mPvBgImg.enable();
 
-                                mCEtOldAddr.setText(bean.getOldAddr());
-                                mCEtOldElectricity.setText(bean.getOldElectricity());
+                mCurrentPicName = "";
+                //------------------------------------------------
 
-                                mCEtNewAddr.setText(bean.getNewAddr());
-                                mCEtNewElectricity.setText(bean.getNewElectricity());
-                                mCEtNewAssetNumbersScan.setText(bean.getNewAssetNumbersScan());
+                final String assetNumbers = mCEtOldAssetNumbers.getText().toString().trim();
+                if(TextUtils.isEmpty(assetNumbers)){
+                    // showToast("请输入旧表资产编号");
+                    VibratorUtil.Vibrate(ReplaceMeterActivity1.this, new long[]{100,100,100,100}, false);   //震动100ms
 
-                                //---------------------------------封扣---------------------------------------
-
-                                mCEtMeterFootNumbersScan.setText(bean.getMeterFootNumbers());
-                                mCEtMeterBodyNumbersScan1.setText(bean.getMeterBodyNumbers1());
-                                mCEtMeterBodyNumbersScan2.setText(bean.getMeterBodyNumbers2());
-
-                                if(StringUtils.isNotEmpty(mMeterBean.getMeterFootPicPath()) &&
-                                        new File(mMeterBean.getMeterFootPicPath()).exists() ){
-                                    mPvCameraMeterFoot.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterFootPicPath()));
-                                    mRLayoutMeterFoot.setVisibility(View.VISIBLE);
-                                    mIBtnCameraMeterFoot.setVisibility(View.GONE);
-                                }else {
-                                    mRLayoutMeterFoot.setVisibility(View.GONE);
-                                    mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
-                                }
-
-                                if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath1()) &&
-                                        new File(mMeterBean.getMeterBodyPicPath1()).exists() ){
-                                    mPvCameraMeterBody1.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath1()));
-                                    mRLayoutMeterBody1.setVisibility(View.VISIBLE);
-                                    mIBtnCameraMeterBody1.setVisibility(View.GONE);
-                                }else {
-                                    mRLayoutMeterBody1.setVisibility(View.GONE);
-                                    mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
-                                }
-
-                                if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath2()) &&
-                                        new File(mMeterBean.getMeterBodyPicPath2()).exists() ){
-                                    mPvCameraMeterBody2.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath2()));
-                                    mRLayoutMeterBody2.setVisibility(View.VISIBLE);
-                                    mIBtnCameraMeterBody2.setVisibility(View.GONE);
-                                }else {
-                                    mRLayoutMeterBody2.setVisibility(View.GONE);
-                                    mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
-                                }
-
-
-
-                                if(StringUtils.isEmpty(mMeterBean.getPicPath())){
-                                    mPhotoIndex = 1;
-                                }else {
-                                    String path = mMeterBean.getPicPath();
-                                    for(String tempPath : path.split(",")){
-                                        if(!(new File(tempPath).exists())){
-                                            path = deleteSubStr(path, tempPath);
-                                        }
-                                    }
-                                    mMeterBean.setPicPath(path);
-                                    if(StringUtils.isNotEmpty(mMeterBean.getPicPath())) {
-                                        try {
-                                            mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
-                                        } catch (Exception e) {
-                                        }
-                                    }
-                                    mPicAdapter.setPathList(mMeterBean.getPicPath());
-                                }
-
-                                isFind = true;
-                                mBeepManager.playSuccessful();
-                                break;
-                            }
-                        }
-
-                        if(!isFind){
-                            mBeepManager.playError();
-                            SweetAlertDialog dialog = new SweetAlertDialog(ReplaceMeterActivity1.this, SweetAlertDialog.NORMAL_TYPE)
-                                    .setTitleText("提示")
-                                    .setContentText(assetNumbers + "\n该电表资产编码无匹配的用户，\n请通知供电所相关人员")
-                                    .setConfirmText("确认")
-                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                        @Override
-                                        public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                            ContentValues values = new ContentValues();
-                                            values.put("assetNumbers", assetNumbers);
-                                            // 只有 14位的资产编码 或是 24位的资产编码才记录 -- 添加个16位
-                                            if(assetNumbers.length() == 14 || assetNumbers.length() == 16 || assetNumbers.length() == 24) {
-                                                taskPresenter.addMismatchingAssetNumbers(addObserver, values);
-                                            }
-                                            mCEtOldAssetNumbers.setText("");
-                                            mPicAdapter.clearPathList();
-                                            sweetAlertDialog.dismiss();
-                                        }
-                                    });
-
-
-                            dialog.setCancelable(false);
-                            dialog.show();
-                        }
-
-
-                        changeDialog.dismiss();
-                    }
-
-                    @Override
-                    public void cancel(ChangeDialog changeDialog) {
-
-                        changeDialog.dismiss();
-                    }
-                };
-
-                myDialog.setTitle("手动输入");
-                myDialog.setAssetNumber(ChangeDialog.HINT_ASSETNUMBER);
-                myDialog.setEtElectricityVisibility(View.GONE);
-                myDialog.show();
-
-                break;
-
-            case R.id.btn_oldElectricity_manualOperation:              // 手动输入 -- 电表地址、止码
-                if(TextUtils.isEmpty(mCEtOldAssetNumbers.getText().toString().trim())){
-                    showToast("请输入--旧资产编号");
+                    Animation anim = AnimationUtils.loadAnimation(ReplaceMeterActivity1.this, R.anim.myanim);
+                    mCEtOldAssetNumbers.startAnimation(anim);
                     return;
                 }
 
-                ChangeDialog myDialog1 = new ChangeDialog(ReplaceMeterActivity1.this) {  // 注意这个上下文，用父的，还是自己的，全局的
+                boolean isFind = false;
 
-                    @Override
-                    public void confirm(ChangeDialog changeDialog, String addr, String electricity) {
+                for(MeterBean1 bean : MyApplication.getMeterBean1List()){
+                    //LogUtils.i("bean.toString()" + bean.toString());
+                    //LogUtils.i("data" + scanData);
 
-                        mCEtOldAddr.setText(addr);
-                        mCEtOldElectricity.setText(electricity);
+                    if(bean.getOldAssetNumbers().equals(assetNumbers)){
 
-                        changeDialog.dismiss();
+                        //LogUtils.i("bean.toString()" + bean.toString());
+                        mMeterBean = bean;
+
+                        mTvUserName.setText(bean.getUserName());
+                        mTvUserNumber.setText(bean.getUserNumber());
+                        mTvUserAddr.setText(bean.getUserAddr());
+                        mTvUserPhone.setText(bean.getUserPhone());
+
+                        mCEtOldAddr.setText(bean.getOldAddr());
+                        mCEtOldElectricity.setText(bean.getOldElectricity());
+
+                        mCEtNewAddr.setText(bean.getNewAddr());
+                        mCEtNewElectricity.setText(bean.getNewElectricity());
+                        mCEtNewAssetNumbersScan.setText(bean.getNewAssetNumbersScan());
+
+                        //---------------------------------封扣---------------------------------------
+
+                        mCEtMeterFootNumbersScan.setText(bean.getMeterFootNumbers());
+                        mCEtMeterBodyNumbersScan1.setText(bean.getMeterBodyNumbers1());
+                        mCEtMeterBodyNumbersScan2.setText(bean.getMeterBodyNumbers2());
+
+                        if(StringUtils.isNotEmpty(mMeterBean.getMeterFootPicPath()) &&
+                                new File(mMeterBean.getMeterFootPicPath()).exists() ){
+                            mPvCameraMeterFoot.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterFootPicPath()));
+                            mRLayoutMeterFoot.setVisibility(View.VISIBLE);
+                            mIBtnCameraMeterFoot.setVisibility(View.GONE);
+                        }else {
+                            mRLayoutMeterFoot.setVisibility(View.GONE);
+                            mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
+                        }
+
+                        if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath1()) &&
+                                new File(mMeterBean.getMeterBodyPicPath1()).exists() ){
+                            mPvCameraMeterBody1.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath1()));
+                            mRLayoutMeterBody1.setVisibility(View.VISIBLE);
+                            mIBtnCameraMeterBody1.setVisibility(View.GONE);
+                        }else {
+                            mRLayoutMeterBody1.setVisibility(View.GONE);
+                            mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
+                        }
+
+                        if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath2()) &&
+                                new File(mMeterBean.getMeterBodyPicPath2()).exists() ){
+                            mPvCameraMeterBody2.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath2()));
+                            mRLayoutMeterBody2.setVisibility(View.VISIBLE);
+                            mIBtnCameraMeterBody2.setVisibility(View.GONE);
+                        }else {
+                            mRLayoutMeterBody2.setVisibility(View.GONE);
+                            mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
+                        }
+
+
+
+                        if(StringUtils.isEmpty(mMeterBean.getPicPath())){
+                            mPhotoIndex = 1;
+                        }else {
+                            String path = mMeterBean.getPicPath();
+                            for(String tempPath : path.split(",")){
+                                if(!(new File(tempPath).exists())){
+                                    path = deleteSubStr(path, tempPath);
+                                }
+                            }
+                            mMeterBean.setPicPath(path);
+                            if(StringUtils.isNotEmpty(mMeterBean.getPicPath())) {
+                                try {
+                                    mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
+                                } catch (Exception e) {
+                                }
+                            }
+                            mPicAdapter.setPathList(mMeterBean.getPicPath());
+                        }
+
+                        isFind = true;
+                        mBeepManager.playSuccessful();
+                        break;
                     }
+                }
 
-                    @Override
-                    public void cancel(ChangeDialog changeDialog) {
+                if(!isFind){
+                    mBeepManager.playError();
+                    SweetAlertDialog dialog = new SweetAlertDialog(ReplaceMeterActivity1.this, SweetAlertDialog.NORMAL_TYPE)
+                            .setTitleText("提示")
+                            .setContentText(assetNumbers + "\n该电表资产编码无匹配的用户，\n请通知供电所相关人员")
+                            .setConfirmText("确认")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    ContentValues values = new ContentValues();
+                                    values.put("assetNumbers", assetNumbers);
+                                    // 只有 14位的资产编码 或是 24位的资产编码才记录 -- 添加个16位
+                                    if(assetNumbers.length() == 14 || assetNumbers.length() == 16 || assetNumbers.length() == 24) {
+                                        taskPresenter.addMismatchingAssetNumbers(addObserver, values);
+                                    }
+                                    //mCEtOldAssetNumbers.setText("");
+                                    mPicAdapter.clearPathList();
+                                    sweetAlertDialog.dismiss();
+                                }
+                            });
 
-                        changeDialog.dismiss();
-                    }
-                };
 
-                myDialog1.setTitle("手动输入");
-                myDialog1.show();
+                    dialog.setCancelable(false);
+                    dialog.show();
+                }
+
 
                 break;
+
+
 
             case R.id.btn_newAssetNumbersScan:                     // 新表资产编号(二维扫描)
                 mCurrentScanBtnId = R.id.btn_newAssetNumbersScan;
@@ -1032,10 +1177,8 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
                     else
                         addr = parseAddr(newAddr);
 
-                    if(!TextUtils.isEmpty(addr)) {
-
+                    if(!TextUtils.isEmpty(addr))
                         startReadMeter(addr);
-                    }
                     else
                         closeDialog();
                 }else{
@@ -2140,6 +2283,7 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
         public void onNext(@NonNull List<MeterBean1> meterBeen) {
             LogUtils.i("meterBeen.size()" + meterBeen.size());
             MyApplication.setMeterBean1List(meterBeen);
+            mBtnOldAssetNumbersManualOperation.setEnabled(true);
         }
 
         @Override
@@ -2286,7 +2430,6 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
                 //mBeepManager.playSuccessful();
 
                 final String scanData = barCode.trim();
-                mCEtGone.setText("");
                 if(mCurrentScanBtnId == R.id.btn_oldAssetNumbers){              // 旧表资产编号(二维扫描)
                     mCEtOldAssetNumbers.setText(scanData);
 
@@ -2404,41 +2547,138 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
 
                 }else if(mCurrentScanBtnId == R.id.btn_newAssetNumbersScan){    // 新表资产编号(二维扫描)
 
-                    mBeepManager.playSuccessful();
-                    if(scanData.length() != 24) {
+                    boolean isFind = false;
 
-                        SweetAlertDialog dialog = new SweetAlertDialog(ReplaceMeterActivity1.this, SweetAlertDialog.NORMAL_TYPE)
-                                .setTitleText("提示")
-                                .setContentText("该资产编码不是24位的是否输入")
-                                .setConfirmText("是")
-                                .setCancelText("否")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
 
-                                        mCEtNewAssetNumbersScan.setText(scanData);
-                                        mCEtNewAddr.setText(parseAddr(scanData));
-                                        mCEtNewElectricity.setText("0");
-                                        sweetAlertDialog.dismiss();
+
+                    for(MeterBean1 bean : MyApplication.getMeterBean1List()){
+                        //LogUtils.i("bean.toString()" + bean.toString());
+                        //LogUtils.i("data" + scanData);
+
+                        if(bean.getNewAssetNumbersScan().equals(scanData) &&
+                                bean.getRelaceOrAnd().equals("0")){
+
+                            //LogUtils.i("bean.toString()" + bean.toString());
+                            mMeterBean = bean;
+
+                            mCEtOldAssetNumbers.setText(bean.getOldAssetNumbers());
+                            mTvUserName.setText(bean.getUserName());
+                            mTvUserNumber.setText(bean.getUserNumber());
+                            mTvUserAddr.setText(bean.getUserAddr());
+                            mTvUserPhone.setText(bean.getUserPhone());
+
+                            mCEtOldAddr.setText(bean.getOldAddr());
+                            mCEtOldElectricity.setText(bean.getOldElectricity());
+
+                            mCEtNewAddr.setText(bean.getNewAddr());
+                            mCEtNewElectricity.setText(bean.getNewElectricity());
+                            mCEtNewAssetNumbersScan.setText(bean.getNewAssetNumbersScan());
+
+                            //---------------------------------封扣---------------------------------------
+
+                            mCEtMeterFootNumbersScan.setText(bean.getMeterFootNumbers());
+                            mCEtMeterBodyNumbersScan1.setText(bean.getMeterBodyNumbers1());
+                            mCEtMeterBodyNumbersScan2.setText(bean.getMeterBodyNumbers2());
+
+                            if(StringUtils.isNotEmpty(mMeterBean.getMeterFootPicPath()) &&
+                                    new File(mMeterBean.getMeterFootPicPath()).exists() ){
+                                mPvCameraMeterFoot.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterFootPicPath()));
+                                mRLayoutMeterFoot.setVisibility(View.VISIBLE);
+                                mIBtnCameraMeterFoot.setVisibility(View.GONE);
+                            }else {
+                                mRLayoutMeterFoot.setVisibility(View.GONE);
+                                mIBtnCameraMeterFoot.setVisibility(View.VISIBLE);
+                            }
+
+                            if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath1()) &&
+                                    new File(mMeterBean.getMeterBodyPicPath1()).exists() ){
+                                mPvCameraMeterBody1.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath1()));
+                                mRLayoutMeterBody1.setVisibility(View.VISIBLE);
+                                mIBtnCameraMeterBody1.setVisibility(View.GONE);
+                            }else {
+                                mRLayoutMeterBody1.setVisibility(View.GONE);
+                                mIBtnCameraMeterBody1.setVisibility(View.VISIBLE);
+                            }
+
+                            if(StringUtils.isNotEmpty(mMeterBean.getMeterBodyPicPath2()) &&
+                                    new File(mMeterBean.getMeterBodyPicPath2()).exists() ){
+                                mPvCameraMeterBody2.setImageBitmap(ImageFactory.getBitmap(mMeterBean.getMeterBodyPicPath2()));
+                                mRLayoutMeterBody2.setVisibility(View.VISIBLE);
+                                mIBtnCameraMeterBody2.setVisibility(View.GONE);
+                            }else {
+                                mRLayoutMeterBody2.setVisibility(View.GONE);
+                                mIBtnCameraMeterBody2.setVisibility(View.VISIBLE);
+                            }
+
+
+
+                            if(StringUtils.isEmpty(mMeterBean.getPicPath())){
+                                mPhotoIndex = 1;
+                            }else {
+                                String path = mMeterBean.getPicPath();
+                                for(String tempPath : path.split(",")){
+                                    if(!(new File(tempPath).exists())){
+                                        path = deleteSubStr(path, tempPath);
                                     }
-                                })
-                                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        mCEtNewAssetNumbersScan.setText("");
-                                        mCEtNewAddr.setText("");
-                                        mCEtNewElectricity.setText("");
-                                        sweetAlertDialog.dismiss();
+                                }
+                                mMeterBean.setPicPath(path);
+                                if(StringUtils.isNotEmpty(mMeterBean.getPicPath())) {
+                                    try {
+                                        mPhotoIndex = Integer.parseInt(path.substring(path.lastIndexOf("_") + 1, path.lastIndexOf("."))) + 1;
+                                    } catch (Exception e) {
                                     }
-                                });
+                                }
+                                mPicAdapter.setPathList(mMeterBean.getPicPath());
+                            }
+
+                            isFind = true;
+                            mBeepManager.playSuccessful();
+                            break;
+                        }
+                    }
+
+                    if(!isFind){
+                        if(!TextUtils.isEmpty(mMeterBean.getOldAssetNumbers())) {
+                            mBeepManager.playSuccessful();
+                            if (scanData.length() != 24) {
+
+                                SweetAlertDialog dialog = new SweetAlertDialog(ReplaceMeterActivity1.this, SweetAlertDialog.NORMAL_TYPE)
+                                        .setTitleText("提示")
+                                        .setContentText("该资产编码不是24位的是否输入")
+                                        .setConfirmText("是")
+                                        .setCancelText("否")
+                                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+
+                                                mCEtNewAssetNumbersScan.setText(scanData);
+                                                mCEtNewAddr.setText(parseAddr(scanData));
+                                                mCEtNewElectricity.setText("0");
+                                                sweetAlertDialog.dismiss();
+                                            }
+                                        })
+                                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                            @Override
+                                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                mCEtNewAssetNumbersScan.setText("");
+                                                mCEtNewAddr.setText("");
+                                                mCEtNewElectricity.setText("");
+                                                sweetAlertDialog.dismiss();
+                                            }
+                                        });
 
 
-                        dialog.setCancelable(false);
-                        dialog.show();
-                    }else {
-                        mCEtNewAssetNumbersScan.setText(scanData);
-                        mCEtNewAddr.setText(parseAddr(scanData));
-                        mCEtNewElectricity.setText("0");
+                                dialog.setCancelable(false);
+                                dialog.show();
+                            } else {
+                                mCEtNewAssetNumbersScan.setText(scanData);
+                                mCEtNewAddr.setText(parseAddr(scanData));
+                                mCEtNewElectricity.setText("0");
+                            }
+                        }else {
+                            mBeepManager.playError();
+                            showToast("请先输入旧资产编码");
+                        }
                     }
 
                 }else if(mCurrentScanBtnId == R.id.btn_meterFootNumbersScan){
@@ -2595,6 +2835,15 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
     }
 
 
+    /**
+     * EditText获取焦点并显示软键盘
+     */
+    public static void showSoftInputFromWindow(Activity activity, ClearEditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    }
 
 
     @Override

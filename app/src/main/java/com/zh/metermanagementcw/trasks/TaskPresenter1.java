@@ -360,4 +360,15 @@ public interface TaskPresenter1 {
      * @return
      */
     void saveScatteredNewMeterActivity(Observer observer, ContentValues values, String newAssetNumbers);
+
+
+    /**
+     * 根据条件查询表 -- "零散新装"
+     *
+     * @param observer
+     * @param conditionMap          查询条件
+     * @return
+     */
+    void searchScatteredNewMeter(Observer observer, HashMap<String, String> conditionMap);
+
 }

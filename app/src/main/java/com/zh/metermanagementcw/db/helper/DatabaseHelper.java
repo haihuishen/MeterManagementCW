@@ -264,7 +264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //					db.execSQL(sql2);
 						//LogUtils.sysout("==========升级数据库", "");
 						break;
-//
+
 //					case 5:								// 2017/09/12
 //
 //						sql1 = "create table if not exists scatterednewmeter(" +

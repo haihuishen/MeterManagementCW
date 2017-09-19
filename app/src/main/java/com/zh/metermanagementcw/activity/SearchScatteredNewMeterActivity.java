@@ -1,6 +1,7 @@
 package com.zh.metermanagementcw.activity;
 
 import android.graphics.Bitmap;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -37,7 +38,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 零散新装
+ * 零散新装 -- 查询
  *
  */
 public class SearchScatteredNewMeterActivity extends BaseActivity implements View.OnClickListener {
@@ -82,8 +83,6 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
     /** 当前二维扫描的按钮 */
     private int mCurrentScanBtnId = 1;
 
-    public BeepManager mBeepManager;
-
     //--------------------------图片-----------------------------
     public Bitmap mBitmap;
 
@@ -95,8 +94,6 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
     public AlphaAnimation in;
     public AlphaAnimation out;
-
-
 
 
     @Override
@@ -111,7 +108,6 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
         mBtnMenu = btnMenu;
 
         mBtnBack.setOnClickListener(this);
-        // mBtnMenu.setOnClickListener(this);
     }
 
     @Override
@@ -150,6 +146,7 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
     public void initListener() {
         mBtnSearch.setOnClickListener(this);
         mBtnAssetsNumber.setOnClickListener(this);
+        mPvBgImg.setOnClickListener(this);
 
         mTbUpAndDowm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
             public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
@@ -168,12 +165,12 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
     @Override
     public void initData() {
-        mScanBack = new ScanBack();
 
         mTbUpAndDowm.setChecked(true);
 
-        mBeepManager = new BeepManager(getContext(),true,false);
+        mBtnAssetsNumber.setEnabled(false);
 
+        mScanBack = new ScanBack();
         taskPresenter1.initBarcode2D(initBarcode2DSObserver, getContext(), mScanBack);
 
 
@@ -265,15 +262,15 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
         boolean isEmpty = true;
         if(StringUtils.isNotEmpty(userName)){
-            conditionMap.put("userName", userName);
+            conditionMap.put(Constant.SCATTEREDNEWMETER.userName.toString(), userName);
             isEmpty = false;
         }
         if(StringUtils.isNotEmpty(userNumber)){
-            conditionMap.put("userNumber", userNumber);
+            conditionMap.put(Constant.SCATTEREDNEWMETER.userNumber.toString(), userNumber);
             isEmpty = false;
         }
         if(StringUtils.isNotEmpty(assetsNumber)){
-            conditionMap.put("assetNumbers", assetsNumber);
+            conditionMap.put(Constant.SCATTEREDNEWMETER.newAssetNumbers.toString(), assetsNumber);
             isEmpty = false;
         }
 
@@ -293,7 +290,7 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
             dialog.show();
         }else {
 
-            taskPresenter1.searchAcceptance(searchScatteredNewMeterObserver, conditionMap);
+            taskPresenter1.searchScatteredNewMeter(searchScatteredNewMeterObserver, conditionMap);
         }
     }
 
@@ -319,7 +316,6 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
                 }
             }
-            //scaning=false;
         }
     }
 
@@ -354,8 +350,7 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
         @Override
         public void onComplete(){
-
-
+            mBtnAssetsNumber.setEnabled(true);
         }
     };
 
@@ -436,4 +431,28 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
         }
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {                 // 如果点击的是"返回按钮"
+
+            if(mLlayoutParent.getVisibility() == View.VISIBLE && mIvBg.getVisibility() == View.VISIBLE){   // 缩小、隐藏那个预览布局
+                mIvBg.startAnimation(out);
+                setTitleIsShow(View.VISIBLE);
+                mPvBgImg.animaTo(mInfo, new Runnable() {
+                    @Override
+                    public void run() {
+                        mLlayoutParent.setVisibility(View.GONE);
+
+                    }
+                });
+                return true;
+            }
+
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

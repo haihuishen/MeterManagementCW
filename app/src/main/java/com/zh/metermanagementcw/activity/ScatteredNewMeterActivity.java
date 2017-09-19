@@ -27,7 +27,6 @@ import com.zebra.adc.decoder.Barcode2DWithSoft;
 import com.zh.metermanagementcw.R;
 import com.zh.metermanagementcw.activity.base.BaseActivity;
 import com.zh.metermanagementcw.adapter.PicAdapter;
-import com.zh.metermanagementcw.bean.MeterBean1;
 import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.utils.FilesUtils;
@@ -72,6 +71,8 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
     ScatteredNewMeterBean mScatteredNewMeterBean = new ScatteredNewMeterBean();
 
     //----------------------------- 用户信息 --------------------------
+    /** 用户编号 -- 编辑框 -- cet_userNumber */
+    ClearEditText mCEtUserNumber;
     /** 用户名称 -- 编辑框 -- cet_userName */
     ClearEditText mCEtUserName;
     /** 用户地址 -- 编辑框 -- cet_userAddr */
@@ -217,6 +218,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
     @Override
     public void initView() {
 
+        mCEtUserNumber = (ClearEditText) findViewById(R.id.cet_userNumber);
         mCEtUserName = (ClearEditText) findViewById(R.id.cet_userName);
         mCEtUserAddr = (ClearEditText) findViewById(R.id.cet_userAddr);
         mCEtUserPhone = (ClearEditText) findViewById(R.id.cet_userPhone);
@@ -470,6 +472,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
      */
     private void saveDate() {
 
+        String userNumber = mCEtUserNumber.getText().toString().trim();                     // 用户编号
         String userName = mCEtUserName.getText().toString().trim();                         // 用户名称
         String userAddr = mCEtUserAddr.getText().toString().trim();                         // 用户地址
         String userPhone = mCEtUserPhone.getText().toString().trim();                       // 用户电话
@@ -482,6 +485,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
         String meterBodyNumbersScan1 = mCEtMeterBodyNumbersScan1.getText().toString().trim();
         String mCeterBodyNumbersScan2 = mCEtMeterBodyNumbersScan2.getText().toString().trim();
 
+        mScatteredNewMeterBean.setUserNumber(userNumber);
         mScatteredNewMeterBean.setUserName(userName);
         mScatteredNewMeterBean.setUserAddr(userAddr);
         mScatteredNewMeterBean.setUserPhone(userPhone);
@@ -502,8 +506,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Constant.SCATTEREDNEWMETER.userNumber.toString(), "");
-
+        contentValues.put(Constant.SCATTEREDNEWMETER.userNumber.toString(), mScatteredNewMeterBean.getUserNumber());
         contentValues.put(Constant.SCATTEREDNEWMETER.userName.toString(), mScatteredNewMeterBean.getUserName());
         contentValues.put(Constant.SCATTEREDNEWMETER.userAddr.toString(), mScatteredNewMeterBean.getUserAddr());
         contentValues.put(Constant.SCATTEREDNEWMETER.userPhone.toString(), mScatteredNewMeterBean.getUserNumber());

@@ -8,13 +8,9 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp">
-
-        <com.zh.metermanagementcw.view.ClearEditText
-            android:id="@+id/cet_gone"
-            android:layout_width="wrap_content"
-            android:layout_height="0.1dp"
-            android:visibility="visible"/>
+        android:padding="5dp"
+        android:layout_below="@+id/v_Masker"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +24,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="2.9"
                 android:background="@color/shen_sky_blue"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -70,24 +67,26 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btn_oldAssetNumbers"
+                        android:id="@+id/btn_oldAssetNumbers_manualOperation"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/btn_bg_blue"
+                        android:text="查询"
+                        android:textColor="@drawable/btn_text_color_blue_w"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/btn_oldAssetNumbers"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:background="@drawable/btn_bg_blue"
                         android:text="扫描\n输入"
                         android:textColor="@drawable/btn_text_color_blue_w"
                         android:textSize="12dp" />
 
-                    <Button
-                        android:id="@+id/btn_oldAssetNumbers_manualOperation"
-                        android:layout_width="50dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/btn_bg_blue"
-                        android:text="手动\n输入"
-                        android:textColor="@drawable/btn_text_color_blue_w"
-                        android:textSize="12dp" />
+
                 </LinearLayout>
 
 
@@ -258,6 +257,7 @@
                         android:background="@drawable/bg_et"
                         android:maxLines="1"
                         android:padding="3dp"
+                        android:inputType="numberDecimal"
                         android:text=""
                         android:textColor="@android:color/black"
                         android:textSize="13dp" />
@@ -275,15 +275,6 @@
                     android:textColor="@drawable/btn_text_color_blue_w"
                     android:textSize="12dp" />
 
-                <Button
-                    android:id="@+id/btn_oldElectricity_manualOperation"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/btn_bg_blue"
-                    android:text="手动\n输入"
-                    android:textColor="@drawable/btn_text_color_blue_w"
-                    android:textSize="12dp" />
             </LinearLayout>
 
             <View
@@ -409,6 +400,7 @@
                         android:padding="3dp"
                         android:text=""
                         android:textColor="@android:color/black"
+                        android:inputType="numberDecimal"
                         android:textSize="13dp" />
 
 

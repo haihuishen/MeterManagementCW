@@ -17,6 +17,7 @@ import com.zh.metermanagementcw.bean.CollectorNumberBean;
 import com.zh.metermanagementcw.bean.ConcentratorBean;
 import com.zh.metermanagementcw.bean.MeterBean1;
 import com.zh.metermanagementcw.bean.MeterPhoneBean;
+import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
 import com.zh.metermanagementcw.bean.TransformerBean;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.db.biz.TableEx;
@@ -1616,27 +1617,6 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
         int i = 0;
         for(String set : conditionMap.keySet()){
-//            if(i == size-1){                                            // 最后一个
-//                if(set.equals("userNumber") || set.equals("userName")) {
-//                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-//                    selection += set + " like ?";
-//
-//                }else {
-//
-//                    selection += set + "=?";
-//                    selectionArgs[i] = conditionMap.get(set);
-//                }
-//            }else {
-//
-//                if(set.equals("userNumber") || set.equals("userName")) {
-//                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-//                    selection += set + " like ? and ";
-//
-//                }else {
-//                    selection += set + "=? and ";
-//                    selectionArgs[i] = conditionMap.get(set);
-//                }
-//            }
             if(i == size-1){                                            // 最后一个
                 selectionArgs[i] = "%" + conditionMap.get(set) + "%";
                 selection += set + " like ?";
@@ -1755,6 +1735,96 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+    }
+
+    @Override
+    public void searchScatteredNewMeter(Observer observer, HashMap<String, String> conditionMap) {
+        int size = conditionMap.keySet().size();
+        if(size <=0 ){
+            return ;
+        }
+
+        String selection = "";
+        final String[] selectionArgs = new String[size];
+
+        int i = 0;
+        for(String set : conditionMap.keySet()){
+            if(i == size-1){                                            // 最后一个
+                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                selection += set + " like ?";
+            }else {
+                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                selection += set + " like ? and ";
+            }
+
+            i++;
+        }
+
+        LogUtils.i(selection);
+
+        final String finalSelection = selection;
+        Observable.just("")
+                .observeOn(Schedulers.io())
+                .map(new Function<String, List<ScatteredNewMeterBean>>() {
+                    @Override
+                    public List<ScatteredNewMeterBean> apply(@NonNull String s) throws Exception {
+
+                        Cursor cursor;
+                        cursor  = mTableEx.Query(Constant.TABLE_SCATTEREDNEWMETER,
+                                null,
+                                finalSelection,
+                                selectionArgs,
+                                null, null, null);
+
+                        List<ScatteredNewMeterBean> beanList = new ArrayList<>();
+                        if(cursor != null && cursor.getCount() != 0) {
+                            if(cursor.moveToFirst()) {
+                                do{
+                                    ScatteredNewMeterBean bean = new ScatteredNewMeterBean();
+
+                                    try {
+
+                                        bean.setUserNumber(getValue(cursor, Constant.SCATTEREDNEWMETER.userNumber.toString()));
+                                        bean.setUserName(getValue(cursor, Constant.SCATTEREDNEWMETER.userName.toString()));
+                                        bean.setUserAddr(getValue(cursor, Constant.SCATTEREDNEWMETER.userAddr.toString()));
+                                        bean.setUserPhone(getValue(cursor, Constant.SCATTEREDNEWMETER.userPhone.toString()));
+
+                                        bean.setNewAddr(getValue(cursor, Constant.SCATTEREDNEWMETER.newAddr.toString()));
+                                        bean.setNewAssetNumbers(getValue(cursor, Constant.SCATTEREDNEWMETER.newAssetNumbers.toString()));
+                                        bean.setNewElectricity(getValue(cursor, Constant.SCATTEREDNEWMETER.newElectricity.toString()));
+
+                                        bean.setMeterFootNumbers(getValue(cursor, Constant.SCATTEREDNEWMETER.meterFootNumbers.toString()));
+                                        bean.setMeterFootPicPath(getValue(cursor, Constant.SCATTEREDNEWMETER.meterFootPicPath.toString()));
+                                        bean.setMeterBodyNumbers1(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyNumbers1.toString()));
+                                        bean.setMeterBodyPicPath1(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyPicPath1.toString()));
+                                        bean.setMeterBodyNumbers2(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyNumbers2.toString()));
+                                        bean.setMeterBodyPicPath2(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyPicPath2.toString()));
+
+                                        bean.setPicPath(getValue(cursor, Constant.SCATTEREDNEWMETER.picPath.toString()));
+
+                                        //------------------------
+                                    }catch (Exception e){
+                                        LogUtils.i("readDbToBeanForCollector -- e.getMessage()3:" + e.getMessage());  // 因为有些空值
+                                    }
+
+                                    Log.i("shen", "nei:" + bean.toString());
+                                    beanList.add(bean);
+
+                                }while (cursor.moveToNext());
+                            }
+                        }
+
+                        Log.i("shen", "readDbToBeanForCollector -- beanList.size():"+beanList.size());
+
+                        return beanList;
+
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
+
+        return ;
     }
 
 

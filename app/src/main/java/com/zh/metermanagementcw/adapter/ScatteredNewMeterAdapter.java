@@ -62,7 +62,7 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
         if(convertView == null){                // 拿缓存
             // 将 layout 填充成"View"
             LayoutInflater inflater=(LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE );
-            convertView = inflater.inflate(R.layout.item_lv_finish,parent,false);      // listview中每一项的布局
+            convertView = inflater.inflate(R.layout.item_lv_scattered_new_meter,parent,false);      // listview中每一项的布局
 
             viewHold = new ViewHold(convertView);
 
@@ -71,6 +71,7 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
             viewHold = (ViewHold) convertView.getTag();
         }
 
+        viewHold.tvUserNumber.setText(mBeanArrayList.get(position).getUserNumber());
         viewHold.tvUserName.setText(mBeanArrayList.get(position).getUserName());
         viewHold.tvUserAddr.setText(mBeanArrayList.get(position).getUserAddr());
         viewHold.tvUserPhone.setText(mBeanArrayList.get(position).getUserPhone());
@@ -81,7 +82,6 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
         viewHold.tvMeterFootNumbers.setText(mBeanArrayList.get(position).getMeterFootNumbers());
         viewHold.tvMeterBodyNumbers1.setText(mBeanArrayList.get(position).getMeterBodyNumbers1());
         viewHold.tvMeterBodyNumbers2.setText(mBeanArrayList.get(position).getMeterBodyNumbers2());
-
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);         // 水平
@@ -120,6 +120,8 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
 
     class ViewHold{
 
+        /** 用户编号 */
+        public TextView tvUserNumber;
         /** 用户名称 */
         public TextView tvUserName;
         /** 用户地址 */
@@ -152,6 +154,7 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
 
         public ViewHold(View view) {
 
+            tvUserNumber = (TextView) view.findViewById(R.id.tv_userNumber);
             tvUserName = (TextView) view.findViewById(R.id.tv_userName);
             tvUserAddr = (TextView) view.findViewById(R.id.tv_userAddr);
             tvUserPhone = (TextView) view.findViewById(R.id.tv_userPhone);
