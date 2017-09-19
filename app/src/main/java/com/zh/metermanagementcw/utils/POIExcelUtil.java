@@ -9,6 +9,7 @@ import com.zh.metermanagementcw.bean.AssetNumberBean;
 import com.zh.metermanagementcw.bean.ConcentratorBean;
 import com.zh.metermanagementcw.bean.MeterBean1;
 import com.zh.metermanagementcw.bean.MeterPhoneBean;
+import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
 import com.zh.metermanagementcw.bean.TransformerBean;
 
 import java.io.File;
@@ -944,6 +945,72 @@ public class POIExcelUtil {
 		LogUtils.i("writeExcelAcceptanceByMonth -- excelPath:" + excelPath);
 		return writeHSSFWorkbook(workbook, excelPath);
 	}
+
+
+	/**
+	 * 零散新装.xls
+	 *
+	 * @param context
+	 * @param scatteredNewMeterBeanList
+	 * @param excelPath
+	 * @return
+	 */
+	public static boolean writeExcelScatteredNewMeter(Context context,
+													  List<ScatteredNewMeterBean> scatteredNewMeterBeanList,
+													  String excelPath){
+
+
+		String sheetName = "零散新装";
+		String[] headers = new String[]{
+				"用户编号", "用户名称", "用户地址", "用户电话",
+				"新表表地址", "新表资产编号", "新电能表止码",
+				"电表表脚封扣", "表箱封扣1", "表箱封扣2"
+
+		};
+
+		HSSFWorkbook workbook = new HSSFWorkbook();				// 声明一个工作薄
+		HSSFSheet sheet = workbook.createSheet(sheetName);		// 生成一个表格
+
+		sheet.setDefaultColumnWidth(25);						// 设置表格默认列宽15个字节
+
+		//---------------------------------------------------------------------------------------
+		HSSFCellStyle headStyle = setHSSFCellStyle1(workbook);
+		HSSFCellStyle contentStyle = setHSSFCellStyle3(workbook);
+
+		// 生成表头内容
+		HSSFRow hssfRow = sheet.createRow(0);					// 创建一行
+		hssfRow.setHeight((short) (15.625 * 40));				// n为行高的像素数。
+		for (int i = 0; i < headers.length; i++) {
+			HSSFCell cell = hssfRow.createCell(i);				// 这一行的第i列的单元格
+			cell.setCellStyle(headStyle);
+			cell.setCellValue(headers[i]);
+		}
+
+		int rowIndex = 1;
+		for (ScatteredNewMeterBean bean : scatteredNewMeterBeanList) {
+
+			hssfRow = sheet.createRow(rowIndex);
+			setCellStyle(contentStyle, hssfRow, 0, bean.getUserNumber());				// 0.用户编号
+			setCellStyle(contentStyle, hssfRow, 1, bean.getUserName());					// 1.用户名称
+			setCellStyle(contentStyle, hssfRow, 2, bean.getUserAddr());					// 2.用户地址
+			setCellStyle(contentStyle, hssfRow, 3, bean.getUserPhone());				// 3.用户电话
+			setCellStyle(contentStyle, hssfRow, 4, bean.getNewAddr());					// 4.新表表地址
+
+			setCellStyle(contentStyle, hssfRow, 5, bean.getNewAssetNumbers());			// 5.新表资产编号
+			setCellStyle(contentStyle, hssfRow, 6, bean.getNewElectricity());			// 6.新电能表止码
+			setCellStyle(contentStyle, hssfRow, 7, bean.getMeterFootNumbers());			// 7.电表表脚封扣
+			setCellStyle(contentStyle, hssfRow, 8, bean.getMeterBodyNumbers1());		// 8.表箱封扣1
+			setCellStyle(contentStyle, hssfRow, 9, bean.getMeterBodyNumbers2());		// 9.表箱封扣2
+
+
+			rowIndex = rowIndex + 1;
+		}
+
+		LogUtils.i("writeExcelScatteredNewMeter -- excelPath:" + excelPath);
+		return writeHSSFWorkbook(workbook, excelPath);
+	}
+
+
 
 
 	/**

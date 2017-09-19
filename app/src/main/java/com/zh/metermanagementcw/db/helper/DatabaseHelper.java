@@ -207,7 +207,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				"picPath varchar(1000)" +									// 拍照图片的路径(变压器)		 -- 2017/09/04
 				")");
 
-
+//
 //		/** 零散新装  -- 2017/09/12 */
 //		db.execSQL("create table if not exists scatterednewmeter(" +
 //				"_id integer primary key autoincrement," +

@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zh.metermanagementcw">
 
+    <!-- 桌面创建快捷图标  删除 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher2.permission.READ_SETTINGS"/>
+    <uses-permission android:name="com.android.launcher3.permission.READ_SETTINGS"/>
+
 
     <!-- 在SDCard中创建与删除文件权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -56,6 +63,7 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name="com.zh.metermanagementcw.activity.SplashActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
@@ -168,6 +176,10 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name="com.zh.metermanagementcw.activity.GenerateReportsScatteredNewMeterActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
 
 
         <activity android:name="com.zh.metermanagementcw.activity.StatisticsSetCopyTransformationActivity"
@@ -201,6 +213,18 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
+
+
+
+        <activity android:name="com.zh.metermanagementcw.activity.StatisticsScatteredNewMeterActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.zh.metermanagementcw.activity.StatisticsScatteredNewMeterDetailsActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
 
         <activity android:name="com.zh.metermanagementcw.activity.SendEmailActivity"
             android:windowSoftInputMode="adjustPan"

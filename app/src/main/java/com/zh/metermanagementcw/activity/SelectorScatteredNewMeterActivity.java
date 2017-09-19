@@ -188,14 +188,14 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 
 					case R.id.layout_generateReports:				 	// 生成报表
 						//showToast("生成报表！");
-//						intent = new Intent(getContext(), GenerateReportsAcceptanceActivity.class);
-//						startActivity(intent);
+						intent = new Intent(getContext(), GenerateReportsScatteredNewMeterActivity.class);
+						startActivity(intent);
 						break;
 
 					case R.id.layout_statistics:						// 统计
 						//showToast("统计！");
-//						intent = new Intent(getContext(), StatisticsAcceptanceActivity.class);
-//						startActivity(intent);
+						intent = new Intent(getContext(), StatisticsScatteredNewMeterActivity.class);
+						startActivity(intent);
 						break;
 
 					case R.id.layout_query:								// 查询

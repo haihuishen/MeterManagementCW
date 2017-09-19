@@ -257,10 +257,10 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
         FilesUtils.broadCreateFile(this, new File(Constant.CACHE_IMAGE_PATH + Constant.DB_NAME));
 
 
-        // 在桌面生成图标
-        ShortCut.createShortCut(this, ResourceUtil.getMipmapResIDByName(this, "app_icon"),
-                ResourceUtil.getStringResIDByName(this, "app_name"));
-
+        if(!ShortCut.hasShortcut(this)) {
+            LogUtils.i("不存在，创建！:");
+            ShortCut.creatShortCut(this, ResourceUtil.getMipmapResIDByName(this, "app_icon"));
+        }
 
 
 //        //内存地址
@@ -328,7 +328,7 @@ public class SplashActivity extends Activity implements Thread.UncaughtException
 
                         // File Context.getFilesDir();
                         // 该方法返回指向/data/data/<Package Name>/files/目录的一个File对象。
-                        for(int i=1; i<=45; i++) {
+                        for(int i=1; i<=58; i++) {
                             File file;
                             if ((file = new File(Constant.DIRECTIONSFORUSEIMAGE_PATH)).exists()) {                                      //  创建路径（文件夹）
                                 file.delete();

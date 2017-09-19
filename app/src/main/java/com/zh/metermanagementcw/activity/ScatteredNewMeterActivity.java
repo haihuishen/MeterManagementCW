@@ -657,6 +657,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
             showToast("保存" + (aLong>0 ? "成功" : "失败"));
 
             if(aLong>0){
+                mCEtUserNumber.setText("");
                 mCEtUserName.setText("");
                 mCEtUserAddr.setText("");
                 mCEtUserPhone.setText("");

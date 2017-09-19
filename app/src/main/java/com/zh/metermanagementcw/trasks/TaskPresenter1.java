@@ -13,6 +13,7 @@ import com.zh.metermanagementcw.bean.AssetNumberBean;
 import com.zh.metermanagementcw.bean.CollectorNumberBean;
 import com.zh.metermanagementcw.bean.ConcentratorBean;
 import com.zh.metermanagementcw.bean.MeterBean1;
+import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
 import com.zh.metermanagementcw.bean.TransformerBean;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.utils.LogUtils;
@@ -370,5 +371,26 @@ public interface TaskPresenter1 {
      * @return
      */
     void searchScatteredNewMeter(Observer observer, HashMap<String, String> conditionMap);
+
+
+    /**
+     * 将数据库中的数据读取到Bean -- ScatteredNewMeter -- "零散新装"
+     *
+     * @param observer
+     * @return
+     */
+    void readDbToBeanForScatteredNewMeter(Observer observer);
+
+    /**
+     * 导出excel -- 零散新装--数据
+     *
+     * @param observer
+     * @param context
+     * @param scatteredNewMeterBeanList        零散新装--数据
+     * @param excelPath                        导出excel文件名
+     */
+    void generateReportsScatteredNewMeter(Observer observer, Context context,
+                                   List<ScatteredNewMeterBean> scatteredNewMeterBeanList,
+                                   String excelPath);
 
 }

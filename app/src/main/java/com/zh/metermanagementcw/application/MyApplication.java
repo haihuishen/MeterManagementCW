@@ -13,6 +13,7 @@ import com.zh.metermanagementcw.bean.ConcentratorBean;
 import com.zh.metermanagementcw.bean.MeterBean;
 import com.zh.metermanagementcw.bean.MeterBean1;
 import com.zh.metermanagementcw.bean.NoWorkOrderPathBean;
+import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
 import com.zh.metermanagementcw.bean.TransformerBean;
 
 import java.util.ArrayList;
@@ -59,6 +60,9 @@ public class MyApplication extends Application {
 	/** acceptance -- 日/月冻结 */
 	private static List<AcceptanceBean> mAcceptanceBeanList = new ArrayList<>();
 
+	//--------------------------ScatteredNewMeterBean------------------------------
+	/** ScatteredNewMeterBean -- 零散新装 */
+	private static List<ScatteredNewMeterBean> mScatteredNewMeterBeanList = new ArrayList<>();
 
 	/** 序列号列表 */
 	private static List<String> serialNumberList = new ArrayList<>();
@@ -183,6 +187,16 @@ public class MyApplication extends Application {
 	public static void setAcceptanceBeanList(List<AcceptanceBean> acceptanceBeanList) {
 		mAcceptanceBeanList = acceptanceBeanList;
 	}
+
+	/** ScatteredNewMeterBean -- 零散新装 */
+	public static List<ScatteredNewMeterBean> getScatteredNewMeterBeanList() {
+		return mScatteredNewMeterBeanList;
+	}
+	/** ScatteredNewMeterBean -- 零散新装 */
+	public static void setScatteredNewMeterBeanList(List<ScatteredNewMeterBean> scatteredNewMeterBeanList) {
+		mScatteredNewMeterBeanList = scatteredNewMeterBeanList;
+	}
+
 
 
 	public static List<String> getSerialNumberList() {

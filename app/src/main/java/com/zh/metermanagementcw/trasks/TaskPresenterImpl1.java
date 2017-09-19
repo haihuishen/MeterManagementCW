@@ -33,6 +33,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -1324,7 +1326,7 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
                                         //------------------------
                                     }catch (Exception e){
-                                        LogUtils.i("readDbToBeanForCollector -- e.getMessage()3:" + e.getMessage());  // 因为有些空值
+                                        LogUtils.i("readDbToBeanForAcceptance -- e.getMessage()3:" + e.getMessage());  // 因为有些空值
                                     }
 
                                     Log.i("shen", "nei:" + bean.toString());
@@ -1826,6 +1828,113 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
         return ;
     }
+
+    @Override
+    public void readDbToBeanForScatteredNewMeter(Observer observer) {
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception { // Observable  (被观察者)
+                emitter.onNext("");
+                emitter.onComplete();
+
+            }
+
+        }).observeOn(Schedulers.io())
+                .map(new Function<String, List<ScatteredNewMeterBean>>() {
+                    @Override
+                    public List<ScatteredNewMeterBean> apply(@NonNull String s) throws Exception {
+
+                        Cursor cursor;
+                        cursor  = mTableEx.Query(Constant.TABLE_SCATTEREDNEWMETER,
+                                null,
+                                null,
+                                null,
+                                null, null, null);
+
+                        List<ScatteredNewMeterBean> beanList = new ArrayList<>();
+                        if(cursor != null && cursor.getCount() != 0) {
+                            if(cursor.moveToFirst()) {
+
+                                do{
+                                    ScatteredNewMeterBean bean = new ScatteredNewMeterBean();
+
+                                    try {
+                                        bean.setUserNumber(getValue(cursor, Constant.SCATTEREDNEWMETER.userNumber.toString()));
+                                        bean.setUserName(getValue(cursor, Constant.SCATTEREDNEWMETER.userName.toString()));
+
+                                        bean.setUserAddr(getValue(cursor, Constant.SCATTEREDNEWMETER.userAddr.toString()));
+                                        bean.setUserPhone(getValue(cursor, Constant.SCATTEREDNEWMETER.userPhone.toString()));
+
+                                        bean.setNewAddr(getValue(cursor, Constant.SCATTEREDNEWMETER.newAddr.toString()));
+                                        bean.setNewAssetNumbers(getValue(cursor, Constant.SCATTEREDNEWMETER.newAssetNumbers.toString()));
+                                        bean.setNewElectricity(getValue(cursor, Constant.SCATTEREDNEWMETER.newElectricity.toString()));
+
+                                        bean.setMeterFootNumbers(getValue(cursor, Constant.SCATTEREDNEWMETER.meterFootNumbers.toString()));
+                                        bean.setMeterFootPicPath(getValue(cursor, Constant.SCATTEREDNEWMETER.meterFootPicPath.toString()));
+                                        bean.setMeterBodyNumbers1(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyNumbers1.toString()));
+                                        bean.setMeterBodyPicPath1(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyPicPath1.toString()));
+                                        bean.setMeterBodyNumbers2(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyNumbers2.toString()));
+                                        bean.setMeterBodyPicPath2(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyPicPath2.toString()));
+
+                                        bean.setPicPath(getValue(cursor, Constant.SCATTEREDNEWMETER.picPath.toString()));
+                                        //------------------------
+                                    }catch (Exception e){
+                                        LogUtils.i("readDbToBeanForScatteredNewMeter -- e.getMessage():" + e.getMessage());  // 因为有些空值
+                                    }
+
+                                    Log.i("shen", "nei:" + bean.toString());
+                                    beanList.add(bean);
+
+                                }while (cursor.moveToNext());
+
+                                cursor.close();             // 关闭游标！
+                            }
+                        }
+
+                        Log.i("shen", "readDbToBeanForScatteredNewMeter -- beanList.size():"+beanList.size());
+
+                        return beanList;
+
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
+    }
+
+
+    @Override
+    public void generateReportsScatteredNewMeter(Observer observer, final Context context,
+                                          final List<ScatteredNewMeterBean> scatteredNewMeterBeanList,
+                                          final String excelPath) {
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<String> emitter) throws Exception { // Observable  (被观察者)
+                emitter.onNext("");
+                emitter.onComplete();
+
+            }
+
+        }).observeOn(Schedulers.io())
+                .map(new Function<String, Boolean>() {
+                    @Override
+                    public Boolean apply(@NonNull String s) throws Exception {
+
+                        boolean b = false;
+
+                        b = POIExcelUtil.writeExcelScatteredNewMeter(context, scatteredNewMeterBeanList,
+                                excelPath);
+
+
+                        return b;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
+
 
 
     /**

@@ -64,6 +64,16 @@ public class DirectionsForUseActivity extends BaseActivity implements View.OnCli
     /** tv_8_39*/
     TextView mTv_8_39;
 
+    /** tv_9_42*/
+    TextView mTv_9_42;
+    /** tv_10_49*/
+    TextView mTv_10_49;
+    /** tv_11_56*/
+    TextView mTv_11_56;
+    /** tv_12_58*/
+    TextView mTv_12_58;
+
+
 
     @Override
     public int getContentLayout() {
@@ -107,7 +117,7 @@ public class DirectionsForUseActivity extends BaseActivity implements View.OnCli
 
         List<String> pathList = new ArrayList<>();
 
-        for(int i=1; i<=45; i++){
+        for(int i=1; i<=58; i++){
             pathList.add(Constant.DIRECTIONSFORUSEIMAGE_PATH + i +".png");
 //            File file = new File(Constant.DIRECTIONSFORUSEIMAGE_PATH + i +".png");
 //            if(file.exists()){
@@ -167,6 +177,10 @@ public class DirectionsForUseActivity extends BaseActivity implements View.OnCli
         mTv_7_33 = (TextView) view.findViewById(R.id.tv_7_33);
         mTv_8_39 = (TextView) view.findViewById(R.id.tv_8_39);
 
+        mTv_9_42 = (TextView) view.findViewById(R.id.tv_9_42);
+        mTv_10_49 = (TextView) view.findViewById(R.id.tv_10_49);
+        mTv_11_56 = (TextView) view.findViewById(R.id.tv_11_56);
+        mTv_12_58 = (TextView) view.findViewById(R.id.tv_12_58);
 
 
         mTv_1_1.setOnClickListener(this);
@@ -177,6 +191,11 @@ public class DirectionsForUseActivity extends BaseActivity implements View.OnCli
         mTv_6_25.setOnClickListener(this);
         mTv_7_33.setOnClickListener(this);
         mTv_8_39.setOnClickListener(this);
+
+        mTv_9_42.setOnClickListener(this);
+        mTv_10_49.setOnClickListener(this);
+        mTv_11_56.setOnClickListener(this);
+        mTv_12_58.setOnClickListener(this);
     }
 
 
@@ -255,6 +274,22 @@ public class DirectionsForUseActivity extends BaseActivity implements View.OnCli
                 mPop.dismiss();
                 break;
 
+            case R.id.tv_9_42:
+                mLvDirectionsForUse.setSelection(41);
+                mPop.dismiss();
+                break;
+            case R.id.tv_10_49:
+                mLvDirectionsForUse.setSelection(48);
+                mPop.dismiss();
+                break;
+            case R.id.tv_11_56:
+                mLvDirectionsForUse.setSelection(55);
+                mPop.dismiss();
+                break;
+            case R.id.tv_12_58:
+                mLvDirectionsForUse.setSelection(57);
+                mPop.dismiss();
+                break;
         }
     }
 
