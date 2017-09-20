@@ -504,7 +504,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                 public void run() {
                     stop = true;
                 }
-            }, 2000);
+            }, 1500);
 
             while (!stop) {
                 try {
@@ -537,7 +537,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                     public void run() {
                         stop = true;
                     }
-                }, 2000);
+                }, 1500);
 
                 while (!stop) {
                     try {
@@ -581,7 +581,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                             mReadMeterAgreementTask.execute();
                         }
                     }
-                }, 1000);
+                }, 500);
 
             }
             //closeDialog();
@@ -659,7 +659,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                 public void run() {
                     stop = true;
                 };
-            }, 2000);
+            }, 1500);
 
             while (!stop) {
                 try {
@@ -702,7 +702,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                     public void run() {
                         stop = true;
                     };
-                }, 2000);
+                }, 1500);
 
                 while (!stop) {
                     try {

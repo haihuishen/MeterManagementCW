@@ -248,69 +248,69 @@ public class ElectricMeterParsUtils {
                                             case 0x0001000B:sbBuf = sbBuf.insert(6,".");break;//"(上11结算月)正向有功总"
                                             case 0x0001000C:sbBuf = sbBuf.insert(6,".");break;//"(上12结算月)正向有功总"
                                             //-------------------------------------------
-                                            case 0x05060101:sbBuf = sbBuf.insert(6,".");break;//"（上1次）日冻结正向有功总电能"
-                                            case 0x05060102:sbBuf = sbBuf.insert(6,".");break;//"（上2次）日冻结正向有功总电能"
-                                            case 0x05060103:sbBuf = sbBuf.insert(6,".");break;//"（上3次）日冻结正向有功总电能"
-                                            case 0x05060104:sbBuf = sbBuf.insert(6,".");break;//"（上4次）日冻结正向有功总电能"
-                                            case 0x05060105:sbBuf = sbBuf.insert(6,".");break;//"（上5次）日冻结正向有功总电能"
-                                            case 0x05060106:sbBuf = sbBuf.insert(6,".");break;//"（上6次）日冻结正向有功总电能"
-                                            case 0x05060107:sbBuf = sbBuf.insert(6,".");break;//"（上7次）日冻结正向有功总电能"
-                                            case 0x05060108:sbBuf = sbBuf.insert(6,".");break;//"（上8次）日冻结正向有功总电能"
-                                            case 0x05060109:sbBuf = sbBuf.insert(6,".");break;//"（上9次）日冻结正向有功总电能"
-                                            case 0x0506010A:sbBuf = sbBuf.insert(6,".");break;//"（上10次）日冻结正向有功总电能"
-                                            case 0x0506010B:sbBuf = sbBuf.insert(6,".");break;//"（上11次）日冻结正向有功总电能"
-                                            case 0x0506010C:sbBuf = sbBuf.insert(6,".");break;//"（上12次）日冻结正向有功总电能"
-                                            case 0x0506010D:sbBuf = sbBuf.insert(6,".");break;//"（上13次）日冻结正向有功总电能"
-                                            case 0x0506010E:sbBuf = sbBuf.insert(6,".");break;//"（上14次）日冻结正向有功总电能"
-                                            case 0x0506010F:sbBuf = sbBuf.insert(6,".");break;//"（上15次）日冻结正向有功总电能"
-                                            case 0x05060110:sbBuf = sbBuf.insert(6,".");break;//"（上16次）日冻结正向有功总电能"
-                                            case 0x05060111:sbBuf = sbBuf.insert(6,".");break;//"（上17次）日冻结正向有功总电能"
-                                            case 0x05060112:sbBuf = sbBuf.insert(6,".");break;//"（上18次）日冻结正向有功总电能"
-                                            case 0x05060113:sbBuf = sbBuf.insert(6,".");break;//"（上19次）日冻结正向有功总电能"
-                                            case 0x05060114:sbBuf = sbBuf.insert(6,".");break;//"（上20次）日冻结正向有功总电能"
-                                            case 0x05060115:sbBuf = sbBuf.insert(6,".");break;//"（上21次）日冻结正向有功总电能"
-                                            case 0x05060116:sbBuf = sbBuf.insert(6,".");break;//"（上22次）日冻结正向有功总电能"
-                                            case 0x05060117:sbBuf = sbBuf.insert(6,".");break;//"（上23次）日冻结正向有功总电能"
-                                            case 0x05060118:sbBuf = sbBuf.insert(6,".");break;//"（上24次）日冻结正向有功总电能"
-                                            case 0x05060119:sbBuf = sbBuf.insert(6,".");break;//"（上25次）日冻结正向有功总电能"
-                                            case 0x0506011A:sbBuf = sbBuf.insert(6,".");break;//"（上26次）日冻结正向有功总电能"
-                                            case 0x0506011B:sbBuf = sbBuf.insert(6,".");break;//"（上27次）日冻结正向有功总电能"
-                                            case 0x0506011C:sbBuf = sbBuf.insert(6,".");break;//"（上28次）日冻结正向有功总电能"
-                                            case 0x0506011D:sbBuf = sbBuf.insert(6,".");break;//"（上29次）日冻结正向有功总电能"
-                                            case 0x0506011E:sbBuf = sbBuf.insert(6,".");break;//"（上30次）日冻结正向有功总电能"
-                                            case 0x0506011F:sbBuf = sbBuf.insert(6,".");break;//"（上31次）日冻结正向有功总电能"
+                                            case 0x05060101:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上1次）日冻结正向有功总电能"
+                                            case 0x05060102:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上2次）日冻结正向有功总电能"
+                                            case 0x05060103:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上3次）日冻结正向有功总电能"
+                                            case 0x05060104:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上4次）日冻结正向有功总电能"
+                                            case 0x05060105:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上5次）日冻结正向有功总电能"
+                                            case 0x05060106:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上6次）日冻结正向有功总电能"
+                                            case 0x05060107:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上7次）日冻结正向有功总电能"
+                                            case 0x05060108:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上8次）日冻结正向有功总电能"
+                                            case 0x05060109:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上9次）日冻结正向有功总电能"
+                                            case 0x0506010A:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上10次）日冻结正向有功总电能"
+                                            case 0x0506010B:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上11次）日冻结正向有功总电能"
+                                            case 0x0506010C:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上12次）日冻结正向有功总电能"
+                                            case 0x0506010D:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上13次）日冻结正向有功总电能"
+                                            case 0x0506010E:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上14次）日冻结正向有功总电能"
+                                            case 0x0506010F:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上15次）日冻结正向有功总电能"
+                                            case 0x05060110:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上16次）日冻结正向有功总电能"
+                                            case 0x05060111:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上17次）日冻结正向有功总电能"
+                                            case 0x05060112:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上18次）日冻结正向有功总电能"
+                                            case 0x05060113:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上19次）日冻结正向有功总电能"
+                                            case 0x05060114:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上20次）日冻结正向有功总电能"
+                                            case 0x05060115:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上21次）日冻结正向有功总电能"
+                                            case 0x05060116:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上22次）日冻结正向有功总电能"
+                                            case 0x05060117:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上23次）日冻结正向有功总电能"
+                                            case 0x05060118:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上24次）日冻结正向有功总电能"
+                                            case 0x05060119:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上25次）日冻结正向有功总电能"
+                                            case 0x0506011A:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上26次）日冻结正向有功总电能"
+                                            case 0x0506011B:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上27次）日冻结正向有功总电能"
+                                            case 0x0506011C:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上28次）日冻结正向有功总电能"
+                                            case 0x0506011D:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上29次）日冻结正向有功总电能"
+                                            case 0x0506011E:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上30次）日冻结正向有功总电能"
+                                            case 0x0506011F:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上31次）日冻结正向有功总电能"
 
-                                            case 0x05060120:sbBuf = sbBuf.insert(6,".");break;//"（上32次）日冻结正向有功总电能"
-                                            case 0x05060121:sbBuf = sbBuf.insert(6,".");break;//"（上33次）日冻结正向有功总电能"
-                                            case 0x05060122:sbBuf = sbBuf.insert(6,".");break;//"（上34次）日冻结正向有功总电能"
-                                            case 0x05060123:sbBuf = sbBuf.insert(6,".");break;//"（上35次）日冻结正向有功总电能"
-                                            case 0x05060124:sbBuf = sbBuf.insert(6,".");break;//"（上36次）日冻结正向有功总电能"
-                                            case 0x05060125:sbBuf = sbBuf.insert(6,".");break;//"（上37次）日冻结正向有功总电能"
-                                            case 0x05060126:sbBuf = sbBuf.insert(6,".");break;//"（上38次）日冻结正向有功总电能"
-                                            case 0x05060127:sbBuf = sbBuf.insert(6,".");break;//"（上39次）日冻结正向有功总电能"
-                                            case 0x05060128:sbBuf = sbBuf.insert(6,".");break;//"（上40次）日冻结正向有功总电能"
-                                            case 0x05060129:sbBuf = sbBuf.insert(6,".");break;//"（上41次）日冻结正向有功总电能"
-                                            case 0x0506012A:sbBuf = sbBuf.insert(6,".");break;//"（上42次）日冻结正向有功总电能"
-                                            case 0x0506012B:sbBuf = sbBuf.insert(6,".");break;//"（上43次）日冻结正向有功总电能"
-                                            case 0x0506012C:sbBuf = sbBuf.insert(6,".");break;//"（上44次）日冻结正向有功总电能"
-                                            case 0x0506012D:sbBuf = sbBuf.insert(6,".");break;//"（上45次）日冻结正向有功总电能"
-                                            case 0x0506012E:sbBuf = sbBuf.insert(6,".");break;//"（上46次）日冻结正向有功总电能"
-                                            case 0x0506012F:sbBuf = sbBuf.insert(6,".");break;//"（上47次）日冻结正向有功总电能"
-                                            case 0x05060130:sbBuf = sbBuf.insert(6,".");break;//"（上48次）日冻结正向有功总电能"
-                                            case 0x05060131:sbBuf = sbBuf.insert(6,".");break;//"（上49次）日冻结正向有功总电能"
-                                            case 0x05060132:sbBuf = sbBuf.insert(6,".");break;//"（上50次）日冻结正向有功总电能"
-                                            case 0x05060133:sbBuf = sbBuf.insert(6,".");break;//"（上51次）日冻结正向有功总电能"
-                                            case 0x05060134:sbBuf = sbBuf.insert(6,".");break;//"（上52次）日冻结正向有功总电能"
-                                            case 0x05060135:sbBuf = sbBuf.insert(6,".");break;//"（上53次）日冻结正向有功总电能"
-                                            case 0x05060136:sbBuf = sbBuf.insert(6,".");break;//"（上54次）日冻结正向有功总电能"
-                                            case 0x05060137:sbBuf = sbBuf.insert(6,".");break;//"（上55次）日冻结正向有功总电能"
-                                            case 0x05060138:sbBuf = sbBuf.insert(6,".");break;//"（上56次）日冻结正向有功总电能"
-                                            case 0x05060139:sbBuf = sbBuf.insert(6,".");break;//"（上57次）日冻结正向有功总电能"
-                                            case 0x0506013A:sbBuf = sbBuf.insert(6,".");break;//"（上58次）日冻结正向有功总电能"
-                                            case 0x0506013B:sbBuf = sbBuf.insert(6,".");break;//"（上59次）日冻结正向有功总电能"
-                                            case 0x0506013C:sbBuf = sbBuf.insert(6,".");break;//"（上60次）日冻结正向有功总电能"
-                                            case 0x0506013D:sbBuf = sbBuf.insert(6,".");break;//"（上61次）日冻结正向有功总电能"
-                                            case 0x0506014E:sbBuf = sbBuf.insert(6,".");break;//"（上62次）日冻结正向有功总电能"
+                                            case 0x05060120:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上32次）日冻结正向有功总电能"
+                                            case 0x05060121:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上33次）日冻结正向有功总电能"
+                                            case 0x05060122:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上34次）日冻结正向有功总电能"
+                                            case 0x05060123:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上35次）日冻结正向有功总电能"
+                                            case 0x05060124:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上36次）日冻结正向有功总电能"
+                                            case 0x05060125:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上37次）日冻结正向有功总电能"
+                                            case 0x05060126:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上38次）日冻结正向有功总电能"
+                                            case 0x05060127:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上39次）日冻结正向有功总电能"
+                                            case 0x05060128:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上40次）日冻结正向有功总电能"
+                                            case 0x05060129:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上41次）日冻结正向有功总电能"
+                                            case 0x0506012A:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上42次）日冻结正向有功总电能"
+                                            case 0x0506012B:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上43次）日冻结正向有功总电能"
+                                            case 0x0506012C:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上44次）日冻结正向有功总电能"
+                                            case 0x0506012D:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上45次）日冻结正向有功总电能"
+                                            case 0x0506012E:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上46次）日冻结正向有功总电能"
+                                            case 0x0506012F:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上47次）日冻结正向有功总电能"
+                                            case 0x05060130:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上48次）日冻结正向有功总电能"
+                                            case 0x05060131:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上49次）日冻结正向有功总电能"
+                                            case 0x05060132:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上50次）日冻结正向有功总电能"
+                                            case 0x05060133:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上51次）日冻结正向有功总电能"
+                                            case 0x05060134:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上52次）日冻结正向有功总电能"
+                                            case 0x05060135:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上53次）日冻结正向有功总电能"
+                                            case 0x05060136:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上54次）日冻结正向有功总电能"
+                                            case 0x05060137:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上55次）日冻结正向有功总电能"
+                                            case 0x05060138:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上56次）日冻结正向有功总电能"
+                                            case 0x05060139:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上57次）日冻结正向有功总电能"
+                                            case 0x0506013A:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上58次）日冻结正向有功总电能"
+                                            case 0x0506013B:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上59次）日冻结正向有功总电能"
+                                            case 0x0506013C:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上60次）日冻结正向有功总电能"
+                                            case 0x0506013D:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上61次）日冻结正向有功总电能"
+                                            case 0x0506013E:sbBuf = sbBuf.delete(0,32); sbBuf = sbBuf.insert(6,".");break;//"（上62次）日冻结正向有功总电能"
 
 
 
@@ -634,6 +634,8 @@ public class ElectricMeterParsUtils {
 
         String meterAgreement = "";
         long days = TimeUtils.timeDifference(timeScan, timeIn, "yyyy-MM-dd");
+
+        //days = days + 1;
         switch ((int) days){
 
             case 1:
@@ -897,28 +899,28 @@ public class ElectricMeterParsUtils {
                 if(type == ElectricMeterParsUtils.METERTYPE._97)
                     meterAgreement = MeterAgreement.Pro97.STR_9090;
                 else if(type == ElectricMeterParsUtils.METERTYPE._07)
-                    meterAgreement = MeterAgreement.Pro07.STR_05060127;
+                    meterAgreement = MeterAgreement.Pro07.STR_05060126;
 
                 break;
             case 39:
                 if(type == ElectricMeterParsUtils.METERTYPE._97)
                     meterAgreement = MeterAgreement.Pro97.STR_9090;
                 else if(type == ElectricMeterParsUtils.METERTYPE._07)
-                    meterAgreement = MeterAgreement.Pro07.STR_05060128;
+                    meterAgreement = MeterAgreement.Pro07.STR_05060127;
 
                 break;
             case 40:
                 if(type == ElectricMeterParsUtils.METERTYPE._97)
                     meterAgreement = MeterAgreement.Pro97.STR_9090;
                 else if(type == ElectricMeterParsUtils.METERTYPE._07)
-                    meterAgreement = MeterAgreement.Pro07.STR_05060129;
+                    meterAgreement = MeterAgreement.Pro07.STR_05060128;
 
                 break;
             case 41:
                 if(type == ElectricMeterParsUtils.METERTYPE._97)
                     meterAgreement = MeterAgreement.Pro97.STR_9090;
                 else if(type == ElectricMeterParsUtils.METERTYPE._07)
-                    meterAgreement = MeterAgreement.Pro07.STR_0506012A;
+                    meterAgreement = MeterAgreement.Pro07.STR_05060129;
 
                 break;
             case 42:

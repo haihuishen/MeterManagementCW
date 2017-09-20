@@ -2056,7 +2056,7 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
         sendBuffer[sendL - 1] = 0x16;
 
         //mMeterController.writeCommand("fefefefefefe".getBytes());
-        mInstance.send("fefefefefefe".getBytes());
+        //mInstance.send("fefefefefefe".getBytes());
         // 发送数据 设置延迟10毫秒
         try {
             Thread.sleep(50);
