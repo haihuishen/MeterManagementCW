@@ -393,4 +393,16 @@ public interface TaskPresenter1 {
                                    List<ScatteredNewMeterBean> scatteredNewMeterBeanList,
                                    String excelPath);
 
+
+    /**
+     * 保存 "零散换装"
+     *
+     * @param observer
+     * @param values
+     * @param newAssetNumbers           新表资产编号
+     *
+     * @return
+     */
+    void saveScatteredReplaceMeterActivity(Observer observer, ContentValues values, String newAssetNumbers);
+
 }

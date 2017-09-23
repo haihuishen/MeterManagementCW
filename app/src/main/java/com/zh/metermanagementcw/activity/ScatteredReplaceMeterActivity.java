@@ -27,7 +27,7 @@ import com.zebra.adc.decoder.Barcode2DWithSoft;
 import com.zh.metermanagementcw.R;
 import com.zh.metermanagementcw.activity.base.BaseActivity;
 import com.zh.metermanagementcw.adapter.PicAdapter;
-import com.zh.metermanagementcw.bean.ScatteredNewMeterBean;
+import com.zh.metermanagementcw.bean.ScatteredReplaceMeterBean;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.utils.FilesUtils;
 import com.zh.metermanagementcw.utils.ImageFactory;
@@ -47,7 +47,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * 零散新装
  */
-public class ScatteredNewMeterActivity extends BaseActivity implements View.OnClickListener {
+public class ScatteredReplaceMeterActivity extends BaseActivity implements View.OnClickListener {
 
     /** 拍照获取图片*/
     public static final int TAKE_PHOTO = 2000;
@@ -69,7 +69,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
     Button mBtnMenu;
 
     //----------------------------- 零散新装 --------------------------
-    ScatteredNewMeterBean mScatteredNewMeterBean = new ScatteredNewMeterBean();
+    ScatteredReplaceMeterBean mScatteredReplaceMeterBean = new ScatteredReplaceMeterBean();
 
     //----------------------------- 用户信息 --------------------------
     /** 用户编号 -- 编辑框 -- cet_userNumber */
@@ -81,6 +81,17 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
     /** 用户电话 -- 编辑框 -- cet_userPhone */
     ClearEditText mCEtUserPhone;
 
+    //-----------------------------旧电表-------------------------------
+    /** 旧电能表表地址 -- 编辑框 -- cet_oldAddr */
+    private ClearEditText mCEtOldAddr;
+    /** 旧表资产编号 -- 编辑框 -- cet_oldAssetNumbersScan */
+    private ClearEditText mCEtOldAssetNumbers;
+    /** 旧表资产编号(扫描) -- 按钮 -- btn_oldAssetNumbersScan*/
+    private Button mBtnOldAssetNumbersScan;
+    /** 旧电能表止码 -- 编辑框 -- cet_oldElectricity*/
+    private ClearEditText mCEtOldElectricity;
+    /** 旧电能表止码(扫描) -- 按钮 -- btn_oldElectricity*/
+    private Button mBtnOldElectricity;
 
     //-----------------------------新电表-------------------------------
     /** 新电能表表地址 -- 编辑框*/
@@ -193,7 +204,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_scattered_new_meter;
+        return R.layout.activity_scattered_replace_meter;
     }
 
 
@@ -224,6 +235,11 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
         mCEtUserAddr = (ClearEditText) findViewById(R.id.cet_userAddr);
         mCEtUserPhone = (ClearEditText) findViewById(R.id.cet_userPhone);
 
+        mCEtOldAddr = (ClearEditText) findViewById(R.id.cet_oldAddr);
+        mCEtOldAssetNumbers = (ClearEditText) findViewById(R.id.cet_oldAssetNumbersScan);
+        mBtnOldAssetNumbersScan = (Button) findViewById(R.id.btn_oldAssetNumbersScan);
+        mCEtOldElectricity = (ClearEditText) findViewById(R.id.cet_oldElectricity);
+        mBtnOldElectricity = (Button) findViewById(R.id.btn_oldElectricity);
 
         mCEtNewAddr = (ClearEditText) findViewById(R.id.cet_newAddr);
         mCEtNewAssetNumbers = (ClearEditText) findViewById(R.id.cet_newAssetNumbersScan);
@@ -270,6 +286,10 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
     @Override
     public void initListener() {
+
+        mBtnOldAssetNumbersScan.setOnClickListener(this);
+        mBtnOldElectricity.setOnClickListener(this);
+
         mBtnNewAssetNumbersScan.setOnClickListener(this);
         mBtnNewElectricity.setOnClickListener(this);
 
@@ -298,6 +318,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
     @Override
     public void initData() {
 
+        mBtnOldAssetNumbersScan.setEnabled(false);
         mBtnNewAssetNumbersScan.setEnabled(false);
 
         mBtnMeterFootNumbersScan.setEnabled(false);
@@ -339,14 +360,14 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                mScatteredNewMeterBean.setPicPath(StringUtils.deleteSubStr(mScatteredNewMeterBean.getPicPath(), path));
+                                mScatteredReplaceMeterBean.setPicPath(StringUtils.deleteSubStr(mScatteredReplaceMeterBean.getPicPath(), path));
                                 File file = new File(path);
                                 if(file.exists()){
                                     file.delete();
                                 }
                                 FilesUtils.broadCreateFile(getContext(), path);
 
-                                mPicAdapter.setPathList(mScatteredNewMeterBean.getPicPath());
+                                mPicAdapter.setPathList(mScatteredReplaceMeterBean.getPicPath());
                                 sweetAlertDialog.dismiss();
                             }
                         })
@@ -478,6 +499,11 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
         String userAddr = mCEtUserAddr.getText().toString().trim();                         // 用户地址
         String userPhone = mCEtUserPhone.getText().toString().trim();                       // 用户电话
 
+        String oldAddr = mCEtOldAddr.getText().toString().trim();                           // 旧电能表表地址
+        String oldAssetNumbers = mCEtOldAssetNumbers.getText().toString().trim();   // 旧表资产编号
+        String oldElectricity = mCEtOldElectricity.getText().toString().trim();             // 旧电能表止码
+
+        
         String newAddr = mCEtNewAddr.getText().toString().trim();                           // 新电能表表地址
         String newAssetNumbers = mCEtNewAssetNumbers.getText().toString().trim();   // 新表资产编号
         String newElectricity = mCEtNewElectricity.getText().toString().trim();             // 新电能表止码
@@ -486,20 +512,24 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
         String meterBodyNumbersScan1 = mCEtMeterBodyNumbersScan1.getText().toString().trim();
         String mCeterBodyNumbersScan2 = mCEtMeterBodyNumbersScan2.getText().toString().trim();
 
-        mScatteredNewMeterBean.setUserNumber(userNumber);
-        mScatteredNewMeterBean.setUserName(userName);
-        mScatteredNewMeterBean.setUserAddr(userAddr);
-        mScatteredNewMeterBean.setUserPhone(userPhone);
+        mScatteredReplaceMeterBean.setUserNumber(userNumber);
+        mScatteredReplaceMeterBean.setUserName(userName);
+        mScatteredReplaceMeterBean.setUserAddr(userAddr);
+        mScatteredReplaceMeterBean.setUserPhone(userPhone);
 
-        mScatteredNewMeterBean.setNewAddr(newAddr);
-        mScatteredNewMeterBean.setNewAssetNumbers(newAssetNumbers);
-        mScatteredNewMeterBean.setNewElectricity(newElectricity);
+        mScatteredReplaceMeterBean.setOldAddr(oldAddr);
+        mScatteredReplaceMeterBean.setOldAssetNumbers(oldAssetNumbers);
+        mScatteredReplaceMeterBean.setOldElectricity(oldElectricity);
+        
+        mScatteredReplaceMeterBean.setNewAddr(newAddr);
+        mScatteredReplaceMeterBean.setNewAssetNumbers(newAssetNumbers);
+        mScatteredReplaceMeterBean.setNewElectricity(newElectricity);
 
-        mScatteredNewMeterBean.setMeterFootNumbers(meterFootNumbersScan);
-        mScatteredNewMeterBean.setMeterBodyNumbers1(meterBodyNumbersScan1);
-        mScatteredNewMeterBean.setMeterBodyNumbers2(mCeterBodyNumbersScan2);
+        mScatteredReplaceMeterBean.setMeterFootNumbers(meterFootNumbersScan);
+        mScatteredReplaceMeterBean.setMeterBodyNumbers1(meterBodyNumbersScan1);
+        mScatteredReplaceMeterBean.setMeterBodyNumbers2(mCeterBodyNumbersScan2);
 
-        mScatteredNewMeterBean.setTime(TimeUtils.getCurrentTimeRq());
+        mScatteredReplaceMeterBean.setTime(TimeUtils.getCurrentTimeRq());
 
         if (TextUtils.isEmpty(newAssetNumbers)){
             showToast("请输入新表的资产编号");
@@ -508,29 +538,33 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(Constant.SCATTEREDNEWMETER.userNumber.toString(), mScatteredNewMeterBean.getUserNumber());
-        contentValues.put(Constant.SCATTEREDNEWMETER.userName.toString(), mScatteredNewMeterBean.getUserName());
-        contentValues.put(Constant.SCATTEREDNEWMETER.userAddr.toString(), mScatteredNewMeterBean.getUserAddr());
-        contentValues.put(Constant.SCATTEREDNEWMETER.userPhone.toString(), mScatteredNewMeterBean.getUserNumber());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.userNumber.toString(), mScatteredReplaceMeterBean.getUserNumber());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.userName.toString(), mScatteredReplaceMeterBean.getUserName());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.userAddr.toString(), mScatteredReplaceMeterBean.getUserAddr());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.userPhone.toString(), mScatteredReplaceMeterBean.getUserNumber());
 
-        contentValues.put(Constant.SCATTEREDNEWMETER.newAddr.toString(), mScatteredNewMeterBean.getNewAddr());
-        contentValues.put(Constant.SCATTEREDNEWMETER.newAssetNumbers.toString(), mScatteredNewMeterBean.getNewAssetNumbers());
-        contentValues.put(Constant.SCATTEREDNEWMETER.newElectricity.toString(), mScatteredNewMeterBean.getNewElectricity());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.oldAddr.toString(), mScatteredReplaceMeterBean.getOldAddr());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.oldAssetNumbers.toString(), mScatteredReplaceMeterBean.getOldAssetNumbers());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.oldElectricity.toString(), mScatteredReplaceMeterBean.getOldElectricity());
+        
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.newAddr.toString(), mScatteredReplaceMeterBean.getNewAddr());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.newAssetNumbers.toString(), mScatteredReplaceMeterBean.getNewAssetNumbers());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.newElectricity.toString(), mScatteredReplaceMeterBean.getNewElectricity());
 
-        contentValues.put(Constant.SCATTEREDNEWMETER.meterFootNumbers.toString(), mScatteredNewMeterBean.getMeterFootNumbers());
-        contentValues.put(Constant.SCATTEREDNEWMETER.meterFootPicPath.toString(), mScatteredNewMeterBean.getMeterFootPicPath());
-        contentValues.put(Constant.SCATTEREDNEWMETER.meterBodyNumbers1.toString(), mScatteredNewMeterBean.getMeterBodyNumbers1());
-        contentValues.put(Constant.SCATTEREDNEWMETER.meterBodyPicPath1.toString(), mScatteredNewMeterBean.getMeterBodyPicPath1());
-        contentValues.put(Constant.SCATTEREDNEWMETER.meterBodyNumbers2.toString(), mScatteredNewMeterBean.getMeterBodyNumbers2());
-        contentValues.put(Constant.SCATTEREDNEWMETER.meterBodyPicPath2.toString(), mScatteredNewMeterBean.getMeterBodyPicPath2());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.meterFootNumbers.toString(), mScatteredReplaceMeterBean.getMeterFootNumbers());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.meterFootPicPath.toString(), mScatteredReplaceMeterBean.getMeterFootPicPath());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.meterBodyNumbers1.toString(), mScatteredReplaceMeterBean.getMeterBodyNumbers1());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.meterBodyPicPath1.toString(), mScatteredReplaceMeterBean.getMeterBodyPicPath1());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.meterBodyNumbers2.toString(), mScatteredReplaceMeterBean.getMeterBodyNumbers2());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.meterBodyPicPath2.toString(), mScatteredReplaceMeterBean.getMeterBodyPicPath2());
 
-        contentValues.put(Constant.SCATTEREDNEWMETER.picPath.toString(), mScatteredNewMeterBean.getPicPath());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.picPath.toString(), mScatteredReplaceMeterBean.getPicPath());
 
-        contentValues.put(Constant.SCATTEREDNEWMETER.time.toString(), mScatteredNewMeterBean.getTime());
+        contentValues.put(Constant.SCATTEREDREPLACEMETER.time.toString(), mScatteredReplaceMeterBean.getTime());
 
         showLoadingDialog("", "正在保存数据...");
 
-        taskPresenter1.saveScatteredNewMeterActivity(saveScatteredNewMeterObserver, contentValues, mScatteredNewMeterBean.getNewAssetNumbers());
+        taskPresenter1.saveScatteredReplaceMeterActivity(saveScatteredReplaceMeterObserver, contentValues, mScatteredReplaceMeterBean.getNewAssetNumbers());
     }
 
     /**
@@ -548,12 +582,18 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                 String barCode = new String(bytes, 0, length);
 
                 final String scanData = barCode.trim();
-                if(mCurrentScanBtnId == R.id.btn_newAssetNumbersScan){    // 新表资产编号(二维扫描)
+                if(mCurrentScanBtnId == R.id.btn_oldAssetNumbersScan){    // 旧表资产编号(二维扫描)
+
+                    mBeepManager.playSuccessful();
+
+                    mCEtOldAssetNumbers.setText(scanData);
+
+                }else if(mCurrentScanBtnId == R.id.btn_newAssetNumbersScan){    // 新表资产编号(二维扫描)
 
                     mBeepManager.playSuccessful();
                     if(scanData.length() != 24) {
 
-                        SweetAlertDialog dialog = new SweetAlertDialog(ScatteredNewMeterActivity.this, SweetAlertDialog.NORMAL_TYPE)
+                        SweetAlertDialog dialog = new SweetAlertDialog(ScatteredReplaceMeterActivity.this, SweetAlertDialog.NORMAL_TYPE)
                                 .setTitleText("提示")
                                 .setContentText("该资产编码不是24位的是否输入")
                                 .setConfirmText("是")
@@ -589,15 +629,15 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                 }else if(mCurrentScanBtnId == R.id.btn_meterFootNumbersScan){
                     mBeepManager.playSuccessful();
                     mCEtMeterFootNumbersScan.setText(scanData);
-                    mScatteredNewMeterBean.setMeterFootNumbers(scanData);
+                    mScatteredReplaceMeterBean.setMeterFootNumbers(scanData);
                 }else if(mCurrentScanBtnId == R.id.btn_meterBodyNumbersScan1){
                     mBeepManager.playSuccessful();
                     mCEtMeterBodyNumbersScan1.setText(scanData);
-                    mScatteredNewMeterBean.setMeterBodyNumbers1(scanData);
+                    mScatteredReplaceMeterBean.setMeterBodyNumbers1(scanData);
                 }else if(mCurrentScanBtnId == R.id.btn_meterBodyNumbersScan2){
                     mBeepManager.playSuccessful();
                     mCEtMeterBodyNumbersScan2.setText(scanData);
-                    mScatteredNewMeterBean.setMeterBodyNumbers2(scanData);
+                    mScatteredReplaceMeterBean.setMeterBodyNumbers2(scanData);
                 }
 
             }
@@ -633,6 +673,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
         @Override
         public void onComplete(){
+            mBtnOldAssetNumbersScan.setEnabled(true);
             mBtnNewAssetNumbersScan.setEnabled(true);
 
             mBtnMeterFootNumbersScan.setEnabled(true);
@@ -646,7 +687,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
      *
      * rxjava -- 主线程
      */
-    Observer saveScatteredNewMeterObserver = new Observer<Long>() {
+    Observer saveScatteredReplaceMeterObserver = new Observer<Long>() {
 
         @Override
         public void onSubscribe(@NonNull Disposable d) {
@@ -665,6 +706,10 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                 mCEtUserAddr.setText("");
                 mCEtUserPhone.setText("");
 
+                mCEtOldAddr.setText("");
+                mCEtOldAssetNumbers.setText("");
+                mCEtOldElectricity.setText("");
+
                 mCEtNewAddr.setText("");
                 mCEtNewAssetNumbers.setText("");
                 mCEtNewElectricity.setText("");
@@ -673,7 +718,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                 mCEtMeterBodyNumbersScan1.setText("");
                 mCEtMeterBodyNumbersScan2.setText("");
 
-                mScatteredNewMeterBean = new ScatteredNewMeterBean();
+                mScatteredReplaceMeterBean = new ScatteredReplaceMeterBean();
                 mPicAdapter.clearPathList();
 
                 mCEtMeterFootNumbersScan.setText("");
@@ -724,6 +769,18 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
             case R.id.btn_menu_right:
                 break;
 
+            case R.id.btn_oldAssetNumbersScan:                     // 旧表资产编号(二维扫描)
+                mCurrentScanBtnId = R.id.btn_oldAssetNumbersScan;
+                mCEtOldAssetNumbers.setText("");
+                mCEtOldAddr.setText("");
+                mCEtOldElectricity.setText("");
+
+                if(mBarcode2DWithSoft != null) {
+                    mBarcode2DWithSoft.stopScan();
+                    mBarcode2DWithSoft.scan();                              //启动扫描
+                }
+                break;
+
             case R.id.btn_newAssetNumbersScan:                     // 新表资产编号(二维扫描)
                 mCurrentScanBtnId = R.id.btn_newAssetNumbersScan;
                 mCEtNewAssetNumbers.setText("");
@@ -754,7 +811,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
             case R.id.pv_meterFootPic:                                  // 电表表脚封扣(拍照后得到的照片) -- 图片
                 mInfo = mPvCameraMeterFoot.getInfo();                   // 拿到pv_camaraPhoto的信息(如：位置)，用于动画
-                mBitmap = ImageFactory.getBitmap(mScatteredNewMeterBean.getMeterFootPicPath());
+                mBitmap = ImageFactory.getBitmap(mScatteredReplaceMeterBean.getMeterFootPicPath());
                 mPvBgImg.setImageBitmap(mBitmap);
                 mIvBg.startAnimation(in);             // 执行动画
                 mIvBg.setVisibility(View.VISIBLE);
@@ -773,8 +830,8 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                String path = mScatteredNewMeterBean.getMeterFootPicPath();
-                                mScatteredNewMeterBean.setMeterFootPicPath("");
+                                String path = mScatteredReplaceMeterBean.getMeterFootPicPath();
+                                mScatteredReplaceMeterBean.setMeterFootPicPath("");
                                 File file = new File(path);
                                 if(file.exists()){
                                     file.delete();
@@ -804,7 +861,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     return;
                 }
 
-                mCurrentPicName = Constant.ScatteredNewMeter_ExportPhone_Day_PATH + newAssetNumber + "_电表表脚封扣.jpg";
+                mCurrentPicName = Constant.ScatteredReplaceMeter_ExportPhone_Day_PATH + newAssetNumber + "_电表表脚封扣.jpg";
 
                 if(mBarcode2DWithSoft!=null){
                     mBarcode2DWithSoft.stopScan();
@@ -837,7 +894,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
             case R.id.pv_meterBodyPic1:                  // 表箱封扣1(拍照后得到的照片) -- 图片
                 mInfo = mPvCameraMeterBody1.getInfo();                   // 拿到pv_camaraPhoto的信息(如：位置)，用于动画
-                mBitmap = ImageFactory.getBitmap(mScatteredNewMeterBean.getMeterBodyPicPath1());
+                mBitmap = ImageFactory.getBitmap(mScatteredReplaceMeterBean.getMeterBodyPicPath1());
                 mPvBgImg.setImageBitmap(mBitmap);
                 mIvBg.startAnimation(in);             // 执行动画
                 mIvBg.setVisibility(View.VISIBLE);
@@ -855,8 +912,8 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                String path = mScatteredNewMeterBean.getMeterBodyPicPath1();
-                                mScatteredNewMeterBean.setMeterBodyPicPath1("");
+                                String path = mScatteredReplaceMeterBean.getMeterBodyPicPath1();
+                                mScatteredReplaceMeterBean.setMeterBodyPicPath1("");
                                 File file = new File(path);
                                 if(file.exists()){
                                     file.delete();
@@ -885,7 +942,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     showToast("请输入--新表资产编号");
                     return;
                 }
-                mCurrentPicName = Constant.ScatteredNewMeter_ExportPhone_Day_PATH + newAssetNumber + "_表箱封扣1.jpg";
+                mCurrentPicName = Constant.ScatteredReplaceMeter_ExportPhone_Day_PATH + newAssetNumber + "_表箱封扣1.jpg";
 
                 if(mBarcode2DWithSoft!=null){
                     mBarcode2DWithSoft.stopScan();
@@ -916,7 +973,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
 
             case R.id.pv_meterBodyPic2:                  // 表箱封扣2(拍照后得到的照片) -- 图片
                 mInfo = mPvCameraMeterBody2.getInfo();                   // 拿到pv_camaraPhoto的信息(如：位置)，用于动画
-                mBitmap = ImageFactory.getBitmap(mScatteredNewMeterBean.getMeterBodyPicPath2());
+                mBitmap = ImageFactory.getBitmap(mScatteredReplaceMeterBean.getMeterBodyPicPath2());
                 mPvBgImg.setImageBitmap(mBitmap);
                 mIvBg.startAnimation(in);             // 执行动画
                 mIvBg.setVisibility(View.VISIBLE);
@@ -934,8 +991,8 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                String path = mScatteredNewMeterBean.getMeterBodyPicPath2();
-                                mScatteredNewMeterBean.setMeterBodyPicPath2("");
+                                String path = mScatteredReplaceMeterBean.getMeterBodyPicPath2();
+                                mScatteredReplaceMeterBean.setMeterBodyPicPath2("");
                                 File file = new File(path);
                                 if(file.exists()){
                                     file.delete();
@@ -963,7 +1020,7 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     showToast("请输入--新表资产编号");
                     return;
                 }
-                mCurrentPicName = Constant.ScatteredNewMeter_ExportPhone_Day_PATH + newAssetNumber + "_表箱封扣2.jpg";
+                mCurrentPicName = Constant.ScatteredReplaceMeter_ExportPhone_Day_PATH + newAssetNumber + "_表箱封扣2.jpg";
 
                 if(mBarcode2DWithSoft!=null){
                     mBarcode2DWithSoft.stopScan();
@@ -984,15 +1041,15 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                 if(!TextUtils.isEmpty(newAssetNumber)) {
 
                     int size = 0;
-                    if(StringUtils.isEmpty(mScatteredNewMeterBean.getPicPath())){
+                    if(StringUtils.isEmpty(mScatteredReplaceMeterBean.getPicPath())){
                         size = 0;
                     }else{
-                        size = mScatteredNewMeterBean.getPicPath().split(",").length;
+                        size = mScatteredReplaceMeterBean.getPicPath().split(",").length;
                     }
                     if(size > 3){
                         showToast("照片已超过4张");
                     }else {
-                        mCurrentPicName = Constant.ScatteredNewMeter_ExportPhone_Day_PATH
+                        mCurrentPicName = Constant.ScatteredReplaceMeter_ExportPhone_Day_PATH
                                 + newAssetNumber + "_" + mPhotoIndex + ".jpg";
 
                         if(mBarcode2DWithSoft!=null){
@@ -1055,14 +1112,14 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     e.printStackTrace();
                 }
 
-                if (mPicAdapter != null && mScatteredNewMeterBean != null) {
+                if (mPicAdapter != null && mScatteredReplaceMeterBean != null) {
                     mPicAdapter.addPath(mCurrentPicName);
                     //LogUtils.i("前：" + mMeterBean.getPicPath());
 
-                    if (StringUtils.isEmpty(mScatteredNewMeterBean.getPicPath())) {
-                        mScatteredNewMeterBean.setPicPath(mCurrentPicName);
+                    if (StringUtils.isEmpty(mScatteredReplaceMeterBean.getPicPath())) {
+                        mScatteredReplaceMeterBean.setPicPath(mCurrentPicName);
                     } else {
-                        mScatteredNewMeterBean.setPicPath(mScatteredNewMeterBean.getPicPath() + "," + mCurrentPicName);
+                        mScatteredReplaceMeterBean.setPicPath(mScatteredReplaceMeterBean.getPicPath() + "," + mCurrentPicName);
                     }
                     //LogUtils.i("后：" + mMeterBean.getPicPath());
                     FilesUtils.broadCreateFile(getContext(), mCurrentPicName);
@@ -1081,13 +1138,13 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     e.printStackTrace();
                 }
 
-                if (mScatteredNewMeterBean != null) {
+                if (mScatteredReplaceMeterBean != null) {
 
                     mRLayoutMeterFoot.setVisibility(View.VISIBLE);
                     mIBtnCameraMeterFoot.setVisibility(View.GONE);
 
-                    mScatteredNewMeterBean.setMeterFootPicPath(mCurrentPicName);
-                    mPvCameraMeterFoot.setImageBitmap(ImageFactory.getBitmap(mScatteredNewMeterBean.getMeterFootPicPath()));
+                    mScatteredReplaceMeterBean.setMeterFootPicPath(mCurrentPicName);
+                    mPvCameraMeterFoot.setImageBitmap(ImageFactory.getBitmap(mScatteredReplaceMeterBean.getMeterFootPicPath()));
                     FilesUtils.broadCreateFile(getContext(), mCurrentPicName);
                 }
             }
@@ -1102,13 +1159,13 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     e.printStackTrace();
                 }
 
-                if (mScatteredNewMeterBean != null) {
+                if (mScatteredReplaceMeterBean != null) {
 
                     mRLayoutMeterBody1.setVisibility(View.VISIBLE);
                     mIBtnCameraMeterBody1.setVisibility(View.GONE);
 
-                    mScatteredNewMeterBean.setMeterBodyPicPath1(mCurrentPicName);
-                    mPvCameraMeterBody1.setImageBitmap(ImageFactory.getBitmap(mScatteredNewMeterBean.getMeterBodyPicPath1()));
+                    mScatteredReplaceMeterBean.setMeterBodyPicPath1(mCurrentPicName);
+                    mPvCameraMeterBody1.setImageBitmap(ImageFactory.getBitmap(mScatteredReplaceMeterBean.getMeterBodyPicPath1()));
 
                     FilesUtils.broadCreateFile(getContext(), mCurrentPicName);
                 }
@@ -1125,13 +1182,13 @@ public class ScatteredNewMeterActivity extends BaseActivity implements View.OnCl
                     e.printStackTrace();
                 }
 
-                if (mScatteredNewMeterBean != null) {
+                if (mScatteredReplaceMeterBean != null) {
 
                     mRLayoutMeterBody2.setVisibility(View.VISIBLE);
                     mIBtnCameraMeterBody2.setVisibility(View.GONE);
 
-                    mScatteredNewMeterBean.setMeterBodyPicPath2(mCurrentPicName);
-                    mPvCameraMeterBody2.setImageBitmap(ImageFactory.getBitmap(mScatteredNewMeterBean.getMeterBodyPicPath2()));
+                    mScatteredReplaceMeterBean.setMeterBodyPicPath2(mCurrentPicName);
+                    mPvCameraMeterBody2.setImageBitmap(ImageFactory.getBitmap(mScatteredReplaceMeterBean.getMeterBodyPicPath2()));
 
                     FilesUtils.broadCreateFile(getContext(), mCurrentPicName);
                 }

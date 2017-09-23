@@ -1804,6 +1804,8 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
                                         bean.setPicPath(getValue(cursor, Constant.SCATTEREDNEWMETER.picPath.toString()));
 
+                                        bean.setTime(getValue(cursor, Constant.SCATTEREDNEWMETER.time.toString()));
+
                                         //------------------------
                                     }catch (Exception e){
                                         LogUtils.i("readDbToBeanForCollector -- e.getMessage()3:" + e.getMessage());  // 因为有些空值
@@ -1878,6 +1880,8 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                                         bean.setMeterBodyPicPath2(getValue(cursor, Constant.SCATTEREDNEWMETER.meterBodyPicPath2.toString()));
 
                                         bean.setPicPath(getValue(cursor, Constant.SCATTEREDNEWMETER.picPath.toString()));
+
+                                        bean.setTime(getValue(cursor, Constant.SCATTEREDNEWMETER.time.toString()));
                                         //------------------------
                                     }catch (Exception e){
                                         LogUtils.i("readDbToBeanForScatteredNewMeter -- e.getMessage():" + e.getMessage());  // 因为有些空值
@@ -1935,6 +1939,29 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                 .subscribe(observer);
     }
 
+
+    @Override
+    public void saveScatteredReplaceMeterActivity(Observer observer, final ContentValues values, final String newAssetNumbers) {
+        Observable.just("")
+                .observeOn(Schedulers.io())
+                .map(new Function<String, Object>() {
+                    @Override
+                    public Object apply(@NonNull String s) throws Exception {
+
+                        long i = mTableEx.Update(Constant.TABLE_SCATTEREDREPLACEMETER, values,
+                                Constant.SCATTEREDREPLACEMETER.newAssetNumbers.toString() + "=?",
+                                new String[]{newAssetNumbers});
+
+                        if(i <= 0){
+                            i = mTableEx.Add(Constant.TABLE_SCATTEREDREPLACEMETER, values);  // 返回值是  -1  失败
+                        }
+
+                        return i;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+    }
 
 
     /**

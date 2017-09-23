@@ -18,7 +18,6 @@ import com.zh.metermanagementcw.R;
 import com.zh.metermanagementcw.activity.base.BaseActivity;
 import com.zh.metermanagementcw.config.Constant;
 import com.zh.metermanagementcw.db.helper.DataManagement;
-import com.zh.metermanagementcw.utils.LogUtils;
 import com.zh.metermanagementcw.utils.VibratorUtil;
 import com.zh.passworddialog.PasswordDialog;
 import com.zh.passworddialog.SecurityCodeView;
@@ -26,9 +25,9 @@ import com.zh.passworddialog.SecurityCodeView;
 import java.util.ArrayList;
 
 /**
- * 功能选择界面 -- 零散新装
+ * 功能选择界面 -- 零散换装
  */
-public class SelectorScatteredNewMeterActivity extends BaseActivity implements OnClickListener {
+public class SelectorScatteredReplaceMeterActivity extends BaseActivity implements OnClickListener {
 
 	private long exitTime;
 
@@ -44,11 +43,11 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 
 	/** 按键ID数组 */
 	private int[] mLayoutIds = {
-			R.id.layout_scatteredNewMeter, 		// 零散新装
-			R.id.layout_generateReports, 		// 生成报表
-			R.id.layout_statistics,				// 统计
-			R.id.layout_query,					// 查询
-			R.id.layout_clean,					// 清空
+			R.id.layout_scatteredReplaceMeter, 		// 零散换装
+			R.id.layout_generateReports, 			// 生成报表
+			R.id.layout_statistics,					// 统计
+			R.id.layout_query,						// 查询
+			R.id.layout_clean,						// 清空
 	};
 
 
@@ -64,7 +63,7 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 
 	@Override
 	public int getContentLayout() {
-		return R.layout.activity_selector_scattered_new_meter;
+		return R.layout.activity_selector_scattered_replace_meter;
 	}
 
 	@Override
@@ -190,29 +189,29 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 
 				switch (view.getId()) {
 
-					case R.id.layout_scatteredNewMeter: 						// 零散新装
-						//showToast("零散新装！");
-						intent = new Intent(getContext(), ScatteredNewMeterActivity.class);
+					case R.id.layout_scatteredReplaceMeter: 			// 零散换装
+						//showToast("零散换装！");
+						intent = new Intent(getContext(), ScatteredReplaceMeterActivity.class);
 						startActivity(intent);
 						break;
 
 
 					case R.id.layout_generateReports:				 	// 生成报表
 						//showToast("生成报表！");
-						intent = new Intent(getContext(), GenerateReportsScatteredNewMeterActivity.class);
-						startActivity(intent);
+//						intent = new Intent(getContext(), GenerateReportsScatteredNewMeterActivity.class);
+//						startActivity(intent);
 						break;
 
 					case R.id.layout_statistics:						// 统计
 						//showToast("统计！");
-						intent = new Intent(getContext(), StatisticsScatteredNewMeterActivity.class);
-						startActivity(intent);
+//						intent = new Intent(getContext(), StatisticsScatteredNewMeterActivity.class);
+//						startActivity(intent);
 						break;
 
 					case R.id.layout_query:								// 查询
 						//showToast("查询！");
-						intent = new Intent(getContext(), SearchScatteredNewMeterActivity.class);
-						startActivity(intent);
+//						intent = new Intent(getContext(), SearchScatteredNewMeterActivity.class);
+//						startActivity(intent);
 						break;
 
 					case R.id.layout_clean:								// 清空
@@ -235,9 +234,9 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 												if (!securityCodeView.getEditContent().equals("7018")) {
 													tvPromptContent.setText("密码输入错误");
 													tvPromptContent.setTextColor(Color.RED);
-													VibratorUtil.Vibrate(SelectorScatteredNewMeterActivity.this, new long[]{100,100}, false);   //震动100ms
+													VibratorUtil.Vibrate(SelectorScatteredReplaceMeterActivity.this, new long[]{100,100}, false);   //震动100ms
 
-													Animation anim = AnimationUtils.loadAnimation(SelectorScatteredNewMeterActivity.this, R.anim.myanim);
+													Animation anim = AnimationUtils.loadAnimation(SelectorScatteredReplaceMeterActivity.this, R.anim.myanim);
 													tvPromptContent.startAnimation(anim);
 
 												}else {
@@ -267,7 +266,7 @@ public class SelectorScatteredNewMeterActivity extends BaseActivity implements O
 									}
 								});
 
-						sweetAlertDialog.show();
+						//sweetAlertDialog.show();
 
 					default:
 						break;

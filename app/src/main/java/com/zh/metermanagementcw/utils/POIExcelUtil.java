@@ -964,7 +964,7 @@ public class POIExcelUtil {
 		String[] headers = new String[]{
 				"用户编号", "用户名称", "用户地址", "用户电话",
 				"新表表地址", "新表资产编号", "新电能表止码",
-				"电表表脚封扣", "表箱封扣1", "表箱封扣2"
+				"电表表脚封扣", "表箱封扣1", "表箱封扣2", "完成时间"
 
 		};
 
@@ -1001,6 +1001,8 @@ public class POIExcelUtil {
 			setCellStyle(contentStyle, hssfRow, 7, bean.getMeterFootNumbers());			// 7.电表表脚封扣
 			setCellStyle(contentStyle, hssfRow, 8, bean.getMeterBodyNumbers1());		// 8.表箱封扣1
 			setCellStyle(contentStyle, hssfRow, 9, bean.getMeterBodyNumbers2());		// 9.表箱封扣2
+
+			setCellStyle(contentStyle, hssfRow, 10, bean.getTime());		// 10.完成时间
 
 
 			rowIndex = rowIndex + 1;

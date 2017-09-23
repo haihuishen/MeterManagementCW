@@ -230,8 +230,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //				"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）
 //				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)
 //
-//				"picPath varchar(1000)" +									// 拍照图片的路径(新装电表)
+//				"picPath varchar(1000)," +									// 拍照图片的路径(新装电表)
 //
+// 				"time date" +												// 完成时间
+//				")");
+//
+//		/** 零散换装  -- 2017/09/22 */
+//		db.execSQL("create table if not exists scatteredreplacemeter(" +
+//				"_id integer primary key autoincrement," +
+//
+//				"userNumber varchar(50) not null," +						// 用户编号
+//				"userName varchar(50)," +									// 用户名称
+//				"userAddr varchar(50)," +									// 用户地址
+//				"userPhone varchar(50)," +									// 用户电话
+//
+//				"oldAddr varchar(50)," +									// 旧表表地址(需扫描)
+//				"oldAssetNumbers varchar(50)," +							// 旧表资产编号(需扫描)
+//				"oldElectricity varchar(50)," +								// 旧电能表止码-电量(需扫描)
+//
+//				"newAddr varchar(50)," +									// 新表表地址(需扫描)
+//				"newAssetNumbers varchar(50)," +							// 新表资产编号(需扫描)
+//				"newElectricity varchar(50)," +								// 新电能表止码-电量(需扫描)
+//
+//				"meterFootNumbers varchar(500)," +							// 表脚封扣（条码）
+//				"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)
+//
+//				"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）
+//				"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)
+//
+//				"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）
+//				"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)
+//
+//				"picPath varchar(1000)," +									// 拍照图片的路径(新装电表)
+//
+//				"time date" +												// 完成时间
 //				")");
 
 	}
@@ -282,10 +314,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //								"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)
 //								"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）
 //								"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)
-//								"picPath varchar(1000)" +									// 拍照图片的路径(新装电表)
+//								"picPath varchar(1000)," +									// 拍照图片的路径(新装电表)
+// 								"time date" +												// 完成时间
+//								")";
+//
+//						sql2 = "create table if not exists scatteredreplacemeter(" +
+//								"_id integer primary key autoincrement," +
+//								"userNumber varchar(50) not null," +						// 用户编号
+//								"userName varchar(50)," +									// 用户名称
+//								"userAddr varchar(50)," +									// 用户地址
+//								"userPhone varchar(50)," +									// 用户电话
+//								"oldAddr varchar(50)," +									// 旧表表地址(需扫描)
+//								"oldAssetNumbers varchar(50)," +							// 旧表资产编号(需扫描)
+//								"oldElectricity varchar(50)," +								// 旧电能表止码-电量(需扫描)
+//								"newAddr varchar(50)," +									// 新表表地址(需扫描)
+//								"newAssetNumbers varchar(50)," +							// 新表资产编号(需扫描)
+//								"newElectricity varchar(50)," +								// 新电能表止码-电量(需扫描)
+//								"meterFootNumbers varchar(500)," +							// 表脚封扣（条码）
+//								"meterFootPicPath varchar(500)," +							// 拍照图片的路径(电表表脚封扣)
+//								"meterBodyNumbers1 varchar(500)," +							// 表箱封扣1（条码）
+//								"meterBodyPicPath1 varchar(500)," +							// 拍照图片的路径(表箱封扣1)
+//								"meterBodyNumbers2 varchar(500)," +							// 表箱封扣2（条码）
+//								"meterBodyPicPath2 varchar(500)," +							// 拍照图片的路径(表箱封扣2)
+//								"picPath varchar(1000)," +									// 拍照图片的路径(新装电表)
+//								"time date" +												// 完成时间
 //								")";
 //
 //						db.execSQL(sql1);
+//						db.execSQL(sql2);
+//
+//
 //
 //						break;
 

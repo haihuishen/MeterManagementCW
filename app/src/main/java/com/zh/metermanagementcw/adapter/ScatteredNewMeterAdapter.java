@@ -82,6 +82,7 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
         viewHold.tvMeterFootNumbers.setText(mBeanArrayList.get(position).getMeterFootNumbers());
         viewHold.tvMeterBodyNumbers1.setText(mBeanArrayList.get(position).getMeterBodyNumbers1());
         viewHold.tvMeterBodyNumbers2.setText(mBeanArrayList.get(position).getMeterBodyNumbers2());
+        viewHold.tvTime.setText(mBeanArrayList.get(position).getTime());
 
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);         // 水平
@@ -145,7 +146,8 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
         public TextView tvMeterBodyNumbers1;
         /** 表箱封扣2 -- 文本 -- tv_meterBodyNumbers2*/
         public TextView tvMeterBodyNumbers2;
-
+        /** 完成时间 */
+        public TextView tvTime;
 
         /** 图片列表 -- 电表的 */
         public RecyclerView rvPic;
@@ -165,6 +167,7 @@ public class ScatteredNewMeterAdapter extends BaseAdapter {
             tvMeterFootNumbers = (TextView) view.findViewById(R.id.tv_meterFootNumbers);
             tvMeterBodyNumbers1 = (TextView) view.findViewById(R.id.tv_meterBodyNumbers1);
             tvMeterBodyNumbers2 = (TextView) view.findViewById(R.id.tv_meterBodyNumbers2);
+            tvTime = (TextView) view.findViewById(R.id.tv_time);
 
             rvPic = (RecyclerView) view.findViewById(R.id.rv_pic);
         }

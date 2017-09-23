@@ -78,6 +78,8 @@ public class Constant {
 
     /** 零散新装--导出文件夹 存放地址 <p> /storage/emulated/0/电表换装/零散新装/导出数据/ <br>  */
     public final static String ScatteredNewMeter_ExportInfo_PATH = ScatteredNewMeter_PATH + "导出数据" + File.separator;
+    /** 零散换装--导出文件夹 存放地址 <p> /storage/emulated/0/电表换装/零散换装/导出数据/ <br>  */
+    public final static String ScatteredReplaceMeter_ExportInfo_PATH = ScatteredReplaceMeter_PATH + "导出数据" + File.separator;
 
 
     /** 日冻结 存放地址 <p> /storage/emulated/0/电表换装/数据验收/导入数据/日冻结/ <br> */
@@ -103,7 +105,12 @@ public class Constant {
     public final static String ScatteredNewMeter_ExportPhone_Day_PATH = ScatteredNewMeter_ExportInfo_PATH
             + "导出图片" + File.separator;
 
-
+    /** 导出Excel--零散新装 存放地址 <p> /storage/emulated/0/电表换装/零散新装/导出数据/导出Excel/ <br> */
+    public final static String ScatteredReplaceMeter_ExportExcel_Day_PATH = ScatteredReplaceMeter_ExportInfo_PATH
+            + "导出Excel" + File.separator;
+    /** 导出图片--零散新装 存放地址 <p> /storage/emulated/0/电表换装/零散新装/导出数据/导出图片/ <br> */
+    public final static String ScatteredReplaceMeter_ExportPhone_Day_PATH = ScatteredReplaceMeter_ExportInfo_PATH
+            + "导出图片" + File.separator;
     //----------------------------------------------------------------------------------------
 
     public final static String type_all = "总户数";
@@ -137,7 +144,8 @@ public class Constant {
     public final static String TABLE_TRANSFORMER = "transformer";
     /** 表名 -- scatterednewmeter -- 零散新装 */
     public final static String TABLE_SCATTEREDNEWMETER = "scatterednewmeter";
-
+    /** 表名 -- scatterednewmeter -- 零散换装 */
+    public final static String TABLE_SCATTEREDREPLACEMETER = "scatteredreplacemeter";
     //----------------------------------------------------------------------------------------
 
 
@@ -434,8 +442,60 @@ public class Constant {
         /** 拍照图片的路径(表箱封扣2) */
         meterBodyPicPath2,
 
-        /** 拍照图片的路径(变压器) */
-        picPath
+        /** 拍照图片的路径 */
+        picPath,
+
+        /** 完成时间 */
+        time
+    }
+
+    //-------------------------------- 零散换装 --2017/09/22--------------------------------
+
+    /** 零散新装 */
+    public static enum SCATTEREDREPLACEMETER{
+        /** 序号(数据库自动生成) */
+        _id,
+        /** 用户编号 */
+        userNumber,
+        /** 用户名称 */
+        userName,
+        /** 用户地址 */
+        userAddr,
+        /** 用户电话 */
+        userPhone,
+
+        /** 旧表表地址(需扫描) */
+        oldAddr,
+        /** 旧表资产编号(需扫描) */
+        oldAssetNumbers,
+        /** 旧电能表止码-电量(需扫描) */
+        oldElectricity,
+        
+        /** 新表表地址(需扫描) */
+        newAddr,
+        /** 新表资产编号(需扫描) */
+        newAssetNumbers,
+        /** 新电能表止码-电量(需扫描) */
+        newElectricity,
+
+        /** 电表表脚封扣（条码） */
+        meterFootNumbers,
+        /** 拍照图片的路径(电表表脚封扣) */
+        meterFootPicPath,
+        /** 表箱封扣1（条码） */
+        meterBodyNumbers1,
+        /** 拍照图片的路径(表箱封扣1) */
+        meterBodyPicPath1,
+        /** 表箱封扣2（条码） */
+        meterBodyNumbers2,
+        /** 拍照图片的路径(表箱封扣2) */
+        meterBodyPicPath2,
+
+        /** 拍照图片的路径 */
+        picPath,
+
+        /** 完成时间 */
+        time
     }
 
 }

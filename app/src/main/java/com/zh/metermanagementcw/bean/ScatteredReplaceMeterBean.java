@@ -3,7 +3,7 @@ package com.zh.metermanagementcw.bean;
 /**
  * 零散新装
  */
-public class ScatteredNewMeterBean {
+public class ScatteredReplaceMeterBean {
     /** 序号(数据库自动生成) */
     String _id;
     /** 用户编号 */
@@ -15,6 +15,13 @@ public class ScatteredNewMeterBean {
     /** 用户电话 */
     String userPhone;
 
+    /** 旧表表地址(需扫描) */
+    String oldAddr;
+    /** 旧表资产编号(需扫描) */
+    String oldAssetNumbers;
+    /** 旧电能表止码-电量(需扫描) */
+    String oldElectricity;
+    
     /** 新表表地址(需扫描) */
     String newAddr;
     /** 新表资产编号(需扫描) */
@@ -88,6 +95,35 @@ public class ScatteredNewMeterBean {
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
     }
+
+    /** 旧表表地址(需扫描) */
+    public String getOldAddr() {
+        return oldAddr;
+    }
+    /** 旧表表地址(需扫描) */
+    public void setOldAddr(String oldAddr) {
+        this.oldAddr = oldAddr;
+    }
+
+    /** 旧表资产编号(需扫描) */
+    public String getOldAssetNumbers() {
+        return oldAssetNumbers;
+    }
+    /** 旧表资产编号(需扫描) */
+    public void setOldAssetNumbers(String oldAssetNumbers) {
+        this.oldAssetNumbers = oldAssetNumbers;
+    }
+
+    /** 旧电能表止码-电量(需扫描) */
+    public String getOldElectricity() {
+        return oldElectricity;
+    }
+    /** 旧电能表止码-电量(需扫描) */
+    public void setOldElectricity(String oldElectricity) {
+        this.oldElectricity = oldElectricity;
+    }
+
+
 
     /** 新表表地址(需扫描) */
     public String getNewAddr() {

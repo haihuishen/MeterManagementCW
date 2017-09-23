@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bm.library.Info;
 import com.bm.library.PhotoView;
 import com.shen.sweetdialog.SweetAlertDialog;
@@ -27,9 +28,11 @@ import com.zh.metermanagementcw.utils.BeepManager;
 import com.zh.metermanagementcw.utils.ImageFactory;
 import com.zh.metermanagementcw.utils.LogUtils;
 import com.zh.metermanagementcw.utils.StringUtils;
+import com.zh.metermanagementcw.utils.TimeUtils;
 import com.zh.metermanagementcw.view.ClearEditText;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -68,6 +71,14 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
     /** 查询 -- 按钮 */
     Button mBtnSearch;
+
+    //--------------------------------------------------
+    /** 新装时间 -- tv_time */
+    TextView mTvTime;
+    /** 时间选择器*/
+    TimePickerView pvTime;
+
+    //--------------------------------------------------
 
     //--------------------------------------------------
     ScatteredNewMeterAdapter mScatteredNewMeterAdapter;
@@ -123,6 +134,8 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
     @Override
     public void initView() {
 
+        mTvTime = (TextView) findViewById(R.id.tv_time);
+
         mCEtUserName = (ClearEditText) findViewById(R.id.et_userName);
         mCEtUserNumber = (ClearEditText) findViewById(R.id.et_userNumber);
         mCEtAssetsNumber = (ClearEditText) findViewById(R.id.et_assetsNumber);
@@ -144,6 +157,7 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
     @Override
     public void initListener() {
+        mTvTime.setOnClickListener(this);
         mBtnSearch.setOnClickListener(this);
         mBtnAssetsNumber.setOnClickListener(this);
         mPvBgImg.setOnClickListener(this);
@@ -173,6 +187,24 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
         mScanBack = new ScanBack();
         taskPresenter1.initBarcode2D(initBarcode2DSObserver, getContext(), mScanBack);
 
+
+        /******************************************************************************/
+        //时间选择器
+        pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+        //控制时间范围
+        // Calendar calendar = Calendar.getInstance();
+        // pvTime.setRange(calendar.get(Calendar.YEAR) - 20, calendar.get(Calendar.YEAR));//要在setTime 之前才有效果哦
+        pvTime.setTitle("新装时间");         // 设置"标题"
+        pvTime.setTime(new Date());         // 设置当前的时间，到时间选择器
+        pvTime.setCyclic(false);
+        pvTime.setCancelable(false);         // true:点击弹出"布局"外部，收回"布局";false:没反应
+        //时间选择后回调
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                mTvTime.setText(TimeUtils.dateConvertString(date,"yyyy-MM-dd"));
+            }
+        });
 
         //------------------------------------------------------------------
 
@@ -221,6 +253,8 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
         mListView.setAdapter(mScatteredNewMeterAdapter);
 
+
+
     }
 
     @Override
@@ -258,7 +292,7 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
         String userName = mCEtUserName.getText().toString().trim();
         String userNumber = mCEtUserNumber.getText().toString().trim();
         String assetsNumber = mCEtAssetsNumber.getText().toString().trim();
-
+        String time = mTvTime.getText().toString().trim();
 
         boolean isEmpty = true;
         if(StringUtils.isNotEmpty(userName)){
@@ -271,6 +305,10 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
         }
         if(StringUtils.isNotEmpty(assetsNumber)){
             conditionMap.put(Constant.SCATTEREDNEWMETER.newAssetNumbers.toString(), assetsNumber);
+            isEmpty = false;
+        }
+        if(StringUtils.isNotEmpty(time)){
+            conditionMap.put(Constant.SCATTEREDNEWMETER.time.toString(), time);
             isEmpty = false;
         }
 
@@ -404,6 +442,10 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
             case R.id.btn_menu_right:
 
+                break;
+
+            case R.id.tv_time:                                          //弹出时间选择器
+                pvTime.show();
                 break;
 
             case R.id.btn_search:

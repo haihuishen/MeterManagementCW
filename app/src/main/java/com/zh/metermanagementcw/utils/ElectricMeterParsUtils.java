@@ -635,7 +635,7 @@ public class ElectricMeterParsUtils {
         String meterAgreement = "";
         long days = TimeUtils.timeDifference(timeScan, timeIn, "yyyy-MM-dd");
 
-        //days = days + 1;
+        days = days + 1;
         switch ((int) days){
 
             case 1:

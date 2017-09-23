@@ -105,6 +105,11 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity android:name="com.zh.metermanagementcw.activity.SelectorScatteredReplaceMeterActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity android:name="com.zh.metermanagementcw.activity.SelectorLoadDataActivity"
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
@@ -246,6 +251,12 @@
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity android:name="com.zh.metermanagementcw.activity.ScatteredReplaceMeterActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
+        </activity>
+
 
     </application>
 

@@ -329,7 +329,7 @@
 ////                LogUtils.i("searchMeterInfoObserver :" + bean.toString());
 ////            }
 //
-//                mMeterBean1List.clear();
+//                mMeterBean1List.clean();
 //                mMeterBean1List.addAll(meterBeen);
 //                mFinishedAdapter.notifyDataSetChanged();
 //            }

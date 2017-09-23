@@ -57,6 +57,19 @@
                     android:hint="用户编码--可以只填写后几位"
                     android:textSize="15dp"/>
 
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/bg_et_g"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:hint="新装时间"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"/>
 
                 <LinearLayout
                     android:layout_marginTop="5dp"

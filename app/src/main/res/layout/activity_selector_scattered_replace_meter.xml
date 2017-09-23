@@ -27,7 +27,7 @@
 
 
             <LinearLayout
-                android:id="@+id/layout_scatteredNewMeter"
+                android:id="@+id/layout_scatteredReplaceMeter"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginLeft="1dp"
@@ -38,18 +38,18 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/iv_scatteredNewMeter"
+                    android:id="@+id/iv_scatteredReplaceMeter"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/scattered_new_meter" />
+                    android:src="@mipmap/scattered_replace_meter" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:singleLine="true"
-                    android:text="零散新装"
+                    android:text="零散换装"
                     android:textColor="#666666"
                     android:textSize="12sp"
                     android:textStyle="bold" />
