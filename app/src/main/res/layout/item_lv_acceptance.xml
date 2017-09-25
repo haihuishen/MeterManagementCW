@@ -15,6 +15,29 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:layout_height="wrap_content"
+            android:text="终端内编号："
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tv_terminalNo"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:text="资产编号:"/>
@@ -25,10 +48,12 @@
             android:layout_weight="3"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:text=""/>
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -77,6 +102,8 @@
             android:text=""/>
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"

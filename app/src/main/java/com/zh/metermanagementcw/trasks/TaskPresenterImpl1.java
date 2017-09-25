@@ -973,29 +973,18 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
                                     try {
 
-                                        meterBean.setUserNumber(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_userNumber)));
-                                        meterBean.setUserName(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_userName)));
-                                        meterBean.setUserAddr(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_userAddr)));
-                                        meterBean.setUserPhone(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_userPhone)));
-                                        meterBean.setMeasurementPointNumber(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_measurementPointNumber)));
-                                        meterBean.setPowerSupplyBureau(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_powerSupplyBureau)));
-                                        meterBean.setTheMeteringSection(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_theMeteringSection)));
-                                        meterBean.setCourts(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_courts)));
-                                        meterBean.setMeasuringPointAddress(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_measuringPointAddress)));
+                                        meterBean.setUserNumber(getValue(cursor, Constant.TABLE_METERINFO1_STR_userNumber));
+                                        meterBean.setUserName(getValue(cursor, Constant.TABLE_METERINFO1_STR_userName));
+                                        meterBean.setUserAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_userAddr));
+                                        meterBean.setUserPhone(getValue(cursor, Constant.TABLE_METERINFO1_STR_userPhone));
+                                        meterBean.setMeasurementPointNumber(getValue(cursor, Constant.TABLE_METERINFO1_STR_measurementPointNumber));
+                                        meterBean.setPowerSupplyBureau(getValue(cursor, Constant.TABLE_METERINFO1_STR_powerSupplyBureau));
+                                        meterBean.setTheMeteringSection(getValue(cursor, Constant.TABLE_METERINFO1_STR_theMeteringSection));
+                                        meterBean.setCourts(getValue(cursor, Constant.TABLE_METERINFO1_STR_courts));
+                                        meterBean.setMeasuringPointAddress(getValue(cursor, Constant.TABLE_METERINFO1_STR_measuringPointAddress));
 
-                                        meterBean.setOldAssetNumbers(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_oldAssetNumbers)));
-                                        meterBean.setOldAddr(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_oldAddr)));
+                                        meterBean.setOldAssetNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldAssetNumbers));
+                                        meterBean.setOldAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldAddr));
                                         //------------------------
                                         String oldAddrAndAsset = cursor.getString(
                                                 cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_oldAddrAndAsset));
@@ -1005,10 +994,8 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                                             meterBean.setOldAddrAndAsset(false);
                                         }
                                         //------------------------
-                                        meterBean.setOldElectricity(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_oldElectricity)));
-                                        meterBean.setNewAddr(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_newAddr)));
+                                        meterBean.setOldElectricity(getValue(cursor, Constant.TABLE_METERINFO1_STR_oldElectricity));
+                                        meterBean.setNewAddr(getValue(cursor, Constant.TABLE_METERINFO1_STR_newAddr));
                                         //------------------------
                                         String newAddrAndAsset = cursor.getString(
                                                 cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_newAddrAndAsset));
@@ -1018,22 +1005,31 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                                             meterBean.setNewAddrAndAsset(false);
                                         }
                                         //------------------------
-                                        meterBean.setNewAssetNumbersScan(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_newAssetNumbersScan)));
-                                        meterBean.setNewElectricity(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_newElectricity)));
-                                        meterBean.setCollectorAssetNumbersScan(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_collectorAssetNumbersScan)));
-                                        meterBean.setTime(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_time)));
-                                        meterBean.setPicPath(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_picPath)));
-                                        meterBean.setMeterPicPath(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_meterPicPath)));
-                                        meterBean.setMeterContentPicPath(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_meterContentPicPath)));
-                                        meterBean.setRelaceOrAnd(cursor.getString(
-                                                cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_relaceOrAnd)));
+                                        meterBean.setNewAssetNumbersScan(getValue(cursor, Constant.TABLE_METERINFO1_STR_newAssetNumbersScan));
+                                        meterBean.setNewElectricity(getValue(cursor, Constant.TABLE_METERINFO1_STR_newElectricity));
+                                        meterBean.setCollectorAssetNumbersScan(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorAssetNumbersScan));
+                                        meterBean.setTime(getValue(cursor, Constant.TABLE_METERINFO1_STR_time));
+                                        meterBean.setPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_picPath));
+                                        meterBean.setMeterPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterPicPath));
+                                        meterBean.setMeterContentPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterContentPicPath));
+                                        meterBean.setRelaceOrAnd(getValue(cursor, Constant.TABLE_METERINFO1_STR_relaceOrAnd));
+
+                                        //----2017/09/04
+                                        meterBean.setMeterFootNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterFootNumbers));
+                                        meterBean.setMeterFootPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterFootPicPath));
+                                        meterBean.setMeterBodyNumbers1(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyNumbers1));
+                                        meterBean.setMeterBodyPicPath1(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyPicPath1));
+                                        meterBean.setMeterBodyNumbers2(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyNumbers2));
+                                        meterBean.setMeterBodyPicPath2(getValue(cursor, Constant.TABLE_METERINFO1_STR_meterBodyPicPath2));
+
+                                        //----2017/09/06
+                                        meterBean.setCollectorFootNumbers(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorFootNumbers));
+                                        meterBean.setCollectorFootPicPath(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorFootPicPath));
+                                        meterBean.setCollectorBodyNumbers1(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyNumbers1));
+                                        meterBean.setCollectorBodyPicPath1(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyPicPath1));
+                                        meterBean.setCollectorBodyNumbers2(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyNumbers2));
+                                        meterBean.setCollectorBodyPicPath2(getValue(cursor, Constant.TABLE_METERINFO1_STR_collectorBodyPicPath2));
+
                                         //------------------------
                                         String isFinish = cursor.getString(
                                                 cursor.getColumnIndex(Constant.TABLE_METERINFO1_STR_isFinish));
@@ -1043,6 +1039,7 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
                                             meterBean.setFinish(false);
                                         }
                                         //------------------------
+
                                     }catch (Exception e){
                                         LogUtils.i("readDbToBeanForCollector -- e.getMessage()3:" + e.getMessage());  // 因为有些空值
                                     }
@@ -1620,11 +1617,21 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
         int i = 0;
         for(String set : conditionMap.keySet()){
             if(i == size-1){                                            // 最后一个
-                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-                selection += set + " like ?";
+                if(set.equalsIgnoreCase(Constant.ACCEPTANCE.terminalNo.toString())){
+                    selectionArgs[i] = conditionMap.get(set);
+                    selection += set + "=?";
+                }else {
+                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                    selection += set + " like ?";
+                }
             }else {
-                selectionArgs[i] = "%" + conditionMap.get(set) + "%";
-                selection += set + " like ? and ";
+                if(set.equalsIgnoreCase(Constant.ACCEPTANCE.terminalNo.toString())){
+                    selectionArgs[i] = conditionMap.get(set);
+                    selection += set + "=? and ";
+                }else {
+                    selectionArgs[i] = "%" + conditionMap.get(set) + "%";
+                    selection += set + " like ? and ";
+                }
             }
 
             i++;

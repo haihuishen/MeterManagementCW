@@ -100,6 +100,8 @@ public class FinishedAdapter extends BaseAdapter {
         String collectorPath = "";
         if(mBeanArrayList.get(position).getRelaceOrAnd() !=null &&
                 mBeanArrayList.get(position).getRelaceOrAnd().equals("0")) {
+
+            //LogUtils.i("shen1");
             //viewHold.tvNewCollector.setVisibility(View.GONE);
             viewHold.lLayoutNewCollector.setVisibility(View.GONE);
             viewHold.lLayoutNewMeter.setVisibility(View.VISIBLE);
@@ -111,12 +113,14 @@ public class FinishedAdapter extends BaseAdapter {
             viewHold.lLayoutPicCollector.setVisibility(View.GONE);
 
         }else {
+            //LogUtils.i("shen2");
             viewHold.lLayoutNewCollector.setVisibility(View.VISIBLE);
             viewHold.lLayoutNewMeter.setVisibility(View.GONE);
 
             viewHold.lLayoutPicCollector.setVisibility(View.VISIBLE);
             viewHold.rvPicCollector.setVisibility(View.VISIBLE);
             viewHold.tvNewCollector.setVisibility(View.VISIBLE);
+
             viewHold.tvNewCollector.setText(mBeanArrayList.get(position).getCollectorAssetNumbersScan());
             viewHold.tvCollectorFootNumbers.setText(mBeanArrayList.get(position).getCollectorFootNumbers());
             viewHold.tvCollectorBodyNumbers1.setText(mBeanArrayList.get(position).getCollectorBodyNumbers1());

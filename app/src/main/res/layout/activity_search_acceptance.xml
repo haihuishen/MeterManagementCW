@@ -30,7 +30,22 @@
                 android:textColor="@color/black"
                 android:textSize="16dp"/>
 
+
             <com.zh.metermanagementcw.view.ClearEditText
+
+                android:id="@+id/et_terminalNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_et_g"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:hint="终端内编号"
+                android:textSize="15dp"/>
+
+            <com.zh.metermanagementcw.view.ClearEditText
+                android:layout_marginTop="5dp"
                 android:id="@+id/et_userName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

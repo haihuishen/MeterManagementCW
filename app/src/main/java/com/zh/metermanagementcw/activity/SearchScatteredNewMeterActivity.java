@@ -411,10 +411,11 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
                 mTbUpAndDowm.setChecked(false);
                 mScatteredNewMeterBeanList.clear();
                 mScatteredNewMeterBeanList.addAll(beanList);
-
                 mScatteredNewMeterAdapter.notifyDataSetChanged();
             }else {
                 showToast("无此用户");
+                mScatteredNewMeterBeanList.clear();
+                mScatteredNewMeterAdapter.notifyDataSetChanged();
             }
         }
 
@@ -437,7 +438,14 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
         switch(v.getId()){
 
             case R.id.btn_back_left:
-                finish();
+                if(!mTbUpAndDowm.isChecked()){
+                    mTbUpAndDowm.setChecked(!mTbUpAndDowm.isChecked());
+                    //使用三目运算符来响应按钮变换的事件
+                    mTbUpAndDowm.setBackgroundResource(R.mipmap.dowm);
+                    LlayoutSearch.setVisibility(View.VISIBLE);
+                }else {
+                    finish();
+                }
                 break;
 
             case R.id.btn_menu_right:
@@ -489,6 +497,13 @@ public class SearchScatteredNewMeterActivity extends BaseActivity implements Vie
 
                     }
                 });
+                return true;
+            }else if(!mTbUpAndDowm.isChecked()){
+                mTbUpAndDowm.setChecked(!mTbUpAndDowm.isChecked());
+                //使用三目运算符来响应按钮变换的事件
+                mTbUpAndDowm.setBackgroundResource(R.mipmap.dowm);
+                LlayoutSearch.setVisibility(View.VISIBLE);
+
                 return true;
             }
 

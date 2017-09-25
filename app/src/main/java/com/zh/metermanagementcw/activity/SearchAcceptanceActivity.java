@@ -53,6 +53,8 @@ public class SearchAcceptanceActivity extends BaseActivity implements View.OnCli
     Button mBtnMenu;
 
 
+    /** 终端内编号 -- 编辑框 --  et_terminalNo */
+    ClearEditText mCEtTerminalNo;
     /** 用户名称 -- 编辑框 */
     ClearEditText mCEtUserName;
     /** 用户编码 -- 编辑框 */
@@ -115,6 +117,7 @@ public class SearchAcceptanceActivity extends BaseActivity implements View.OnCli
     @Override
     public void initView() {
 
+        mCEtTerminalNo  = (ClearEditText) findViewById(R.id.et_terminalNo);
         mCEtUserName = (ClearEditText) findViewById(R.id.et_userName);
         mCEtUserNumber = (ClearEditText) findViewById(R.id.et_userNumber);
         mCEtAssetsNumber = (ClearEditText) findViewById(R.id.et_assetsNumber);
@@ -199,22 +202,27 @@ public class SearchAcceptanceActivity extends BaseActivity implements View.OnCli
 
         HashMap<String, String> conditionMap = new HashMap<>();
 
+        String terminalNo = mCEtTerminalNo.getText().toString().trim();
         String userName = mCEtUserName.getText().toString().trim();
         String userNumber = mCEtUserNumber.getText().toString().trim();
         String assetsNumber = mCEtAssetsNumber.getText().toString().trim();
 
 
         boolean isEmpty = true;
+        if(StringUtils.isNotEmpty(terminalNo)){
+            conditionMap.put(Constant.ACCEPTANCE.terminalNo.toString(), terminalNo);
+            isEmpty = false;
+        }
         if(StringUtils.isNotEmpty(userName)){
-            conditionMap.put("userName", userName);
+            conditionMap.put(Constant.ACCEPTANCE.userName.toString(), userName);
             isEmpty = false;
         }
         if(StringUtils.isNotEmpty(userNumber)){
-            conditionMap.put("userNumber", userNumber);
+            conditionMap.put(Constant.ACCEPTANCE.userNumber.toString(), userNumber);
             isEmpty = false;
         }
         if(StringUtils.isNotEmpty(assetsNumber)){
-            conditionMap.put("assetNumbers", assetsNumber);
+            conditionMap.put(Constant.ACCEPTANCE.assetNumbers.toString(), assetsNumber);
             isEmpty = false;
         }
 
@@ -322,6 +330,8 @@ public class SearchAcceptanceActivity extends BaseActivity implements View.OnCli
                 mAcceptanceAdapter.notifyDataSetChanged();
             }else {
                 showToast("无此用户");
+                mAcceptanceBeanList.clear();
+                mAcceptanceAdapter.notifyDataSetChanged();
             }
         }
 
@@ -344,7 +354,14 @@ public class SearchAcceptanceActivity extends BaseActivity implements View.OnCli
         switch(v.getId()){
 
             case R.id.btn_back_left:
-                finish();
+                if(!mTbUpAndDowm.isChecked()){
+                    mTbUpAndDowm.setChecked(!mTbUpAndDowm.isChecked());
+                    //使用三目运算符来响应按钮变换的事件
+                    mTbUpAndDowm.setBackgroundResource(R.mipmap.dowm);
+                    LlayoutSearch.setVisibility(View.VISIBLE);
+                }else {
+                    finish();
+                }
                 break;
 
             case R.id.btn_menu_right:
@@ -367,4 +384,23 @@ public class SearchAcceptanceActivity extends BaseActivity implements View.OnCli
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK) {                 // 如果点击的是"返回按钮"
+
+            if(!mTbUpAndDowm.isChecked()){
+                mTbUpAndDowm.setChecked(!mTbUpAndDowm.isChecked());
+                //使用三目运算符来响应按钮变换的事件
+                mTbUpAndDowm.setBackgroundResource(R.mipmap.dowm);
+                LlayoutSearch.setVisibility(View.VISIBLE);
+
+                return true;
+            }
+
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

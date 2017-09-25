@@ -89,6 +89,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="终端内编号："
+                    android:textColor="@android:color/black"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/tv_terminalNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:textSize="13dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="用户编号："
                     android:textColor="@android:color/black"
                     android:textSize="13dp" />
@@ -125,27 +147,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="终端内编号："
-                    android:textColor="@android:color/black"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/tv_terminalNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:maxLines="2"
-                    android:textColor="@android:color/black"
-                    android:textSize="13dp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

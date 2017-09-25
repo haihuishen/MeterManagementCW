@@ -396,8 +396,6 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
         @Override
         public void onNext(@NonNull List<MeterBean1> meterBeen) {
 
-            mTvTitle.setText("查询结果");
-
             if(meterBeen != null && meterBeen.size() > 0) {
                 mTbUpAndDowm.setChecked(false);
 //            for(MeterBean1 bean : meterBeen){
@@ -408,6 +406,9 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
                 mFinishedAdapter.notifyDataSetChanged();
             }else {
                 showToast("无此用户");
+
+                mMeterBean1List.clear();
+                mFinishedAdapter.notifyDataSetChanged();
             }
         }
 
@@ -465,7 +466,15 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
         switch(v.getId()){
 
             case R.id.btn_back_left:
-                finish();
+                if(!mTbUpAndDowm.isChecked()){
+                    mTbUpAndDowm.setChecked(!mTbUpAndDowm.isChecked());
+                    //使用三目运算符来响应按钮变换的事件
+                    mTbUpAndDowm.setBackgroundResource(R.mipmap.dowm);
+                    LlayoutSearch.setVisibility(View.VISIBLE);
+
+                }else {
+                    finish();
+                }
                 break;
 
             case R.id.btn_menu_right:
@@ -520,6 +529,14 @@ public class SearchSetCopyTransformationActivity extends BaseActivity implements
 
                     }
                 });
+                return true;
+
+            }else if(!mTbUpAndDowm.isChecked()){
+                mTbUpAndDowm.setChecked(!mTbUpAndDowm.isChecked());
+                //使用三目运算符来响应按钮变换的事件
+                mTbUpAndDowm.setBackgroundResource(R.mipmap.dowm);
+                LlayoutSearch.setVisibility(View.VISIBLE);
+
                 return true;
             }
 

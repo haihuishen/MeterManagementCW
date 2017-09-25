@@ -81,6 +81,7 @@ public class AcceptanceAdapter extends BaseAdapter {
         viewHold.tvAssetNumbers.setText(mBeanArrayList.get(position).getAssetNumbers());
         viewHold.tvUserNumber.setText(mBeanArrayList.get(position).getUserNumber());
         viewHold.tvUserName.setText(mBeanArrayList.get(position).getUserName());
+        viewHold.tvTerminalNo.setText(mBeanArrayList.get(position).getTerminalNo());
         viewHold.tvMeterAddr.setText(mBeanArrayList.get(position).getMeterAddr());
         
 
@@ -104,12 +105,15 @@ public class AcceptanceAdapter extends BaseAdapter {
 
     class ViewHold{
 
+
         /** 资产编号 -- tv_assetNumbers*/
         public TextView tvAssetNumbers;
         /** 用户编号 -- tv_userNumber*/
         public TextView tvUserNumber;
         /** 用户名称 -- tv_userName*/
         public TextView tvUserName;
+        /** 终端内编号 -- tv_terminalNo*/
+        public TextView tvTerminalNo;
         /** 电表地址 -- tv_meterAddr*/
         public TextView tvMeterAddr;
 
@@ -151,6 +155,7 @@ public class AcceptanceAdapter extends BaseAdapter {
             tvAssetNumbers = (TextView) view.findViewById(R.id.tv_assetNumbers);
             tvUserNumber = (TextView) view.findViewById(R.id.tv_userNumber);
             tvUserName = (TextView) view.findViewById(R.id.tv_userName);
+            tvTerminalNo = (TextView) view.findViewById(R.id.tv_terminalNo);
             tvMeterAddr = (TextView) view.findViewById(R.id.tv_meterAddr);
 
 
