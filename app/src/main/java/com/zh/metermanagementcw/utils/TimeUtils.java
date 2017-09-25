@@ -32,7 +32,10 @@ public class TimeUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMM");
         return simpleDateFormat.format(new Date());
     }
-
+    public static String getCurrentyyyyMM() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        return simpleDateFormat.format(new Date());
+    }
 
     public static String getCurrentTimeRq() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.sss");

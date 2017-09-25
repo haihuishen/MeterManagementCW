@@ -98,7 +98,7 @@ public class LoadDataActivity extends BaseActivity implements View.OnClickListen
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                showLoadingDialog("","导入中...");
+                                showLoadingDialog("导入中...","");
                                 taskPresenter.importExcelToDb(importObserver);
                                 sweetAlertDialog.dismiss();
                             }

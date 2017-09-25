@@ -60,6 +60,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
     private final String READMETER_AGREEMENT_TASK = "ReadMeterAgreementTask";
     private final String READMETER_AGREEMENT_TIME_TASK = "ReadMeterAgreementTimeTask";
+    private final String READMETER_ADDR_TASK = "ReadMeterAddrTask";
     private final String TIME_TYPE_DAY = "TimeTypeDay";
     private final String TIME_TYPE_MONTH = "TimeTypeMonth";
 
@@ -74,15 +75,21 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
     /** 资产编号 -- 编辑框 --  cet_assetNumbers*/
     ClearEditText mCEtAssetNumbers;
-    /** 资产编号2D扫描 -- 按钮 --  btn_assetNumbers*/
-    Button mBtnAssetNumbers;
     /** 用户编号 -- 文本 --  tv_userNumber*/
     TextView mTvUserNumber;
     /** 用户名称 -- 文本 --  tv_userName*/
     TextView mTvUserName;
+    /** 终端内编号 -- 文本 --  tv_terminalNo*/
+    TextView mTvTerminalNo;
     /** 电表地址 -- 文本 --  tv_meterAddr*/
     TextView mTvMeterAddr;
 
+    /** 资产编号2D扫描 -- 按钮 --  btn_assetNumbers*/
+    Button mBtnAssetNumbers;
+    /** 资产编号 -- 查询 -- 按钮 --  btn_query*/
+    Button mBtnQuery;
+    /** 资产编号红外扫描 -- 按钮 --  btn_readAssetNumbers*/
+    Button mBtnReadAssetNumbers;
 
     /** 冻结时间(日) -- 文本 --  tv_daysFreezingTimeIn*/
     TextView mTvDaysFreezingTimeIn;
@@ -129,6 +136,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
     ReadMeterAgreementTask mReadMeterAgreementTask;
     ReadMeterAgreementTimeTask mReadMeterAgreementTimeTask;
+    ReadMeterAddrTask mReadMeterAddrTask;
     //--------------------------扫描-------------------------
     /** 成为 二维扫描 */
     Barcode2DWithSoft mBarcode2DWithSoft;
@@ -280,7 +288,30 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                             mTvMonthFreezingTimeScan.setText(datas[2]);
                             mAcceptanceBean.setMonthFreezingTimeScan(datas[2]);
                         }
+                    }else if(mTasking.equals(READMETER_ADDR_TASK)){
+
+                        if(datas[1].length() == 4)
+                            mReadMeter97Or07 = "97";
+                        else if(datas[1].length() == 8)
+                            mReadMeter97Or07 = "07";
+
+//                        if(!mReadMeter97Or07.equals(""))
+//                            mBeepManager.playSuccessful();
+
+                        LogUtils.i("mTasking.equals(READMETER_ADDR_TASK -- " + mReadMeter97Or07 );
+
+                        if(mReadMeterAddrTask!=null
+                                && !mReadMeterAddrTask.isCancelled()
+                                && mReadMeterAddrTask.getStatus() == AsyncTask.Status.RUNNING){
+
+                            mReadMeterAddrTask.setStop();
+                        }
+
+                        if(mCurrentReadBtnId == R.id.btn_readAssetNumbers){
+                            checkForAddr(datas[0]);
+                        }
                     }
+
                     break;
                 default:
                     break;
@@ -319,10 +350,15 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
     @Override
     public void initView(){
         mCEtAssetNumbers = (ClearEditText) findViewById(R.id.cet_assetNumbers);
-        mBtnAssetNumbers = (Button) findViewById(R.id.btn_assetNumbers);
         mTvUserNumber = (TextView) findViewById(R.id.tv_userNumber);
         mTvUserName = (TextView) findViewById(R.id.tv_userName);
+        mTvTerminalNo = (TextView) findViewById(R.id.tv_terminalNo);
         mTvMeterAddr = (TextView) findViewById(R.id.tv_meterAddr);
+
+        mBtnAssetNumbers = (Button) findViewById(R.id.btn_assetNumbers);
+        mBtnQuery = (Button) findViewById(R.id.btn_query);
+        mBtnReadAssetNumbers = (Button) findViewById(R.id.btn_readAssetNumbers);
+
 
         mTvDaysFreezingTimeIn = (TextView) findViewById(R.id.tv_daysFreezingTimeIn);
         mTvElectricityInByDay = (TextView) findViewById(R.id.tv_electricityInByDay);
@@ -346,6 +382,9 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
     public void initListener() {
 
         mBtnAssetNumbers.setOnClickListener(this);
+        mBtnQuery.setOnClickListener(this);
+        mBtnReadAssetNumbers.setOnClickListener(this);
+
         mBtnElectricityScanByDay.setOnClickListener(this);
         mBtnElectricityScanByMonth.setOnClickListener(this);
         mBtnSave.setOnClickListener(this);
@@ -354,12 +393,15 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
     @Override
     public void initData() {
-        mCEtAssetNumbers.setEnabled(false);
-        mCEtElectricityScanByDay.setEnabled(false);
-        mCEtElectricityScanByMonth.setEnabled(false);
+//        mCEtAssetNumbers.setEnabled(false);
+//        mCEtElectricityScanByDay.setEnabled(false);
+//        mCEtElectricityScanByMonth.setEnabled(false);
 
 
         mBtnAssetNumbers.setEnabled(false);
+        mBtnQuery.setEnabled(false);
+        mBtnReadAssetNumbers.setEnabled(false);
+
         mBtnElectricityScanByDay.setEnabled(false);
         mBtnElectricityScanByMonth.setEnabled(false);
 
@@ -435,7 +477,8 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
 
     /**
-     * 开始抄表
+     * 开始抄表<p>
+     * 获取电表的当前时间
      */
     private void startReadMeter(String addr) {
 
@@ -450,6 +493,119 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
         mReadMeterAgreementTimeTask = new ReadMeterAgreementTimeTask(addr);
         mReadMeterAgreementTimeTask.execute();
+    }
+
+    /**
+     * 异步  -- 获取地址
+     */
+    public class ReadMeterAddrTask extends AsyncTask<String, String, String> {
+
+        boolean stop = false;
+
+        String mAddr = "AAAAAAAAAAAA";
+        String mMeterAgreement = "";
+
+        public ReadMeterAddrTask() {
+        }
+
+
+        public void setStop() {
+            stop = true;
+        }
+
+        @Override
+        protected void onPreExecute() {                                                 // 执行前
+            super.onPreExecute();
+
+            stop = false;
+            mTasking = READMETER_ADDR_TASK;
+            mReadMeter97Or07 = "";
+            showLoadingDialog("正在红外读取", null);
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... strings) {            // 执行中
+
+            byte[] command;
+
+            //---------------------------------07--------------------------------
+            mAddr = "000000000000";
+            mMeterAgreement = MeterAgreement.Pro07.STR_00010000;
+            command = ElectricMeterParsUtils.getBuffer(
+                    ElectricMeterParsUtils.getMeterAddress(mAddr, ElectricMeterParsUtils.METERTYPE._07),
+                    mMeterAgreement);    // 生成命令！
+            mInstance.send(command);
+            Timer timer07 = new Timer();
+            timer07.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    stop = true;
+                }
+            }, 1500);
+
+            while (!stop) {
+                try {
+                    Thread.currentThread().sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            timer07.cancel();
+
+            stop = false;
+
+            //---------------------------------97--------------------------------
+            if (mReadMeter97Or07.equals("")) {
+
+                mAddr = "AAAAAAAAAAAA";
+                mMeterAgreement = MeterAgreement.Pro97.STR_9010;
+                command = ElectricMeterParsUtils.getBuffer(
+                        ElectricMeterParsUtils.getMeterAddress(mAddr, ElectricMeterParsUtils.METERTYPE._97),
+                        mMeterAgreement);                      // 生成命令！
+
+                mInstance.send(command);
+
+                Timer timer97 = new Timer();
+                timer97.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        stop = true;
+                    }
+                }, 1500);
+
+                while (!stop) {
+                    try {
+                        Thread.currentThread().sleep(10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                timer97.cancel();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String str) {           // 执行后
+            super.onPostExecute(str);
+
+            if (TextUtils.isEmpty(mReadMeter97Or07)) {                             // 没有收到数据
+                LogUtils.i("TextUtils.isEmpty(mReadMeter97Or07) -- " + mReadMeter97Or07 );
+
+                Message message = Message.obtain();
+                message.what = BROAD_READMETER_FAIL;
+                mHandler.sendMessage(message);
+            }
+            closeDialog();
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            // updataLoadingDialog("正在确定电表协议,请稍等", values[0]);
+        }
     }
 
     /**
@@ -595,6 +751,33 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
     }
 
     /**
+     * 开始抄表<p>
+     * 获取掌机当前的时间
+     */
+    private void startReadMeter1(String addr) {
+
+        if (TextUtils.isEmpty(addr)) {
+            showToast("表地址不能为空");
+            return;
+        }
+
+        if(mTimeType.equals(TIME_TYPE_DAY)) {
+            mTvDaysFreezingTimeScan.setText(TimeUtils.getCurrentyyyyMMdd());
+            String timeIn = mTvDaysFreezingTimeIn.getText().toString().trim();
+            String timeScan = mTvDaysFreezingTimeScan.getText().toString().trim();
+            mReadMeterAgreementTask = new ReadMeterAgreementTask(addr, timeIn, timeScan);
+            mReadMeterAgreementTask.execute();
+
+        }else if(mTimeType.equals(TIME_TYPE_MONTH)){
+            mTvMonthFreezingTimeScan.setText(TimeUtils.getCurrentyyyyMMdd());
+            String timeIn = mTvMonthFreezingTimeIn.getText().toString().trim();
+            String timeScan = mTvMonthFreezingTimeScan.getText().toString().trim();
+            mReadMeterAgreementTask = new ReadMeterAgreementTask(addr, timeIn, timeScan);
+            mReadMeterAgreementTask.execute();
+        }
+    }
+
+    /**
      * 异步 -- 获取地址&正向有功电度(日冻结)
      */
     public class ReadMeterAgreementTask extends AsyncTask<String, String, String> {
@@ -624,7 +807,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
             stop = false;
             mTasking = READMETER_AGREEMENT_TASK;
             mReadMeter97Or07 = "";
-            //showLoadingDialog("正在红外读取", null);
+            showLoadingDialog("正在红外读取", null);
 
         }
 
@@ -758,70 +941,150 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                 String barCode = new String(bytes, 0, length);
                 String scanData = barCode.trim();
 
-                boolean isHave = false;
-                if (mCurrentScanBtnId == R.id.btn_assetNumbers) {
-                    for(AcceptanceBean bean : mAcceptanceBeanList){
-
-                        if(bean.getAssetNumbers().equalsIgnoreCase(scanData)){
-                            mBeepManager.playSuccessful();
-                            mAcceptanceBean = bean;
-                            LogUtils.i(bean.toString());
-                            isHave = true;
-
-                            mCEtAssetNumbers.setText(scanData);
-                            mTvUserNumber.setText(bean.getUserNumber());
-                            mTvUserName.setText(bean.getUserName());
-                            mTvMeterAddr.setText(bean.getMeterAddr());
-
-                            mTvDaysFreezingTimeIn.setText(bean.getDaysFreezingTimeIn());
-                            mTvElectricityInByDay.setText(bean.getElectricityInByDay());
-                            mTvDaysFreezingTimeScan.setText(bean.getDaysFreezingTimeScan());
-                            mCEtElectricityScanByDay.setText(bean.getElectricityScanByDay());
-                            mTvDifferencesByDay.setText(bean.getConclusionByDay());
-
-                            mTvMonthFreezingTimeIn.setText(bean.getMonthFreezingTimeIn());
-                            mTvElectricityInByMonth.setText(bean.getElectricityInByMonth());
-                            mTvMonthFreezingTimeScan.setText(bean.getMonthFreezingTimeScan());
-                            mCEtElectricityScanByMonth.setText(bean.getElectricityScanByMonth());
-                            mTvDifferencesByMonth.setText(bean.getConclusionByMonth());
-
-                            if(TextUtils.isEmpty(bean.getDaysFreezingTimeIn()) ||
-                                    TextUtils.isEmpty(bean.getElectricityInByDay()))
-                                mBtnElectricityScanByDay.setEnabled(false);
-                            else
-                                mBtnElectricityScanByDay.setEnabled(true);
-
-
-                            if(TextUtils.isEmpty(bean.getMonthFreezingTimeIn()) ||
-                                    TextUtils.isEmpty(bean.getElectricityInByMonth()))
-                                mBtnElectricityScanByMonth.setEnabled(false);
-                            else
-                                mBtnElectricityScanByMonth.setEnabled(true);
-
-
-                            break;
-                        }
-                    }
-
-                    if(!isHave){
-                        mBeepManager.playError();
-                        SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
-                                .setTitleText("提示")
-                                .setContentText(scanData + "\n该电表资产编码无匹配的用户，\n请通知供电所相关人员")
-                                .setConfirmText("确认")
-                                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                    @Override
-                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                        sweetAlertDialog.dismiss();
-                                    }
-                                });
-
-                        dialog.show();
-                    }
-                }
+                checkForAssetNumbers(scanData);
             }
         }
     }
+
+
+    /**
+     * 根据"资产编号"调取数据
+     * @param assetNumbers 资产编号
+     */
+    private void checkForAssetNumbers(String assetNumbers){
+        boolean isHave = false;
+        if (mCurrentScanBtnId == R.id.btn_assetNumbers ||
+                mCurrentScanBtnId == R.id.btn_query ) {
+            for(AcceptanceBean bean : mAcceptanceBeanList){
+
+                if(bean.getAssetNumbers().equalsIgnoreCase(assetNumbers)){
+                    mBeepManager.playSuccessful();
+                    mAcceptanceBean = bean;
+                    LogUtils.i(bean.toString());
+                    isHave = true;
+
+                    mCEtAssetNumbers.setText(assetNumbers);
+                    mTvUserNumber.setText(bean.getUserNumber());
+                    mTvUserName.setText(bean.getUserName());
+                    mTvTerminalNo.setText(bean.getTerminalNo());
+                    mTvMeterAddr.setText(bean.getMeterAddr());
+
+
+                    mTvDaysFreezingTimeIn.setText(bean.getDaysFreezingTimeIn());
+                    mTvElectricityInByDay.setText(bean.getElectricityInByDay());
+                    mTvDaysFreezingTimeScan.setText(bean.getDaysFreezingTimeScan());
+                    mCEtElectricityScanByDay.setText(bean.getElectricityScanByDay());
+                    mTvDifferencesByDay.setText(bean.getConclusionByDay());
+
+                    mTvMonthFreezingTimeIn.setText(bean.getMonthFreezingTimeIn());
+                    mTvElectricityInByMonth.setText(bean.getElectricityInByMonth());
+                    mTvMonthFreezingTimeScan.setText(bean.getMonthFreezingTimeScan());
+                    mCEtElectricityScanByMonth.setText(bean.getElectricityScanByMonth());
+                    mTvDifferencesByMonth.setText(bean.getConclusionByMonth());
+
+                    if(TextUtils.isEmpty(bean.getDaysFreezingTimeIn()) ||
+                            TextUtils.isEmpty(bean.getElectricityInByDay()))
+                        mBtnElectricityScanByDay.setEnabled(false);
+                    else
+                        mBtnElectricityScanByDay.setEnabled(true);
+
+
+                    if(TextUtils.isEmpty(bean.getMonthFreezingTimeIn()) ||
+                            TextUtils.isEmpty(bean.getElectricityInByMonth()))
+                        mBtnElectricityScanByMonth.setEnabled(false);
+                    else
+                        mBtnElectricityScanByMonth.setEnabled(true);
+
+
+                    break;
+                }
+            }
+
+            if(!isHave){
+                mBeepManager.playError();
+                SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("提示")
+                        .setContentText(assetNumbers + "\n该电表资产编码无匹配的用户，\n请通知供电所相关人员")
+                        .setConfirmText("确认")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+
+                dialog.show();
+            }
+        }
+    }
+
+    /**
+     * 根据"地址"调取数据
+     * @param addr 地址
+     */
+    private void checkForAddr(String addr){
+        boolean isHave = false;
+            for(AcceptanceBean bean : mAcceptanceBeanList){
+
+                if(bean.getMeterAddr().equalsIgnoreCase(addr)){
+                    mBeepManager.playSuccessful();
+                    mAcceptanceBean = bean;
+                    LogUtils.i(bean.toString());
+                    isHave = true;
+
+                    mCEtAssetNumbers.setText(bean.getAssetNumbers());
+                    mTvUserNumber.setText(bean.getUserNumber());
+                    mTvUserName.setText(bean.getUserName());
+                    mTvTerminalNo.setText(bean.getTerminalNo());
+                    mTvMeterAddr.setText(bean.getMeterAddr());
+
+                    mTvDaysFreezingTimeIn.setText(bean.getDaysFreezingTimeIn());
+                    mTvElectricityInByDay.setText(bean.getElectricityInByDay());
+                    mTvDaysFreezingTimeScan.setText(bean.getDaysFreezingTimeScan());
+                    mCEtElectricityScanByDay.setText(bean.getElectricityScanByDay());
+                    mTvDifferencesByDay.setText(bean.getConclusionByDay());
+
+                    mTvMonthFreezingTimeIn.setText(bean.getMonthFreezingTimeIn());
+                    mTvElectricityInByMonth.setText(bean.getElectricityInByMonth());
+                    mTvMonthFreezingTimeScan.setText(bean.getMonthFreezingTimeScan());
+                    mCEtElectricityScanByMonth.setText(bean.getElectricityScanByMonth());
+                    mTvDifferencesByMonth.setText(bean.getConclusionByMonth());
+
+                    if(TextUtils.isEmpty(bean.getDaysFreezingTimeIn()) ||
+                            TextUtils.isEmpty(bean.getElectricityInByDay()))
+                        mBtnElectricityScanByDay.setEnabled(false);
+                    else
+                        mBtnElectricityScanByDay.setEnabled(true);
+
+
+                    if(TextUtils.isEmpty(bean.getMonthFreezingTimeIn()) ||
+                            TextUtils.isEmpty(bean.getElectricityInByMonth()))
+                        mBtnElectricityScanByMonth.setEnabled(false);
+                    else
+                        mBtnElectricityScanByMonth.setEnabled(true);
+
+
+                    break;
+                }
+            }
+
+            if(!isHave){
+                mBeepManager.playError();
+                SweetAlertDialog dialog = new SweetAlertDialog(getContext(), SweetAlertDialog.NORMAL_TYPE)
+                        .setTitleText("提示")
+                        .setContentText(addr + "\n该电表地址无匹配的用户，\n请通知供电所相关人员")
+                        .setConfirmText("确认")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismiss();
+                            }
+                        });
+
+                dialog.show();
+            }
+    }
+
 
     /**
      * 初始二维扫描
@@ -890,6 +1153,8 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
         @Override
         public void onComplete(){
 
+            mBtnReadAssetNumbers.setEnabled(true);
+
             mBtnElectricityScanByDay.setEnabled(true);
             mBtnElectricityScanByMonth.setEnabled(true);
 
@@ -928,6 +1193,8 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
         @Override
         public void onComplete() {
 
+            mBtnQuery.setEnabled(true);
+
             if(mBooleanSave)
                 showToast("保存成功！");
 
@@ -962,6 +1229,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
             mCEtAssetNumbers.setText("");
             mTvUserNumber.setText("");
             mTvUserName.setText("");
+            mTvTerminalNo.setText("");
             mTvMeterAddr.setText("");
 
             mTvDaysFreezingTimeIn.setText("");
@@ -1075,7 +1343,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                 mAcceptanceBean.setFinishByDay(false);
 
                 String meterAddr1 = mTvMeterAddr.getText().toString().trim();
-                startReadMeter(meterAddr1);
+                startReadMeter1(meterAddr1);
 
                 break;
 
@@ -1096,7 +1364,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
 
                 String meterAddr2 = mTvMeterAddr.getText().toString().trim();
-                startReadMeter(meterAddr2);
+                startReadMeter1(meterAddr2);
 
                 break;
 
@@ -1106,6 +1374,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                 mCEtAssetNumbers.setText("");
                 mTvUserNumber.setText("");
                 mTvUserName.setText("");
+                mTvTerminalNo.setText("");
                 mTvMeterAddr.setText("");
 
                 mTvDaysFreezingTimeIn.setText("");
@@ -1127,6 +1396,63 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                     mBarcode2DWithSoft.stopScan();
                     mBarcode2DWithSoft.scan();                              //启动扫描
                 }
+
+                break;
+
+            case R.id.btn_query:                         			// 手动输入查询
+
+                mTvUserNumber.setText("");
+                mTvUserName.setText("");
+                mTvTerminalNo.setText("");
+                mTvMeterAddr.setText("");
+
+                mTvDaysFreezingTimeIn.setText("");
+                mTvElectricityInByDay.setText("");
+                mTvDaysFreezingTimeScan.setText("");
+                mCEtElectricityScanByDay.setText("");
+                mTvDifferencesByDay.setText("");
+
+                mTvMonthFreezingTimeIn.setText("");
+                mTvElectricityInByMonth.setText("");
+                mTvMonthFreezingTimeScan.setText("");
+                mCEtElectricityScanByMonth.setText("");
+                mTvDifferencesByMonth.setText("");
+
+                //----------------------------------------------------
+                String assetNumbers = mCEtAssetNumbers.getText().toString().trim();
+                if(TextUtils.isEmpty(assetNumbers)){
+                    showToast("请输入资产编码");
+                }else {
+                    checkForAssetNumbers(assetNumbers);
+                }
+
+
+                break;
+
+            case R.id.btn_readAssetNumbers:                        // 广播获取地址
+
+                mCEtAssetNumbers.setText("");
+                mTvUserNumber.setText("");
+                mTvUserName.setText("");
+                mTvTerminalNo.setText("");
+                mTvMeterAddr.setText("");
+
+                mTvDaysFreezingTimeIn.setText("");
+                mTvElectricityInByDay.setText("");
+                mTvDaysFreezingTimeScan.setText("");
+                mCEtElectricityScanByDay.setText("");
+                mTvDifferencesByDay.setText("");
+
+                mTvMonthFreezingTimeIn.setText("");
+                mTvElectricityInByMonth.setText("");
+                mTvMonthFreezingTimeScan.setText("");
+                mCEtElectricityScanByMonth.setText("");
+                mTvDifferencesByMonth.setText("");
+
+                //----------------------------------------------------
+                mCurrentReadBtnId = R.id.btn_readAssetNumbers;
+                mReadMeterAddrTask = new ReadMeterAddrTask();
+                mReadMeterAddrTask.execute();
 
                 break;
 

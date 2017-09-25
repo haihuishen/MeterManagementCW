@@ -103,7 +103,7 @@ public class LoadDataAcceptanceActivity extends BaseActivity implements View.OnC
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                showLoadingDialog("","导入中...");
+                                showLoadingDialog("导入中...","");
 
                                 File path = new File(Constant.Acceptance_Day_PATH);
                                 File[] files = path.listFiles();

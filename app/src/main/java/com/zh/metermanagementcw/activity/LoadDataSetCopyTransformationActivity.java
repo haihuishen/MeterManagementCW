@@ -103,7 +103,7 @@ public class LoadDataSetCopyTransformationActivity extends BaseActivity implemen
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                showLoadingDialog("","导入中...");
+                                showLoadingDialog("导入中...","");
 
                                 File path = new File(Constant.IMPORT_METER_INFO_PATH);
                                 File[] files = path.listFiles();

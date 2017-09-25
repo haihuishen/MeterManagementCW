@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1.3"
         android:background="@color/shen_sky_blue"
         android:orientation="vertical">
 
@@ -50,9 +50,9 @@
 
                 <com.zh.metermanagementcw.view.ClearEditText
                     android:id="@+id/cet_assetNumbers"
-                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/bg_et"
                     android:maxLines="1"
@@ -64,14 +64,14 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_assetNumbers"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/btn_bg_blue"
                 android:text="扫描\n输入"
                 android:textColor="@drawable/btn_text_color_blue_w"
-                android:textSize="12dp" />
+                android:textSize="12dp"
+                android:visibility="gone"/>
         </LinearLayout>
 
 
@@ -125,6 +125,27 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="终端内编号："
+                    android:textColor="@android:color/black"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/tv_terminalNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:maxLines="2"
+                    android:textColor="@android:color/black"
+                    android:textSize="13dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -146,6 +167,65 @@
                     android:maxLines="2"
                     android:textColor="@android:color/black"
                     android:textSize="13dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_assetNumbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text="扫描\n输入"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btn_query"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text="查询"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btn_readAssetNumbers"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/btn_bg_blue"
+                    android:text="红外\n读取"
+                    android:textColor="@drawable/btn_text_color_blue_w"
+                    android:textSize="12dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -186,7 +266,6 @@
             android:padding="5dp">
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -242,6 +321,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -354,7 +434,6 @@
             android:padding="5dp">
 
             <LinearLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
