@@ -765,6 +765,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
             mTvDaysFreezingTimeScan.setText(TimeUtils.getCurrentyyyyMMdd());
             String timeIn = mTvDaysFreezingTimeIn.getText().toString().trim();
             String timeScan = mTvDaysFreezingTimeScan.getText().toString().trim();
+            mAcceptanceBean.setDaysFreezingTimeScan(timeScan);
             mReadMeterAgreementTask = new ReadMeterAgreementTask(addr, timeIn, timeScan);
             mReadMeterAgreementTask.execute();
 
@@ -772,6 +773,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
             mTvMonthFreezingTimeScan.setText(TimeUtils.getCurrentyyyyMMdd());
             String timeIn = mTvMonthFreezingTimeIn.getText().toString().trim();
             String timeScan = mTvMonthFreezingTimeScan.getText().toString().trim();
+            mAcceptanceBean.setMonthFreezingTimeScan(timeScan);
             mReadMeterAgreementTask = new ReadMeterAgreementTask(addr, timeIn, timeScan);
             mReadMeterAgreementTask.execute();
         }
