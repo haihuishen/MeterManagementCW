@@ -25,6 +25,7 @@ import com.zh.metermanagementcw.db.helper.DataManagement;
 import com.zh.metermanagementcw.utils.LogUtils;
 import com.zh.metermanagementcw.utils.POIExcelUtil;
 import com.zh.metermanagementcw.utils.StringUtils;
+import com.zh.metermanagementcw.utils.TimeUtils;
 import com.zh.metermanagementcw.view.linkagerecyclerview.ShenBean;
 
 import java.io.File;
@@ -801,12 +802,14 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
     }
 
     @Override
-    public void addCollectorToMeterInfo(Observer observer, final String meteringSection, final CollectorNumberBean collectorNumberBean, List<MeterBean1> meterBean1List) {
+    public void addCollectorToMeterInfo(Observer observer, final String meteringSection,
+                                        final CollectorNumberBean collectorNumberBean, List<MeterBean1> meterBean1List) {
 
-
+        String time = TimeUtils.getCurrentTime_yyyyMMdd_HHmm();
         MeterBean1[] meterBean1arr = new MeterBean1[meterBean1List.size()];
         for(int i=0; i< meterBean1List.size(); i++){
             meterBean1arr[i] = meterBean1List.get(i);
+            meterBean1arr[i].setTime(time);
         }
 
         Observable.fromArray(meterBean1arr)
@@ -828,6 +831,7 @@ public class TaskPresenterImpl1 implements TaskPresenter1 {
 
                         values.put("relaceOrAnd", "1");         // 0:"换表"； 1："新装采集器" -- 要先判断是否抄完
                         values.put("meterPicPath", meterBean1.getMeterPicPath());
+                        values.put("time", meterBean1.getTime());
                         values.put("isFinish", true);
 
                         long i = mTableEx.Update(Constant.TABLE_METERINFO1, values,

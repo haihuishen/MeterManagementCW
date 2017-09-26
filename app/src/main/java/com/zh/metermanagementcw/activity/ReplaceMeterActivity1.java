@@ -1749,7 +1749,7 @@ public class ReplaceMeterActivity1 extends BaseActivity implements View.OnClickL
         mMeterBean.setNewAddrAndAsset(false);
         mMeterBean.setNewAssetNumbersScan(newAssetNumbersScan);
         mMeterBean.setNewElectricity(newElectricity);
-        mMeterBean.setTime(TimeUtils.getCurrentTimeRq());
+        mMeterBean.setTime(TimeUtils.getCurrentTime_yyyyMMdd_HHmm());
         mMeterBean.setRelaceOrAnd("0");
         mMeterBean.setFinish(isFinish);
         mMeterBean.setCollectorAssetNumbersScan("");

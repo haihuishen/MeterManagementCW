@@ -42,6 +42,11 @@ public class TimeUtils {
         return simpleDateFormat.format(new Date());
     }
 
+    public static String getCurrentTime_yyyyMMdd_HHmm() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return simpleDateFormat.format(new Date());
+    }
+
     /**
      * 将 Date 转化为字符串
      * @param date

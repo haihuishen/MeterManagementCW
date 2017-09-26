@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Administrator on 2017/4/30.
  */
-public class FinishedAdapter extends BaseAdapter {
+public class FinishedAdapter1 extends BaseAdapter {
 
     private ArrayList<MeterBean1> mBeanArrayList = new ArrayList<>();
     private Context mContext;
@@ -31,9 +31,9 @@ public class FinishedAdapter extends BaseAdapter {
 
     private ArrayList<CollectorNumberBean> mCollectorNumberBean = new ArrayList<>();
 
-    public FinishedAdapter(Context context, ArrayList<MeterBean1> meterBeanList,
-                           ArrayList<CollectorNumberBean> collectorNumberBean,
-                           FinishPhotoListener finishPhotoListener){
+    public FinishedAdapter1(Context context, ArrayList<MeterBean1> meterBeanList,
+                            ArrayList<CollectorNumberBean> collectorNumberBean,
+                            FinishPhotoListener finishPhotoListener){
 
         mContext = context;
         mBeanArrayList = meterBeanList;
@@ -77,11 +77,11 @@ public class FinishedAdapter extends BaseAdapter {
         viewHold.tvUserName.setText(mBeanArrayList.get(position).getUserName());
         viewHold.tvUserAddr.setText(mBeanArrayList.get(position).getUserAddr());
         viewHold.tvUserPhone.setText(mBeanArrayList.get(position).getUserPhone());
-        viewHold.tvTime.setText(mBeanArrayList.get(position).getTime());
-
         viewHold.tvOldAssetNumbers.setText(mBeanArrayList.get(position).getOldAssetNumbers());
+
         viewHold.tvOldAddr.setText(mBeanArrayList.get(position).getOldAddr());
         viewHold.tvOldElectricity.setText(mBeanArrayList.get(position).getOldElectricity());
+
 
         viewHold.tvNewAssetNumbersScan.setText(mBeanArrayList.get(position).getNewAssetNumbersScan());
         viewHold.tvNewAddr.setText(mBeanArrayList.get(position).getNewAddr());
@@ -215,11 +215,6 @@ public class FinishedAdapter extends BaseAdapter {
         public TextView tvUserAddr;
         /** 用户电话 */
         public TextView tvUserPhone;
-
-        /** 业务时间 -- tv_time */
-        public TextView tvTime;
-
-
         /** 旧资产编码 */
         public TextView tvOldAssetNumbers;
         /** 旧表表地址 */
@@ -274,9 +269,6 @@ public class FinishedAdapter extends BaseAdapter {
             tvUserName = (TextView) view.findViewById(R.id.tv_userName);
             tvUserAddr = (TextView) view.findViewById(R.id.tv_userAddr);
             tvUserPhone = (TextView) view.findViewById(R.id.tv_userPhone);
-
-            tvTime = (TextView) view.findViewById(R.id.tv_time);
-
             tvOldAssetNumbers = (TextView) view.findViewById(R.id.tv_oldAssetNumbers);
             tvOldAddr = (TextView) view.findViewById(R.id.tv_oldAddr);
             tvOldElectricity = (TextView) view.findViewById(R.id.tv_oldElectricity);

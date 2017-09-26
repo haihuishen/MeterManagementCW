@@ -373,7 +373,7 @@ public class POIExcelUtil {
 				"新电能表资产编号", "新电能表止码", "新电能表表地址", "II型采集器资产编号",
 				"新电能表表脚封扣", "新电能表表箱封扣1", "新电能表表箱封扣2",
 				"采集器表脚封扣", "采集器表箱封扣1", "采集器表箱封扣2",
-				"备注"
+				"备注", "业务日期"
 		};
 
 		HSSFWorkbook workbook = new HSSFWorkbook();				// 声明一个工作薄
@@ -401,7 +401,7 @@ public class POIExcelUtil {
 //8.旧电能表资产编号 9.旧电能表资产编号 10.旧电能表止码 11.旧电能表表地址
 //12.新电能表资产编号 13.新电能表止码 14.新电能表表地址 15.II型采集器资产编号
 //16.新电能表电表表脚封扣 17.新电能表表箱封扣1 18.新电能表表箱封扣2
-//19.采集器表脚封扣 20.采集器表箱封扣1 21.采集器表箱封扣2 22.备注
+//19.采集器表脚封扣 20.采集器表箱封扣1 21.采集器表箱封扣2 22.备注 23.业务日期
 
 			hssfRow = sheet.createRow(rowIndex);
 			setCellStyle(contentStyle, hssfRow, 0, rowIndex + "");						// 0.序号
@@ -464,7 +464,8 @@ public class POIExcelUtil {
 
 
 
-				setCellStyle(contentStyle, hssfRow, 22, notes);								// 19.备注
+				setCellStyle(contentStyle, hssfRow, 22, notes);								// 22.备注
+				setCellStyle(contentStyle, hssfRow, 23, bean.getTime());					// 23.业务日期
 			}else {
 
 				setCellStyle(contentStyle, hssfRow, 9, "");            	// 9.旧电能表资产编号
@@ -486,7 +487,8 @@ public class POIExcelUtil {
 				setCellStyle(contentStyle, hssfRow, 20, "");								// 20.采集器表箱封扣1
 				setCellStyle(contentStyle, hssfRow, 21, "");								// 21.采集器表箱封扣2
 
-				setCellStyle(contentStyle, hssfRow, 22, "");								// 19.备注
+				setCellStyle(contentStyle, hssfRow, 22, "");								// 22.备注
+				setCellStyle(contentStyle, hssfRow, 23, "");								// 23.业务日期
 			}
 
 			rowIndex++;
@@ -601,7 +603,7 @@ public class POIExcelUtil {
 		String[] headers = new String[]{
 				"测量点号", "电表资产编号", "电表通讯方式", "电表通讯地址", "通讯参数模板ID",
 				"倍率", "是否是变压器总表", "接线方式", "采集器编号", "采集资产编号",
-				"用户编号", "用户名称", "用电地址"
+				"用户编号", "用户名称", "用电地址", "业务日期"
 		};
 
 		HSSFWorkbook workbook = new HSSFWorkbook();				// 声明一个工作薄
@@ -654,6 +656,9 @@ public class POIExcelUtil {
 //	【数据源】
 //		12.用电地址
 //	【数据源】
+
+//		13.业务日期
+
 			if(bean.isFinish() && bean.getRelaceOrAnd() != null) {
 
 
@@ -731,7 +736,7 @@ public class POIExcelUtil {
 				setCellStyle(contentStyle, hssfRow, 10, bean.getUserNumber());                // 10.用户编号
 				setCellStyle(contentStyle, hssfRow, 11, bean.getUserName());                // 11.用户名称
 				setCellStyle(contentStyle, hssfRow, 12, bean.getUserAddr());                // 12.用户地址
-
+				setCellStyle(contentStyle, hssfRow, 13, bean.getTime());                	// 13.业务日期
 				rowIndex++;
 			}
 		}
@@ -755,7 +760,8 @@ public class POIExcelUtil {
 
 		String sheetName = "户表档案";
 		String[] headers = new String[]{
-				"用户编号", "用户名称", "用电地址", "计量点编号", "计量点地址", "变更标志", "装拆标志", "资产编号", "有功总示数"
+				"用户编号", "用户名称", "用电地址", "计量点编号", "计量点地址",
+				"变更标志", "装拆标志", "资产编号", "有功总示数", "业务日期"
 
 		};
 
@@ -785,6 +791,7 @@ public class POIExcelUtil {
 			//040500231017251	韦美连	大化县景山村古旧新屯	0405002310172511	大化县景山村古旧新屯	更换后	未装拆
 
 			boolean isFinish = bean.isFinish();
+			boolean isRelaeMeter = bean.getRelaceOrAnd().equals("0");    // 是否是--换表
 
 			hssfRow = sheet.createRow(rowIndex);
 			setCellStyle(contentStyle, hssfRow, 0, bean.getUserNumber());				// 0.用户编号
@@ -795,10 +802,19 @@ public class POIExcelUtil {
 			setCellStyle(contentStyle, hssfRow, 5, "更换前");							// 5.装拆标志
 			setCellStyle(contentStyle, hssfRow, 6, "未装拆");							// 6.资产编号
 			setCellStyle(contentStyle, hssfRow, 7, bean.getOldAssetNumbers());			// 7.旧电能表资产编号
-			if(isFinish)
-				setCellStyle(contentStyle, hssfRow, 8, bean.getOldElectricity());			// 8.旧电能表止码
-			else
-				setCellStyle(contentStyle, hssfRow, 8, "");									// 8.旧电能表止码
+			if(isFinish) {
+				if(isRelaeMeter) {
+					setCellStyle(contentStyle, hssfRow, 8, bean.getOldElectricity());       // 8.旧电能表止码
+					setCellStyle(contentStyle, hssfRow, 9, bean.getTime());                    // 9.业务日期
+				}else {
+					setCellStyle(contentStyle, hssfRow, 8, "");                                    // 8.旧电能表止码
+					setCellStyle(contentStyle, hssfRow, 9, "");            							// 9.业务日期
+				}
+			}
+			else {
+				setCellStyle(contentStyle, hssfRow, 8, "");                                    // 8.旧电能表止码
+				setCellStyle(contentStyle, hssfRow, 9, "");            							// 9.业务日期
+			}
 
 			hssfRow = sheet.createRow(rowIndex + 1);
 			setCellStyle(contentStyle, hssfRow, 0, bean.getUserNumber());				// 0.用户编号
@@ -810,12 +826,20 @@ public class POIExcelUtil {
 			setCellStyle(contentStyle, hssfRow, 6, "未装拆");							// 6.资产编号
 
 			if(isFinish) {
-				setCellStyle(contentStyle, hssfRow, 7, bean.getNewAssetNumbersScan());        // 6.新电能表资产编号
-				setCellStyle(contentStyle, hssfRow, 8, bean.getNewElectricity());            // 7.新电能表止码
+				if(isRelaeMeter) {
+					setCellStyle(contentStyle, hssfRow, 7, bean.getNewAssetNumbersScan());      // 7.新电能表资产编号
+					setCellStyle(contentStyle, hssfRow, 8, bean.getNewElectricity());           // 8.新电能表止码
+					setCellStyle(contentStyle, hssfRow, 9, bean.getTime());                        // 9.业务日期
+				}else {
+					setCellStyle(contentStyle, hssfRow, 7, "");      							// 7.新电能表资产编号
+					setCellStyle(contentStyle, hssfRow, 8, "");            						// 8.新电能表止码
+					setCellStyle(contentStyle, hssfRow, 9, "");            						// 9.业务日期
+				}
 			}
 			else {
-				setCellStyle(contentStyle, hssfRow, 7, bean.getNewAssetNumbersScan());        // 6.新电能表资产编号
-				setCellStyle(contentStyle, hssfRow, 8, "");            // 7.新电能表止码
+				setCellStyle(contentStyle, hssfRow, 7, "");      							// 7.新电能表资产编号
+				setCellStyle(contentStyle, hssfRow, 8, "");            						// 8.新电能表止码
+				setCellStyle(contentStyle, hssfRow, 9, "");            						// 9.业务日期
 			}
 
 			rowIndex = rowIndex + 2;

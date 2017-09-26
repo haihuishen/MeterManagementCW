@@ -38,6 +38,7 @@ import com.zh.metermanagementcw.utils.FilesUtils;
 import com.zh.metermanagementcw.utils.ImageFactory;
 import com.zh.metermanagementcw.utils.LogUtils;
 import com.zh.metermanagementcw.utils.StringUtils;
+import com.zh.metermanagementcw.utils.TimeUtils;
 import com.zh.metermanagementcw.view.ClearEditText;
 
 import java.io.File;
@@ -1062,6 +1063,7 @@ public class NewCollectorActivity1 extends BaseActivity implements View.OnClickL
                         mCollectorNumberBean.setCollectorFootNumbers(collectorFootNumbersScan);
                         mCollectorNumberBean.setCollectorBodyNumbers1(collectorBodyNumbersScan1);
                         mCollectorNumberBean.setCollectorBodyNumbers2(collectorBodyNumbersScan2);
+
 
                         showLoadingDialog("","正在保存数据...");
                         taskPresenter1.addCollectorToMeterInfo(saveCollectorToMeterInfoObserver,
