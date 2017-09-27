@@ -530,15 +530,41 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
 
             byte[] command;
 
+//            //---------------------------------07--------------------------------
+//            mAddr = "000000000000";
+//            mMeterAgreement = MeterAgreement.Pro07.STR_00010000;
+//            command = ElectricMeterParsUtils.getBuffer(
+//                    ElectricMeterParsUtils.getMeterAddress(mAddr, ElectricMeterParsUtils.METERTYPE._07),
+//                    mMeterAgreement);    // 生成命令！
+//            mInstance.send(command);
+//            Timer timer07 = new Timer();
+//            timer07.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+//                    stop = true;
+//                }
+//            }, 1500);
+//
+//            while (!stop) {
+//                try {
+//                    Thread.currentThread().sleep(10);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            timer07.cancel();
+//
+//            stop = false;
+
             //---------------------------------07--------------------------------
-            mAddr = "000000000000";
-            mMeterAgreement = MeterAgreement.Pro07.STR_00010000;
+            mAddr = "AAAAAAAAAAAA";
+            mMeterAgreement = MeterAgreement.Pro07.STR_00000000;
             command = ElectricMeterParsUtils.getBuffer(
                     ElectricMeterParsUtils.getMeterAddress(mAddr, ElectricMeterParsUtils.METERTYPE._07),
                     mMeterAgreement);    // 生成命令！
             mInstance.send(command);
-            Timer timer07 = new Timer();
-            timer07.schedule(new TimerTask() {
+            Timer timer07_2 = new Timer();
+            timer07_2.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     stop = true;
@@ -552,7 +578,7 @@ public class AcceptanceActivity extends BaseActivity implements OnClickListener 
                     e.printStackTrace();
                 }
             }
-            timer07.cancel();
+            timer07_2.cancel();
 
             stop = false;
 
