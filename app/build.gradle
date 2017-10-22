@@ -44,7 +44,7 @@ android {
     // 编译后的apk名字!
     android.applicationVariants.all {
         variant -> variant.outputs.each {
-            output -> output.outputFile = new File(output.outputFile.parent, "集抄改造_ZH-E7_" +
+            output -> output.outputFile = new File(output.outputFile.parent, "JCGZ_ZH-E7_" +
                     defaultConfig.versionCode +  "_v" + defaultConfig.versionName +"_"+buildType.name+ ".apk");
         }
     }

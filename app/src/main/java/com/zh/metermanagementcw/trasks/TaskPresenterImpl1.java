@@ -44,9 +44,8 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
- * Created by gbh on 16/12/7.
+ *
  */
-
 public class TaskPresenterImpl1 implements TaskPresenter1 {
 
 
