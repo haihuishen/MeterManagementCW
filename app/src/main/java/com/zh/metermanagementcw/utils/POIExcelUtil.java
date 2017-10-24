@@ -804,6 +804,7 @@ public class POIExcelUtil {
 			setCellStyle(contentStyle, hssfRow, 7, bean.getOldAssetNumbers());			// 7.旧电能表资产编号
 			if(isFinish) {
 				if(isRelaeMeter) {
+					setCellStyle(contentStyle, hssfRow, 6, "已装拆");							// 6.资产编号
 					setCellStyle(contentStyle, hssfRow, 8, bean.getOldElectricity());       // 8.旧电能表止码
 					setCellStyle(contentStyle, hssfRow, 9, bean.getTime());                    // 9.业务日期
 				}else {
@@ -827,6 +828,7 @@ public class POIExcelUtil {
 
 			if(isFinish) {
 				if(isRelaeMeter) {
+					setCellStyle(contentStyle, hssfRow, 6, "已装拆");							// 6.资产编号
 					setCellStyle(contentStyle, hssfRow, 7, bean.getNewAssetNumbersScan());      // 7.新电能表资产编号
 					setCellStyle(contentStyle, hssfRow, 8, bean.getNewElectricity());           // 8.新电能表止码
 					setCellStyle(contentStyle, hssfRow, 9, bean.getTime());                        // 9.业务日期
